@@ -1,7 +1,5 @@
 FROM node:10
 
-LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
-
 ENV NODE_ENV=development
 ENV PORT=3000
 ENV API_URL=http://localhost:4040/api/
