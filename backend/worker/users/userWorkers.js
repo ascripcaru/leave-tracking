@@ -14,9 +14,9 @@ function handleNewUsers(params, callback) {
         params.domain = domain;
 
         smtp.sendMail(email, emailSubject, 'newUser', params)
-            .then(info => callback(null, info))
+            .then(info => callback(null, info));
     } catch(error) {
-        console.log('err handleNewUsers', error)
+        console.log('err handleNewUsers', error);
         return callback(error);
     }
 }
@@ -31,7 +31,7 @@ function handlePasswordReset(params, callback) {
         const emailSubject = `${firstName} password reset`;
 
         smtp.sendMail(email, emailSubject, 'resetPassword', params)
-            .then(info => callback(null, info))
+            .then(info => callback(null, info));
     } catch(error) {
         return callback(error);
     }

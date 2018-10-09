@@ -25,7 +25,7 @@ async function handleNewLeaveRequest(leave, callback) {
         Promise.all([
             smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave),
             smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
-        ]).then(info => callback(null, info))
+        ]).then(info => callback(null, info));
     } catch(error) {
         console.log('handleNewLeaveRequest:', error);
         return callback(error);
@@ -53,7 +53,7 @@ async function handleApprovedLeaveRequest(leave, callback) {
         Promise.all([
             smtp.sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave),
             smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave)
-        ]).then(info => callback(null, info))
+        ]).then(info => callback(null, info));
     } catch(error) {
         console.log('handleApprovedLeaveRequest:', error);
         return callback(error);
@@ -80,7 +80,7 @@ async function handleRejectedLeaveRequest(leave, callback) {
         Promise.all([
             smtp.sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave),
             smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave)
-        ]).then(info => callback(null, info))
+        ]).then(info => callback(null, info));
     } catch(error) {
         console.log('handleRejectedLeaveRequest:', error);
         return callback(error);
@@ -106,7 +106,7 @@ async function handleCanceledLeaveRequest(leave, callback) {
         Promise.all([
             smtp.sendMail(email, userEmailSubject, 'canceledLeaveRequest', leave),
             smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', leave)
-        ]).then(info => callback(null, info))
+        ]).then(info => callback(null, info));
     } catch(error) {
         console.log('handleCanceledLeaveRequest:', error);
         return callback(error);
