@@ -12,7 +12,8 @@ export const LEAVE_TYPES = {
     STUDY: 'study-leave',
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
-    MARRIAGE_LEAVE: 'marriage-leave'
+    MARRIAGE_LEAVE: 'marriage-leave',
+    WORK_FROM_HOME: 'work-from-home'
 };
 
 export const REQUEST_STATUS = {

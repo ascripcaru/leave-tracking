@@ -12,7 +12,8 @@ export const LEAVE_TYPES = {
     STUDY: 'study-leave',
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
-    MARRIAGE_LEAVE: 'marriage-leave'
+    MARRIAGE_LEAVE: 'marriage-leave',
+    WORK_FROM_HOME: 'work-from-home'
 }
 
 export const HUMAN_LEAVE_TYPES = {
@@ -23,5 +24,6 @@ export const HUMAN_LEAVE_TYPES = {
     'study-leave': 'Study Leave',
     'half-day-leave': 'Half Day Off',
     'bereavement-leave': 'Bereavement Leave',
-    'marriage-leave': 'Marriage Leave'
+    'marriage-leave': 'Marriage Leave',
+    'work-from-home': 'Work From Home'
 }

@@ -4,16 +4,15 @@ import { UserService } from '~/services/user-service';
 @inject(UserService)
 export class Reports {
 
-    userIds = [];
-    results = [];
-
-    constructor(_userService) {
-        this._userService = _userService;
-        this.model = this;
+    constructor(_user) {
+        this._user = _user;
     }
 
+    async attached() {
+        this.getUsers();
+    }
 
-    userSource = function(query, limit) {
-        return this._userService.searchApproverUserByName(query, limit, 'APPROVER');
-    }.bind(this);
+    async getUsers() {
+        this.users = await this._user.getUsers();
+    }
 }

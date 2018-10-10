@@ -18,7 +18,7 @@ export class App {
                 name: 'home',
                 moduleId: './dash',
                 nav: true,
-                title:'Home',
+                title: 'Home',
                 settings: {
                     icon: 'home'
                 },
@@ -29,9 +29,9 @@ export class App {
                 name: 'reports',
                 moduleId: './reports',
                 nav: false,
-                title:'Reports',
+                title: 'Reports',
                 settings: {
-                    icon: 'folder-open'
+                    icon: 'list-alt'
                 },
                 requires: ['ADMIN'],
                 auth: true
@@ -41,7 +41,7 @@ export class App {
                 name: 'calendar',
                 moduleId: './calendar',
                 nav: true,
-                title:'Calendar',
+                title: 'Calendar',
                 settings: {
                     icon: 'calendar'
                 },
@@ -53,7 +53,7 @@ export class App {
                 name: 'add-request',
                 moduleId: './add-request/add-request',
                 nav: true,
-                title:'Add request',
+                title: 'Add request',
                 settings: {
                     icon: 'plus'
                 },
@@ -64,7 +64,7 @@ export class App {
                 name: 'edit-request',
                 moduleId: './add-request/edit-request',
                 nav: false,
-                title:'Edit request',
+                title: 'Edit request',
                 settings: {
                     icon: 'pencil'
                 },
@@ -75,7 +75,7 @@ export class App {
                 name: 'admin',
                 moduleId: './admin/admin',
                 nav: false,
-                title:'Admin',
+                title: 'Admin',
                 settings: {
                     icon: 'cog'
                 },
@@ -87,7 +87,7 @@ export class App {
                 name: 'approvals',
                 moduleId: './approvals/approvals',
                 nav: false,
-                title:'Approvals',
+                title: 'Approvals',
                 settings: {
                     icon: 'ok'
                 },
@@ -99,7 +99,7 @@ export class App {
                 name: 'login',
                 moduleId: './login/login',
                 nav: false,
-                title:'Login',
+                title: 'Login',
                 settings: {
                     icon: 'log-in'
                 }
@@ -109,7 +109,7 @@ export class App {
                 name: 'recover',
                 moduleId: './recover-password/recover-password',
                 nav: false,
-                title:'Recover Password !',
+                title: 'Recover Password !',
                 settings: {
                 },
                 auth: false
@@ -119,7 +119,7 @@ export class App {
                 name: 'profile',
                 moduleId: './profile/profile',
                 nav: true,
-                title:'Profile',
+                title: 'Profile',
                 settings: {
                     icon: 'user'
                 },

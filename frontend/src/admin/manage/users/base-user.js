@@ -76,7 +76,7 @@ export default class BaseUser {
         await this.fetchProjectsData();
     }
 
-    async fetchData(params) {
+    async fetchData() {
         await this.fetchProjectsData();
     }
 

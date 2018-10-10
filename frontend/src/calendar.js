@@ -6,7 +6,7 @@ import { HolidayService } from '~/services/holiday-service'
 @inject(LeaveService, HolidayService)
 export class Calendar {
     isLoading = true;
-    calendar ={}
+    calendar = {};
     config = {
         tmpl_path: "bootstrap-calendar/tmpls/",
         events_source: {},
@@ -30,7 +30,7 @@ export class Calendar {
             $('.btn-group button').removeClass('active');
             $('button[data-calendar-view="' + view + '"]').addClass('active');
         }
-    }
+    };
 
     constructor(_leave, _holiday) {
         this._leave = _leave;

@@ -1,20 +1,26 @@
 <template>
-  <require from="./components/type-ahead"></require>
-
-    <div class="col-sm-9">
-        <h3><i class="glyphicon glyphicon-list-alt"></i> Reports could be built here :)</h3>
-
-        <type-ahead
-            field="_id"
-            placeholder="Search for users ..."
-            display-name="fullName"
-            results.two-way="results"
-            data-source.bind="userSource"
-            >
-        </type-ahead>
-
+    <div class="col-sm-12">
+        <h3><i class="glyphicon glyphicon-list-alt"></i> Reports</h3>
         <hr>
-        <span>User IDs: ${results}</span>
-        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Pending</th>
+                    <th scope="col">Taken</th>
+                    <th scope="col">Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="user of users">
+                    <td>${user.fullName}</td>
+                    <td>${user.holidays}</td>
+                    <td>${user.pending}</td>
+                    <td>${user.taken}</td>
+                    <td><strong>${user.holidays - user.pending - user.taken}</strong></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
