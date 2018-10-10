@@ -16,12 +16,13 @@
 
                         <div class="col-xs-7 col-sm-8 col-md-9">
                             <ul>
-                                <li>Start date: ${user.startDate | dateFormat:'YYYY-MM-DD'}</li>
+                                <li>Start date: ${user.startDate | dateFormat}</li>
                                 <li>Project: ${user.project}</li>
                                 <li>Role: ${user.role}</li>
                                 <li>Total days/year: ${user.daysPerYear}</li>
-                                <li>Days remaining: ${user.holidays}</li>
+                                <li>Pending days: ${user.pending}</li>
                                 <li>Taken days: ${user.taken}</li>
+                                <li><strong>Days remaining: ${user.holidays}</strong></li>
                             </ul>
                         </div>
                     </div>
