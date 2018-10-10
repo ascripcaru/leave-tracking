@@ -27,6 +27,7 @@ async function create(req, res, next) {
         roles: req.body.roles,
         name: req.body.name,
         description: req.body.description,
+        active: req.body.active,
     });
 
     project.save()
@@ -40,7 +41,7 @@ function update(req, res, next) {
     project.name = req.body.name;
     project.roles = req.body.roles;
     project.description = req.body.description;
-
+    project.active = req.body.active;
 
     project.save()
         .then(savedProject => res.json(savedProject))
@@ -48,7 +49,7 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
+    const { limit = 100, skip = 0 } = req.query;
     Project.list({ limit, skip })
         .then(projects => res.json(projects))
         .catch(e => next(e));

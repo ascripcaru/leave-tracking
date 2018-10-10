@@ -25,6 +25,9 @@ const ProjectSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    active: {
+        type: Boolean,
     }
 });
 
@@ -46,7 +49,7 @@ ProjectSchema.statics = {
         return this.find()
             .populate('approvers')
             .populate('roles')
-            .sort({ createdAt: -1 })
+            .sort({ active: -1, name: 1 })
             .skip(+skip)
             .limit(+limit)
             .exec();

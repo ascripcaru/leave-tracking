@@ -5,7 +5,8 @@ export class CreateProject extends BaseProject {
         approvers: [],
         roles: [],
         description: '',
-        name: ''
+        name: '',
+        active: true,
     };
 
     activate() {
