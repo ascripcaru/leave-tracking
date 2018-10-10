@@ -44,11 +44,11 @@ export default class BaseUser {
             .ensure('lastName').required()
             .ensure('email').required().email()
             .ensure('password').required().minLength(5)
-            .ensure('daysPerYear').satisfiesRule('integerRange', 0, 500)
-            .ensure('holidays').satisfiesRule('integerRange', 0, 500)
-            .ensure('position').satisfiesRule('otherThan', 'None', true)
+            .ensure('daysPerYear').satisfiesRule('integerRange', 0, 100)
+            .ensure('holidays').satisfiesRule('integerRange', 0, 100)
+            .ensure('position').satisfiesRule('otherThan', 'None')
             .ensure('userType').satisfiesRule('otherThan', 'None')
-            .ensure('projectId').satisfiesRule('otherThan', 'None', true)
+            .ensure('projectId').satisfiesRule('otherThan', 'None')
             .on(this.user);
 
         if (attachObserver) {

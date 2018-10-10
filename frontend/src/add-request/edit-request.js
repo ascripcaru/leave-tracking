@@ -145,7 +145,7 @@ export class EditRequest {
             };
 
             this._leave.updateLeaveRequest(leave)
-                .then(() => this.router.navigate('home'))
+                .then(() => this.router.navigateBack())
                 .catch(error => {
                     this._notify.danger(error.message && error.message.message,
                         { containerSelector: '#edit-request', limit: 1 })
