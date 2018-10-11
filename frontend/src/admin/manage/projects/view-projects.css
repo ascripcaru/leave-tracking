@@ -8,3 +8,10 @@
     text-overflow: ellipsis;
     padding-right: 20px;
 }
+
+.project-active {
+    color: green;
+}
+.project-inactive {
+    color: red;
+}

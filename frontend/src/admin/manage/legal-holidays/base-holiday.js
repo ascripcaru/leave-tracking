@@ -17,7 +17,7 @@ export default class BaseHoliday {
         calendarWeeks: true,
         showTodayButton: true,
         showClose: true,
-        format: 'YYYY-MM-DD',
+        format: 'DD-MM-YYYY',
         widgetPositioning: {
             horizontal: 'left'
         }
