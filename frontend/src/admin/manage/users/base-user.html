@@ -74,13 +74,13 @@
                 <div repeat.for="i of user.projectRoles.length" class="project-roles">
                     <div class="col-xs-4">
                         <select class="form-control" value.bind="user.projectRoles[i].project & validate">
-                            <option selected>None</option>
+                            <option value="" selected>None</option>
                             <option repeat.for="project of projects" value.bind="project._id">${project.name}</option>
                         </select>
                     </div>
                     <div class="col-xs-4">
                         <select class="form-control" value.bind="user.projectRoles[i].role & validate">
-                            <option selected>None</option>
+                            <option value="" selected>None</option>
                             <option repeat.for="role of roles(user.projectRoles[i].project)" value.bind="role._id">${role.name}</option>
                         </select>
                     </div>

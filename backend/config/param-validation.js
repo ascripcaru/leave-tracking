@@ -6,7 +6,8 @@ const updateUserValidations = {
     lastName: Joi.string().required(),
     email: Joi.string().required(),
     holidays: Joi.number().required(),
-    userType: Joi.string().required()
+    userType: Joi.string().required(),
+    projectRoles: Joi.array().items(Joi.object({ project: Joi.string().required(), role: Joi.string().required() }))
 };
 
 const createUserValidations = Object.assign({ password: Joi.string().required() }, updateUserValidations);

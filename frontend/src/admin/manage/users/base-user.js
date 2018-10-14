@@ -32,6 +32,11 @@ export default class BaseUser {
     }
 
     attached() {
+        this.projectRules = ValidationRules
+            .ensure('project').required()
+            .ensure('role').required()
+            .rules;
+
         ValidationRules
             .ensure('startDate').satisfies(obj => obj instanceof Date)
             .ensure('firstName').required()
@@ -42,6 +47,16 @@ export default class BaseUser {
             .ensure('holidays').satisfiesRule('integerRange', 0, 100)
             .ensure('userType').satisfiesRule('otherThan', 'None')
             .on(this.user);
+
+        this.user.projectRoles.forEach(i => {
+            this.controller.addObject(i, this.projectRules);
+        });
+    }
+
+    detached() {
+        this.user.projectRoles.forEach(i => {
+            this.controller.removeObject(i);
+        });
     }
 
     get canSave() {
@@ -71,11 +86,14 @@ export default class BaseUser {
     }
 
     addRole() {
-        this.user.projectRoles.push({ project: '', role: '' });
+        const newRole = { project: '', role: '' };
+        this.user.projectRoles.push(newRole);
+        this.controller.addObject(newRole, this.projectRules);
     }
 
     removeRole(index) {
-        this.user.projectRoles.splice(index, 1);
+        const res = this.user.projectRoles.splice(index, 1);
+        this.controller.removeObject(res[0]);
     }
 
     roles(id) {
