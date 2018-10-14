@@ -7,16 +7,16 @@
                 <a class="list-group-item" repeat.for="user of users"
                     href="#/admin/users/${user._id}/edit">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <img class="fa fa-3x pull-left"
                                   src="${user.avatar}"></img>
                             <h4 class="list-group-item-heading">
-                                ${user.firstName} ${user.lastName} (${user.holidays})
+                                ${user.firstName} ${user.lastName} (${user.holidays}) <small>${user.userType}</small>
                             </h4>
                             <p class="list-group-item-text">${user.email}</p>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <p repeat.for="item of user.projectRoles" class="list-group-item-text">
                                 <strong>
                                     ${item.role.name} @

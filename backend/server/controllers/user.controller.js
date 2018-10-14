@@ -86,11 +86,7 @@ function list(req, res, next) {
     }
 
     if (userType) {
-        queryOptions.extra.$and = [
-            {
-                userType: userType
-            }
-        ];
+        queryOptions.extra.$and = [{ userType: { $in: userType.split(',') } }];
     }
 
     User.list(queryOptions)
@@ -100,7 +96,7 @@ function list(req, res, next) {
 
 function computeFilterFields(name, fields) {
     const escapedName = _.escapeRegExp(name);
-    const reg = new RegExp(`${escapedName}`,'i');
+    const reg = new RegExp(`${escapedName}`, 'i');
 
     let reqFields;
     if (fields) {

@@ -44,7 +44,8 @@ export class UserService {
     }
 
     getQueryParams(name, type, limit) {
-        return `limit=${limit}&name=${name}&fields=firstName,lastName,email${_.isUndefined(type) ? '' : '&userType='+type}`;
+        const userType = type.reduce((a, c) => `${a},${c}`);
+        return `limit=${limit}&name=${name}&fields=firstName,lastName,email${_.isUndefined(type) ? '' : '&userType=' + userType}`;
     }
 
     searchUser(name, type, limit = 10) {
@@ -57,6 +58,6 @@ export class UserService {
     }
 
     searchApproverUserByName(name) {
-        return this.searchUser(name, 'APPROVER');
+        return this.searchUser(name, ['APPROVER', 'ADMIN']);
     }
 }
