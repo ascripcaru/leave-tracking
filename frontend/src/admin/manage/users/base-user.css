@@ -1,0 +1,9 @@
+.add-role {
+  padding-left: 15px;
+}
+.project-roles {
+  padding-bottom: 15px;
+}
+.project-roles .col-xs-4 {
+  padding-left: 0;
+}

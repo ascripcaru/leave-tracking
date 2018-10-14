@@ -6,8 +6,6 @@ const updateUserValidations = {
     lastName: Joi.string().required(),
     email: Joi.string().required(),
     holidays: Joi.number().required(),
-    position: Joi.string().allow('').optional(),
-    projectId: Joi.string().allow('').hex().optional(),
     userType: Joi.string().required()
 };
 

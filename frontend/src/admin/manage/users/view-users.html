@@ -16,12 +16,12 @@
                             <p class="list-group-item-text">${user.email}</p>
                         </div>
 
-                        <div show.bind="user.role.name" class="col-sm-4">
-                            <p class="list-group-item-text">
+                        <div class="col-sm-4">
+                            <p repeat.for="item of user.projectRoles" class="list-group-item-text">
                                 <strong>
-                                    ${user.role.name} @
+                                    ${item.role.name} @
                                 </strong>
-                                ${user.project} | ${user.userType}
+                                ${item.project.name}
                             </p>
                         </div>
                     </div>

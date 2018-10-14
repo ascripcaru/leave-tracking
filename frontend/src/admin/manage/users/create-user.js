@@ -1,17 +1,15 @@
 import BaseUser from './base-user';
 
 export class CreateUser extends BaseUser {
-    roles = [];
     user = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            position: '',
-            projectId: '',
-            daysPerYear: 0,
-            holidays: 0,
-            userType: ''
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        projectRoles: [{ project: '', role: '' }],
+        daysPerYear: 24,
+        holidays: 24,
+        userType: ''
     };
 
     activate() {

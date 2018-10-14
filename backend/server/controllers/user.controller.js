@@ -25,8 +25,7 @@ function create(req, res, next) {
         email,
         password,
         holidays,
-        position,
-        projectId,
+        projectRoles,
         daysPerYear,
         userType
     } = req.body;
@@ -38,8 +37,7 @@ function create(req, res, next) {
         email: email.toLowerCase(),
         password,
         holidays,
-        position,
-        projectId,
+        projectRoles,
         daysPerYear,
         userType
     });
@@ -65,8 +63,7 @@ function update(req, res, next) {
     if (req.body.password) user.password = bcrypt.hashSync(req.body.password, 10);
     user.daysPerYear = req.body.daysPerYear;
     user.holidays = req.body.holidays;
-    user.position = req.body.position;
-    user.projectId = req.body.projectId;
+    user.projectRoles = req.body.projectRoles;
     user.userType = req.body.userType;
 
     user.save()

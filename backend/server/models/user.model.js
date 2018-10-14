@@ -40,15 +40,18 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    position: {
-        type: String,
-        required: false
-    },
-    projectId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
-        required: false
-    },
+    projectRoles: [{
+        project: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Project',
+            required: true
+        },
+        role: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ProjectRole',
+            required: true
+        }
+    }],
     userType: {
         type: String,
         required: true
@@ -70,6 +73,8 @@ const UserSchema = new mongoose.Schema({
 UserSchema.statics = {
     get(id) {
         return this.findById(id)
+            .populate('projectRoles.project')
+            .populate('projectRoles.role')
             .then((user) => {
                 if (user) {
                     return user;
@@ -81,6 +86,8 @@ UserSchema.statics = {
 
     list({ skip = 0, limit = 50, extra = {} } = {}) {
         return this.find(extra)
+            .populate('projectRoles.project')
+            .populate('projectRoles.role')
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit);

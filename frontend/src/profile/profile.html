@@ -1,4 +1,5 @@
 <template>
+    <require from="./profile.css"></require>
     <spinner show.bind="!userLoaded"></spinner>
 
     <ai-dialog show.bind="userLoaded">
@@ -15,10 +16,13 @@
                         </div>
 
                         <div class="col-xs-7 col-sm-8 col-md-9">
-                            <ul>
+                            <ul class="profile-items">
                                 <li>Start date: ${user.startDate | dateFormat}</li>
-                                <li>Project: ${user.project}</li>
-                                <li>Role: ${user.role}</li>
+                                <li>Role:
+                                    <ul>
+                                        <li repeat.for="item of user.projectRoles">${item.role.name} @ ${item.project.name}</li>
+                                    </ul>
+                                </li>
                                 <li>Total days/year: ${user.daysPerYear}</li>
                                 <li>Pending days: ${user.pending}</li>
                                 <li>Taken days: ${user.taken}</li>
