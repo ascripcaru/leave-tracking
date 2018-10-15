@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { LEAVE_TYPES, HUMAN_LEAVE_TYPES, REQUEST_STATUS } from '~/util/constants';
+import { LEGEND, HUMAN_LEAVE_TYPES, REQUEST_STATUS } from '~/util/constants';
 import { ApiService } from './api-service';
 
 @inject(ApiService)
@@ -29,32 +29,13 @@ export class LeaveService {
                 id: leave._id,
                 title: `${leave.userId.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
                 type: leaveType,
-                class: this.computeEventClass(leaveType),
+                class: LEGEND[leaveType],
                 start: moment(leave.start).valueOf(),
                 end: moment(leave.end).valueOf()
             }
         });
 
         return events;
-    }
-
-    computeEventClass(type) {
-        const { ANNUAL, PARENTING, UNPAID, STUDY, HALF_DAY, SICK } = LEAVE_TYPES;
-
-        switch(type) {
-            case ANNUAL:
-                return 'event-important';
-            case PARENTING:
-                return 'event-success';
-            case UNPAID:
-                return 'event-warning';
-            case STUDY:
-                return 'event-info';
-            case HALF_DAY:
-                return 'event-inverse';
-            case SICK:
-                return 'event-special';
-        }
     }
 
     addLeaveRequest(request) {

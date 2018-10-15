@@ -1,10 +1,12 @@
 import { inject } from 'aurelia-framework';
 import moment from 'moment';
-import { LeaveService } from '~/services/leave-service'
-import { HolidayService } from '~/services/holiday-service'
+import { LeaveService } from '~/services/leave-service';
+import { HolidayService } from '~/services/holiday-service';
+import { HUMAN_LEAVE_TYPES, LEGEND } from '~/util/constants';
 
 @inject(LeaveService, HolidayService)
 export class Calendar {
+    legend = Object.keys(LEGEND).map(i => { return { class: LEGEND[i], name: HUMAN_LEAVE_TYPES[i] } });
     isLoading = true;
     calendar = {};
     config = {

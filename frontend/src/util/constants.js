@@ -27,3 +27,12 @@ export const HUMAN_LEAVE_TYPES = {
     'marriage-leave': 'Marriage Leave',
     'work-from-home': 'Work From Home'
 }
+
+export const LEGEND = {
+    'annual-leave': 'event-important',
+    'sick-leave': 'event-special',
+    'parenting-leave': 'event-success',
+    'unpaid-leave': 'event-warning',
+    'study-leave': 'event-info',
+    'half-day-leave': 'event-inverse'
+};
