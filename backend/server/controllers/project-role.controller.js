@@ -58,10 +58,8 @@ async function remove(req, res, next) {
 
     const assignedProjects = await Project.find({ roles: { $in: [projectRoleId] } });
 
-    const assignedUsers = await User.find({ projectId: { $in: [ assignedProjects ] }});
-
-    if(assignedProjects && assignedUsers && assignedUsers.length > 0 && assignedProjects.length) {
-        next(new APIError(`ProjectRole is assigned to ${assignedUsers.length} users & ${assignedProjects.length} projects`, 403, true));
+    if (assignedProjects && assignedProjects.length) {
+        next(new APIError(`ProjectRole is assigned to ${assignedProjects.length} projects`, 403, true));
     } else {
         projectRole.remove()
             .then(deletedProjectRole => res.json(deletedProjectRole))

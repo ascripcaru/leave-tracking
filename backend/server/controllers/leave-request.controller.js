@@ -273,7 +273,7 @@ async function fetchLeaves(userId, status) {
         const projectsQuery = {approvers: {$in: [userId]}};
         const projectsICanApprove = (await Project.find(projectsQuery)).map(proj => proj._id);
 
-        const usersQuery = {projectId: {$in: projectsICanApprove}};
+        const usersQuery = {'projectRoles.project': {$in: projectsICanApprove}};
         const usersICanApprove = (await User.find(usersQuery)).map(usr => usr._id);
 
         const leaveQuery = {status, userId: {$in: usersICanApprove}};

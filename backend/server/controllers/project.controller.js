@@ -59,9 +59,9 @@ async function remove(req, res, next) {
     const project = req.project;
     const { _id: projectId } = project;
 
-    const assignedUsers = await User.find({ projectId });
+    const assignedUsers = await User.find({ 'projectRoles.project': projectId });
 
-    if(assignedUsers && assignedUsers.length > 0) {
+    if (assignedUsers && assignedUsers.length > 0) {
         next(new APIError(`Project is assigned to ${assignedUsers.length} users`, 403, true));
     } else {
         project.remove()
@@ -76,7 +76,7 @@ function getUsers(req, res, next) {
         next(new APIError('Project id is undefined', 400, true));
         return null;
     }
-    User.find({projectId})
+    User.find({ 'projectRoles.project': projectId })
         .then(users => res.json(users))
         .catch(e => next(e));
 }
