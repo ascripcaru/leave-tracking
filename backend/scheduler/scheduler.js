@@ -15,4 +15,14 @@ const increaseDaysPerYear = cron.schedule('0 3 1 1 *', async () => {
     await User.updateMany({ daysPerYear: { $lt: 30 } }, { $inc: { daysPerYear: 1 } });
 });
 
-export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear };
+const updateUserHolidaysForNewYear = cron.schedule('0 4 1 1 *', async () => {
+    User.find()
+        .then(users => {
+            users.forEach(async user => {
+                user.holidays += user.daysPerYear;
+                await user.save();
+            });
+        });
+});
+
+export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear };

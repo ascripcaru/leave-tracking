@@ -5,7 +5,7 @@ import util from 'util';
 import config from './config/config';
 import app from './config/express';
 import worker from './worker/worker';
-import { removeObsoleteWFHAndHalfDay, increaseDaysPerYear } from './scheduler/scheduler';
+import { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear } from './scheduler/scheduler';
 
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
@@ -38,6 +38,7 @@ if (!module.parent) {
     app.listen(process.env.PORT || config.port, () => {
         removeObsoleteWFHAndHalfDay.start();
         increaseDaysPerYear.start();
+        updateUserHolidaysForNewYear.start();
         worker.start();
         console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
     });
