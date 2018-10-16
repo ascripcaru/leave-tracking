@@ -1,8 +1,9 @@
 import moment from 'moment';
 import cron from 'node-cron';
-import { LEAVE_TYPES } from '../server/helpers/constants';
-import LeaveRequest from '../server/models/leave-request.model';
+import worker from '../worker/worker';
 import User from '../server/models/user.model';
+import LeaveRequest from '../server/models/leave-request.model';
+import { LEAVE_TYPES, REQUEST_STATUS } from '../server/helpers/constants';
 
 const removeObsoleteWFHAndHalfDay = cron.schedule('0 7 * * *', async () => {
     await LeaveRequest.deleteMany({
@@ -25,4 +26,11 @@ const updateUserHolidaysForNewYear = cron.schedule('0 4 1 1 *', async () => {
         });
 });
 
-export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear };
+const unapprovedReminder = cron.schedule('0 11 * * *', async () => {
+    LeaveRequest.find({ status: REQUEST_STATUS.PENDING, start: { $lt: moment().add(2, 'd') } })
+        .then(leaves => {
+            leaves.forEach(leave => worker.queueLeaveReminder(leave));
+        });
+});
+
+export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear, unapprovedReminder };

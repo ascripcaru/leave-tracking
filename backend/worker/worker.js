@@ -4,19 +4,20 @@ import userWorkers from './users/userWorkers';
 import leaveWorkers from './leave/leaveRequestWorkers';
 
 class Worker {
-    get QUEUE_EVENTS() {
+    get queueTypes() {
         return {
-            USER: 'queue_user',
-            LEAVE: 'queue_leave_request'
+            user: 'queue_user',
+            leave: 'queue_leave_request'
         };
     }
 
-    get PROCESS_EVENTS() {
+    get processEvents() {
         return {
             USER: 'process_new_user',
             CHECK_FOR_USERS: 'process_check_for_users',
             PASSWORD_RESET: 'process_password_reset',
             NEW_LEAVE: 'process_new_leave_request',
+            LEAVE_REMINDER: 'process_leave_reminder',
             APPROVED_LEAVE: 'process_approved_leave_request',
             REJECTED_LEAVE: 'process_rejected_leave_request',
             CANCELED_LEAVE: 'process_canceled_leave_request'
@@ -40,44 +41,43 @@ class Worker {
     }
 
     queueNewUser(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.USER);
-
-        queue.enqueue(this.PROCESS_EVENTS.USER, data, () => {});
+        const queue = this.client.queue(this.queueTypes.user);
+        queue.enqueue(this.processEvents.USER, data, () => {});
     }
 
     queueCheckForUsers() {
-        const queue = this.client.queue(this.QUEUE_EVENTS.USER);
-
-        queue.enqueue(this.PROCESS_EVENTS.CHECK_FOR_USERS, {}, () => {});
+        const queue = this.client.queue(this.queueTypes.user);
+        queue.enqueue(this.processEvents.CHECK_FOR_USERS, {}, () => {});
     }
 
     queuePasswordReset(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.USER);
-
-        queue.enqueue(this.PROCESS_EVENTS.PASSWORD_RESET, data, () => {});
+        const queue = this.client.queue(this.queueTypes.user);
+        queue.enqueue(this.processEvents.PASSWORD_RESET, data, () => {});
     }
 
     queueNewLeaveRequest(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
+        const queue = this.client.queue(this.queueTypes.leave);
+        queue.enqueue(this.processEvents.NEW_LEAVE, data, () => {});
+    }
 
-        queue.enqueue(this.PROCESS_EVENTS.NEW_LEAVE, data, () => {});
+    queueLeaveReminder(data) {
+        const queue = this.client.queue(this.queueTypes.leave);
+        queue.enqueue(this.processEvents.LEAVE_REMINDER, data, () => {});
     }
 
     queueApprovedLeaveRequest(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
-
-        queue.enqueue(this.PROCESS_EVENTS.APPROVED_LEAVE, data, () => {});
+        const queue = this.client.queue(this.queueTypes.leave);
+        queue.enqueue(this.processEvents.APPROVED_LEAVE, data, () => {});
     }
 
     queueRejectedLeaveRequest(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
-
-        queue.enqueue(this.PROCESS_EVENTS.REJECTED_LEAVE, data, () => {});
+        const queue = this.client.queue(this.queueTypes.leave);
+        queue.enqueue(this.processEvents.REJECTED_LEAVE, data, () => {});
     }
 
     queueCanceledLeaveRequest(data) {
-        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
-        queue.enqueue(this.PROCESS_EVENTS.CANCELED_LEAVE, data, () => {});
+        const queue = this.client.queue(this.queueTypes.leave);
+        queue.enqueue(this.processEvents.CANCELED_LEAVE, data, () => {});
     }
 
     registerWorkers() {
@@ -86,7 +86,7 @@ class Worker {
     }
 
     registerUserWorkers() {
-        const worker = this.client.worker([this.QUEUE_EVENTS.USER]);
+        const worker = this.client.worker([this.queueTypes.user]);
 
         worker.register({
             process_new_user: userWorkers.handleNewUsers,
@@ -98,10 +98,11 @@ class Worker {
     }
 
     registerLeaveRequestWorkers() {
-        const worker = this.client.worker([this.QUEUE_EVENTS.LEAVE]);
+        const worker = this.client.worker([this.queueTypes.leave]);
 
         worker.register({
             process_new_leave_request: leaveWorkers.handleNewLeaveRequest,
+            process_leave_reminder: leaveWorkers.handleLeaveReminder,
             process_approved_leave_request: leaveWorkers.handleApprovedLeaveRequest,
             process_rejected_leave_request: leaveWorkers.handleRejectedLeaveRequest,
             process_canceled_leave_request: leaveWorkers.handleCanceledLeaveRequest

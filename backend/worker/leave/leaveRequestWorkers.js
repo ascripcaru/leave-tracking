@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import moment from 'moment';
 import smtp from '../../smtp/smtp';
 import User from '../../server/models/user.model';
@@ -9,10 +10,10 @@ const DATETIME_FORMAT = 'DD MMM YYYY HH:mm';
 async function handleNewLeaveRequest(leave, callback) {
     try {
         const { leaveType } = leave;
-        const { user, project, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
+        const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
-        leave.projectName = project.name;
+        leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
         leave.start = moment(leave.start).format(DATE_FORMAT);
@@ -32,13 +33,37 @@ async function handleNewLeaveRequest(leave, callback) {
     }
 }
 
+async function handleLeaveReminder(leave, callback) {
+    try {
+        const { leaveType } = leave;
+        const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
+        const { firstName, lastName } = user;
+
+        leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
+        leave.approvers = approversData;
+        leave.employee = user;
+        leave.start = moment(leave.start).format(DATE_FORMAT);
+        leave.end = moment(leave.end).format(DATE_FORMAT);
+        leave.createdAt = moment(leave.createdAt).format(DATETIME_FORMAT);
+
+        const approverEmailSubject = `[${leaveType}] REMINDER Leave request pending for: ${firstName} ${lastName}`;
+
+        Promise.all([
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
+        ]).then(info => callback(null, info));
+    } catch(error) {
+        console.log('handleLeaveReminder:', error);
+        return callback(error);
+    }
+}
+
 async function handleApprovedLeaveRequest(leave, callback) {
     try {
         const { leaveType } = leave;
-        const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
+        const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
-        leave.projectName = project.name;
+        leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
@@ -63,10 +88,10 @@ async function handleApprovedLeaveRequest(leave, callback) {
 async function handleRejectedLeaveRequest(leave, callback) {
     try {
         const { leaveType } = leave;
-        const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
+        const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
-        leave.projectName = project.name;
+        leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
@@ -90,10 +115,10 @@ async function handleRejectedLeaveRequest(leave, callback) {
 async function handleCanceledLeaveRequest(leave, callback) {
     try {
         const { leaveType } = leave;
-        const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
+        const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
-        leave.projectName = project.name;
+        leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
@@ -114,7 +139,7 @@ async function handleCanceledLeaveRequest(leave, callback) {
 }
 
 function getUserDetails(_id) {
-    return User.findOne({ _id }).populate('projectId');
+    return User.findOne({ _id });
 }
 
 function getProjectDetails(_id) {
@@ -125,22 +150,21 @@ async function getAndAgredateLeaveRequestData(leave) {
     const { userId, lastUpdatedBy } = leave;
 
     const user = await getUserDetails(userId);
-    const { projectId } = user;
+    const { projectRoles } = user;
 
     const approver = await getUserDetails(lastUpdatedBy);
+    const projects = await Promise.all(projectRoles.map(item => getProjectDetails(item.project)));
 
-    const project = await getProjectDetails(projectId);
-    const approvers = (project || {}).approvers || [];
-
-    const approversEmails = approvers.map(i => i.email);
+    const approvers = projects.reduce((a, v) => a.concat(v.approvers), []);
+    const approversEmails = _.uniq(approvers.map(i => i.email));
 
     return {
         user,
-        project,
+        projects,
         approver,
         approversData: approvers,
         approversEmails
     };
 }
 
-export default { handleNewLeaveRequest, handleApprovedLeaveRequest, handleRejectedLeaveRequest, handleCanceledLeaveRequest };
+export default { handleNewLeaveRequest, handleLeaveReminder, handleApprovedLeaveRequest, handleRejectedLeaveRequest, handleCanceledLeaveRequest };
