@@ -2,3 +2,34 @@
   display: flex;
   align-items: center;
 }
+
+.event-annual {
+  background-color: #4caf50;
+}
+.event-sick {
+  background-color: #fb8c00;
+}
+.event-parenting {
+  background-color: #ffee58;
+}
+.event-unpaid {
+  background-color: #f44336;
+}
+.event-study {
+  background-color: #2196f3;
+}
+.event-half-day {
+  background-color: #e0e0e0;
+}
+.event-bereavement {
+  background-color: #000000;
+}
+.event-marriage {
+  background-color: #e040fb;
+}
+.event-work-from-home {
+  background-color: #78909c;
+}
+.event-in-lieu {
+  background-color: #18ffff;
+}

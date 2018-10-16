@@ -1,7 +1,7 @@
 export const USER_TYPES = {
     ADMIN: 'ADMIN',
     APPROVER: 'APPROVER',
-    USER: 'USER'
+    USER: 'USER',
 };
 
 export const LEAVE_TYPES = {
@@ -13,7 +13,8 @@ export const LEAVE_TYPES = {
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
     MARRIAGE_LEAVE: 'marriage-leave',
-    WORK_FROM_HOME: 'work-from-home'
+    WORK_FROM_HOME: 'work-from-home',
+    IN_LIEU: 'in-lieu-leave',
 };
 
 export const REQUEST_STATUS = {

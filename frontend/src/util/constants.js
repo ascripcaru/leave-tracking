@@ -1,7 +1,7 @@
 export const REQUEST_STATUS = {
     APPROVED: 'approved',
     REJECTED: 'rejected',
-    PENDING: 'pending'
+    PENDING: 'pending',
 }
 
 export const LEAVE_TYPES = {
@@ -13,7 +13,8 @@ export const LEAVE_TYPES = {
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
     MARRIAGE_LEAVE: 'marriage-leave',
-    WORK_FROM_HOME: 'work-from-home'
+    WORK_FROM_HOME: 'work-from-home',
+    IN_LIEU: 'in-lieu-leave',
 }
 
 export const HUMAN_LEAVE_TYPES = {
@@ -25,14 +26,19 @@ export const HUMAN_LEAVE_TYPES = {
     'half-day-leave': 'Half Day Off',
     'bereavement-leave': 'Bereavement Leave',
     'marriage-leave': 'Marriage Leave',
-    'work-from-home': 'Work From Home'
+    'work-from-home': 'Work From Home',
+    'in-lieu-leave': 'In Lieu Leave',
 }
 
 export const LEGEND = {
-    'annual-leave': 'event-important',
-    'sick-leave': 'event-special',
-    'parenting-leave': 'event-success',
-    'unpaid-leave': 'event-warning',
-    'study-leave': 'event-info',
-    'half-day-leave': 'event-inverse'
+    'annual-leave': 'event-annual',
+    'sick-leave': 'event-sick',
+    'parenting-leave': 'event-parenting',
+    'unpaid-leave': 'event-unpaid',
+    'study-leave': 'event-study',
+    'half-day-leave': 'event-half-day',
+    'bereavement-leave': 'event-bereavement',
+    'marriage-leave': 'event-marriage',
+    'work-from-home': 'event-work-from-home',
+    'in-lieu-leave': 'event-in-lieu',
 };
