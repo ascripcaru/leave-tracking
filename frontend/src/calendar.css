@@ -24,6 +24,9 @@
 .event-bereavement, .dh-event-bereavement {
   background-color: #000000;
 }
+.dh-event-bereavement:not(:hover) > a {
+  color: white;
+}
 .event-marriage, .dh-event-marriage {
   background-color: #e040fb;
 }
