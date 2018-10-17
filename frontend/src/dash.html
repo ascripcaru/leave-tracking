@@ -51,6 +51,10 @@
                                             - ${request.end | dateFormat}
                                         </span>
                                         | ${request.leaveType | humanizeLeave}
+                                        <span if.bind="request.comment" class="leave-tooltip">
+                                            <i class="fa fa-info-circle"></i>
+                                            <span class="leave-tooltip-text">${request.comment}</span>
+                                        </span>
                                     </span>
                                 </div>
                                 <span class="badge badge-pill">${request.status}</span>

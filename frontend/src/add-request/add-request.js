@@ -35,6 +35,7 @@ export class AddRequest {
     start = moment();
     end = moment();
     holidays = [];
+    comment = '';
 
     pickerOptions = {
         calendarWeeks: true,
@@ -129,7 +130,8 @@ export class AddRequest {
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
-                workDays: this.dateDiff
+                workDays: this.dateDiff,
+                comment: this.comment,
             };
 
             this._leave.addLeaveRequest(leave)

@@ -30,7 +30,8 @@ async function create(req, res, next) {
             lastUpdatedBy: token.id,
             userId: req.body.userId,
             status: req.body.status,
-            workDays: req.body.workDays
+            workDays: req.body.workDays,
+            comment: req.body.comment,
         });
 
     const pendingAndApproved = await LeaveRequest.find({
@@ -106,6 +107,7 @@ async function update(req, res, next) {
 
     leave.start = req.body.start;
     leave.end = req.body.end;
+    leave.comment = req.body.comment;
     leave.workDays = req.body.workDays;
     leave.leaveType = req.body.leaveType;
     leave.lastUpdatedBy = lastUpdatedBy._id;

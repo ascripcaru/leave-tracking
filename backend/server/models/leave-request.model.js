@@ -11,6 +11,10 @@ const LeaveRequestSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    comment: {
+        type: String,
+        required: false
+    },
     approverId: {
         type: String,
         required: false

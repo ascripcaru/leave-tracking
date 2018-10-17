@@ -31,6 +31,7 @@ export class EditRequest {
         this.start = moment(this.request.start);
         this.end = moment(this.request.end);
         this.dateDiff = this.request.workDays;
+        this.comment = this.request.comment;
     }
 
     attached() {
@@ -141,7 +142,8 @@ export class EditRequest {
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
-                workDays: this.dateDiff
+                workDays: this.dateDiff,
+                comment: this.comment,
             };
 
             this._leave.updateLeaveRequest(leave)
