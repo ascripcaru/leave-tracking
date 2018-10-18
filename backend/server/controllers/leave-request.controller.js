@@ -99,6 +99,7 @@ async function updateStatus(req, res, next) {
 }
 
 async function update(req, res, next) {
+    const { userType } = req.token;
     const lastUpdatedBy = await User.findById(req.token.id);
     const leave = req.leaveRequest;
     const { workDays, leaveType, userId } = leave;
@@ -121,6 +122,11 @@ async function update(req, res, next) {
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
 
     if (overlapFound) {
+        return;
+    }
+
+    if (userType === USER_TYPES.USER && leave.status === REQUEST_STATUS.APPROVED) {
+        next(new APIError({ message: 'You do not have rights to edit an appproved request.' }, 403, true));
         return;
     }
 
