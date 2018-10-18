@@ -9,14 +9,14 @@ export class Users {
         this._project = _project;
     }
 
-    configureRouter(config, router){
+    configureRouter(config, router) {
         config.map([
             {
                 route: [''],
                 name: 'view-users',
                 moduleId: './view-users',
                 nav: true,
-                title:'Manage users',
+                title: 'Manage users',
                 settings: {
                     icon: 'time'
                 },
@@ -27,7 +27,7 @@ export class Users {
                 name: 'edit-user',
                 moduleId: './edit-user',
                 nav: false,
-                title:'Edit user',
+                title: 'Edit user',
                 settings: {
                     icon: 'time'
                 },
@@ -38,7 +38,7 @@ export class Users {
                 name: 'create-user',
                 moduleId: './create-user',
                 nav: false,
-                title:'Create user',
+                title: 'Create user',
                 settings: {
                     icon: 'time'
                 },

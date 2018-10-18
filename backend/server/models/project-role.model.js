@@ -18,9 +18,6 @@ const ProjectRoleSchema = new mongoose.Schema({
     }
 });
 
-ProjectRoleSchema.method({
-});
-
 ProjectRoleSchema.statics = {
     get(id) {
         return this.findById(id)

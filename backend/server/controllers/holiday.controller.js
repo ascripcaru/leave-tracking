@@ -1,5 +1,4 @@
 import Holiday from '../models/holiday.model';
-import Audit from '../models/audit.model';
 
 function load(req, res, next, id) {
     Holiday.get(id)
@@ -23,14 +22,7 @@ function create(req, res, next) {
     });
 
     holiday.save()
-        .then(async savedHoliday => {
-            const audit = new Audit({
-                author: req.token.id,
-                details: `Created Holiday: ${savedHoliday.name}|${savedHoliday.description}(${savedHoliday.date})`
-            });
-            await audit.save();
-            return res.json(savedHoliday);
-        })
+        .then(savedHoliday => res.json(savedHoliday))
         .catch(e => next(e));
 }
 
@@ -42,16 +34,7 @@ function update(req, res, next) {
 
 
     holiday.save()
-        .then(async savedHoliday => {
-            const audit = new Audit({
-                author: req.token.id,
-                details: `Updated Holiday:
-                    ${req.body.name}|${req.body.description}|${req.body.date} with
-                    ${savedHoliday.name}|${savedHoliday.description}(${savedHoliday.date})`
-            });
-            await audit.save();
-            return res.json(savedHoliday);
-        })
+        .then(savedHoliday => res.json(savedHoliday))
         .catch(e => next(e));
 }
 
@@ -65,42 +48,37 @@ function list(req, res, next) {
 
 function aggregate(req, res, next) {
     Holiday
-    .aggregate([
-        { $sort: { date: 1 } },
-        { $group:{
-            _id: { $year: '$date' },
-            items: { $push: '$$ROOT' },
-            totalDays: { $sum: 1},
-            workingDays: {
-                $sum: {
-                    $cond: {
-                        if: { $in: [
-                            { $dayOfWeek:{ date:'$date', timezone: 'Europe/Bucharest'} },
-                            {$range: [ 2, 6 ] } ]
-                        },
-                        then: 1, else: 0
+        .aggregate([
+            { $sort: { date: 1 } },
+            {
+                $group: {
+                    _id: { $year: '$date' },
+                    items: { $push: '$$ROOT' },
+                    totalDays: { $sum: 1 },
+                    workingDays: {
+                        $sum: {
+                            $cond: {
+                                if: {
+                                    $in: [
+                                        { $dayOfWeek: { date: '$date', timezone: 'Europe/Bucharest' } },
+                                        { $range: [2, 6] }]
+                                },
+                                then: 1, else: 0
+                            }
+                        }
                     }
                 }
-            }
-        }},
-        { $sort: { _id: -1 } }
-    ])
-    .then(holidays => res.json(holidays))
-    .catch(e => next(e));
+            },
+            { $sort: { _id: -1 } }
+        ])
+        .then(holidays => res.json(holidays))
+        .catch(e => next(e));
 }
 
 function remove(req, res, next) {
     const holiday = req.holiday;
     holiday.remove()
-        .then(async deletedHoliday => {
-            const audit = new Audit({
-                author: req.token.id,
-                details: `Deleted Holiday:
-                    ${deletedHoliday.name}|${deletedHoliday.description}(${deletedHoliday.date})`
-            });
-            await audit.save();
-            return res.json(deletedHoliday);
-        })
+        .then(deletedHoliday => res.json(deletedHoliday))
         .catch(e => next(e));
 }
 

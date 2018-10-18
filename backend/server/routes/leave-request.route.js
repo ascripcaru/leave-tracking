@@ -7,9 +7,7 @@ import permit from './permission';
 import { USER_TYPES } from '../helpers/constants';
 
 const { ADMIN, APPROVER } = USER_TYPES;
-
 const router = express.Router();
-
 const { authorize } = expressAuth;
 
 router.use(authorize());

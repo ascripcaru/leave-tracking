@@ -3,12 +3,9 @@ import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 import config from '../../config/config';
-import { UserSchema } from '../models/user.model';
+import User from '../models/user.model';
 import worker from '../../worker/worker';
 import PasswordResetTokenSchema from '../models/password-reset-token.model';
-import mongoose from 'mongoose';
-
-const User = mongoose.model('User', UserSchema);
 
 async function login(req, res, next) {
     const unauthorizedError = new APIError('Bad credentials', httpStatus.UNAUTHORIZED, true);
@@ -24,7 +21,7 @@ async function login(req, res, next) {
 
     const match = await bcrypt.compare(password, dbHash);
 
-    if(!match) {
+    if (!match) {
         return next(unauthorizedError);
     }
 
@@ -46,7 +43,7 @@ async function recover(req, res) {
     const { email } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
 
-    if(!user) {
+    if (!user) {
         return res.json();
     }
 
@@ -86,18 +83,18 @@ async function reset(req, res, next) {
 
     const dbToken = await PasswordResetTokenSchema.findOne({ token });
 
-    if(!dbToken) {
+    if (!dbToken) {
         return next(new APIError('Invalid token', httpStatus.BAD_REQUEST, true));
     }
 
-    if(dbToken.used) {
+    if (dbToken.used) {
         return next(new APIError('Token was already used', httpStatus.BAD_REQUEST, true));
     }
 
     const { userId } = dbToken;
     const user = await User.findOne({ _id: userId });
 
-    if(!user) {
+    if (!user) {
         return next(new APIError('User linked to token does not exist', httpStatus.BAD_REQUEST, true));
     }
 

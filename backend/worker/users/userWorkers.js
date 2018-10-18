@@ -15,7 +15,7 @@ function handleNewUsers(params, callback) {
 
         smtp.sendMail(email, emailSubject, 'newUser', params)
             .then(info => callback(null, info));
-    } catch(error) {
+    } catch (error) {
         console.log('err handleNewUsers', error);
         return callback(error);
     }
@@ -32,7 +32,7 @@ function handlePasswordReset(params, callback) {
 
         smtp.sendMail(email, emailSubject, 'resetPassword', params)
             .then(info => callback(null, info));
-    } catch(error) {
+    } catch (error) {
         return callback(error);
     }
 }
@@ -41,7 +41,7 @@ function createDefaultUser(params, cb) {
     User.countDocuments()
         .then(result => {
             if (result !== 0) {
-                return cb(null, {result});
+                return cb(null, { result });
             }
 
             const user = new User({

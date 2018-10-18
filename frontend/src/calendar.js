@@ -15,7 +15,7 @@ export class Calendar {
         modal_type: 'template',
         tmpl_cache: true,
         modal: '#events-modal',
-        modal_title: function(ev) {
+        modal_title: function (ev) {
             return ev.title;
         },
         view: 'month',
@@ -27,7 +27,7 @@ export class Calendar {
         },
         merge_holidays: false,
         holidays: {},
-        onAfterViewLoad: function(view) {
+        onAfterViewLoad: function (view) {
             $('.page-header h3').text(this.getTitle());
             $('.btn-group button').removeClass('active');
             $('button[data-calendar-view="' + view + '"]').addClass('active');

@@ -25,16 +25,12 @@ export default class BaseProject {
 
     attached() {
         ValidationRules
-            .ensure('name')
-                .required()
-            .ensure('description')
-                .required()
-            .ensure('approvers')
-                .satisfies(value => Array.isArray(value) && value.length > 0)
-                .withMessage('At least one approver is required')
-            .ensure('roles')
-                .satisfies(value => Array.isArray(value) && value.length > 0)
-                .withMessage('At least one role is required')
+            .ensure('name').required()
+            .ensure('description').required()
+            .ensure('approvers').satisfies(value => Array.isArray(value) && value.length > 0)
+            .withMessage('At least one approver is required')
+            .ensure('roles').satisfies(value => Array.isArray(value) && value.length > 0)
+            .withMessage('At least one role is required')
             .on(this.project);
     }
 
@@ -52,11 +48,11 @@ export default class BaseProject {
             .then(() => this.router.navigateToRoute('projects'));
     }
 
-    userSource = function(query, limit) {
-        return this._user.searchApproverUserByName(query);
+    userSource = function (query, limit = 10) {
+        return this._user.searchApproverUser(query, limit);
     }.bind(this);
 
-    projectRoleSource = function(query, limit) {
+    projectRoleSource = function (query) {
         return this._projectRole.searchProjectRoleByName(query);
     }.bind(this);
 

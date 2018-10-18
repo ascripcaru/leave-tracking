@@ -10,14 +10,14 @@ export class ManageProjects {
         this._project = _project;
     }
 
-    configureRouter(config, router){
+    configureRouter(config, router) {
         config.map([
             {
                 route: [''],
                 name: 'view-projects',
                 moduleId: './view-projects',
                 nav: true,
-                title:'Manage projects',
+                title: 'Manage projects',
                 settings: {
                     icon: 'time'
                 },
@@ -28,7 +28,7 @@ export class ManageProjects {
                 name: 'edit-project',
                 moduleId: './edit-project',
                 nav: false,
-                title:'Edit project',
+                title: 'Edit project',
                 settings: {
                     icon: 'time'
                 },
@@ -39,7 +39,7 @@ export class ManageProjects {
                 name: 'create-project',
                 moduleId: './create-project',
                 nav: false,
-                title:'Create project',
+                title: 'Create project',
                 settings: {
                     icon: 'time'
                 },

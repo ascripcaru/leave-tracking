@@ -10,7 +10,7 @@ export class BootstrapFormRenderer {
     }
 
     update(instruction, action) {
-        for (let { result, elements} of instruction) {
+        for (let { result, elements } of instruction) {
             elements.forEach(e => action(e, result));
         }
     }

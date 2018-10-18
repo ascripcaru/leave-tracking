@@ -12,23 +12,23 @@ export class Admin {
 
     configureRouter(config, router) {
         config.map([
-             {
+            {
                 route: [''],
                 name: 'admin',
                 moduleId: './dash',
                 nav: true,
-                title:'Admin',
+                title: 'Admin',
                 settings: {
                     icon: 'time'
                 },
                 auth: true
             },
-           {
+            {
                 route: ['users'],
                 name: 'users',
                 moduleId: './manage/users/manage-users',
                 nav: true,
-                title:'Manage Users',
+                title: 'Manage Users',
                 settings: {
                     icon: 'time'
                 },
@@ -39,7 +39,7 @@ export class Admin {
                 name: 'projects',
                 moduleId: './manage/projects/manage-projects',
                 nav: true,
-                title:'Manage Projects',
+                title: 'Manage Projects',
                 settings: {
                     icon: 'time'
                 },
@@ -50,7 +50,7 @@ export class Admin {
                 name: 'project-roles',
                 moduleId: './manage/project-roles/manage-project-roles',
                 nav: true,
-                title:'Manage Project Roles',
+                title: 'Manage Project Roles',
                 settings: {
                     icon: 'time'
                 },
@@ -61,7 +61,7 @@ export class Admin {
                 name: 'holidays',
                 moduleId: './manage/legal-holidays/manage-holidays',
                 nav: true,
-                title:'Manage Holidays',
+                title: 'Manage Holidays',
                 settings: {
                     icon: 'time'
                 },
@@ -72,7 +72,7 @@ export class Admin {
                 name: 'audit',
                 moduleId: './audit/audit',
                 nav: true,
-                title:'Audit time :)',
+                title: 'Audit time :)',
                 settings: {
                     icon: 'time'
                 },

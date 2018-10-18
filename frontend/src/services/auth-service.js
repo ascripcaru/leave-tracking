@@ -10,10 +10,10 @@ let shouldIdentifyLogRocket = true;
 export class AuthService {
     meData = {};
 
-    constructor(_api, _events){
-     this.http = _api.http;
-     this._api = _api;
-     this._events = _events;
+    constructor(_api, _events) {
+        this.http = _api.http;
+        this._api = _api;
+        this._events = _events;
     }
 
     /**
@@ -23,13 +23,12 @@ export class AuthService {
     * @returns {User}
     **/
     login(email, password) {
-        return this.http.post('auth/login', {email, password})
+        return this.http.post('auth/login', { email, password })
             .then(response => {
                 const { token } = response;
 
                 this._api.attachToken(token);
                 localStorage.setItem('token', token);
-
 
                 return this.me();
             });
@@ -69,7 +68,7 @@ export class AuthService {
 
         const me = JSON.parse(localStorage.getItem('me'));
 
-        if(!me) {
+        if (!me) {
             return;
         }
 

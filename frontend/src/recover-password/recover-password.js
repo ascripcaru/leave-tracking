@@ -3,12 +3,12 @@ import { Router } from 'aurelia-router';
 import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { AuthService } from '~/services/auth-service';
 import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
-import {NotificationService} from 'aurelia-notify';
+import { NotificationService } from 'aurelia-notify';
 
 
 @inject(AuthService, Router, ValidationControllerFactory, NotificationService)
 export class ForgotPassword {
-   user = {
+    user = {
         email: '',
         password: '',
         newPassword: ''
@@ -72,7 +72,7 @@ export class ForgotPassword {
         } else {
             await this._auth.recover(this.user.email);
             this._notify.info('An email with the instructions will be sent.',
-                        { containerSelector: '#loginForm', limit: 1 })
+                { containerSelector: '#loginForm', limit: 1 })
             this.redirect();
         }
     }

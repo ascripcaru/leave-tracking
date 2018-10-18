@@ -21,10 +21,8 @@ export default class BaseProjectRole {
 
     attached() {
         ValidationRules
-            .ensure('name')
-                .required()
-            .ensure('description')
-                .required()
+            .ensure('name').required()
+            .ensure('description').required()
             .on(this.projectRole);
     }
 

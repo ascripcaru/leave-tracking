@@ -21,7 +21,7 @@ function get(req, res) {
 }
 
 async function create(req, res, next) {
-    const {token} = req;
+    const { token } = req;
     const leave = new LeaveRequest(
         {
             start: req.body.start,
@@ -36,7 +36,7 @@ async function create(req, res, next) {
 
     const pendingAndApproved = await LeaveRequest.find({
         userId: req.body.userId,
-        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
+        $or: [{ status: REQUEST_STATUS.APPROVED }, { status: REQUEST_STATUS.PENDING }]
     });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
@@ -114,8 +114,8 @@ async function update(req, res, next) {
 
     const pendingAndApproved = await LeaveRequest.find({
         userId,
-        _id: {$ne: leave._id},
-        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}],
+        _id: { $ne: leave._id },
+        $or: [{ status: REQUEST_STATUS.APPROVED }, { status: REQUEST_STATUS.PENDING }],
     });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
@@ -203,16 +203,16 @@ function remove(req, res, next) {
 }
 
 function list(req, res, next) {
-    const {limit = 50, skip = 0} = req.query;
-    LeaveRequest.list({limit, skip})
+    const { limit = 50, skip = 0 } = req.query;
+    LeaveRequest.list({ limit, skip })
         .then(users => res.json(users))
         .catch(e => next(e));
 }
 
 function getForUser(req, res, next) {
-    const {userId} = req.params;
+    const { userId } = req.params;
 
-    LeaveRequest.find({userId})
+    LeaveRequest.find({ userId })
         .then(leaves => res.json(leaves))
         .catch(e => next(e));
 }
@@ -220,7 +220,7 @@ function getForUser(req, res, next) {
 function checkForOverlap(item, leave, next) {
     const currentStart = moment(leave.start);
     const currentEnd = moment(leave.end);
-    let {start, end} = item;
+    let { start, end } = item;
 
     start = moment(start);
     end = moment(end);
@@ -241,7 +241,7 @@ function checkForOverlap(item, leave, next) {
 }
 
 function pending(req, res, next) {
-    const {token} = req;
+    const { token } = req;
 
     fetchLeaves(token.id, REQUEST_STATUS.PENDING)
         .then(pendingLeaves => res.json(pendingLeaves))
@@ -249,7 +249,7 @@ function pending(req, res, next) {
 }
 
 function approved(req, res, next) {
-    const {token} = req;
+    const { token } = req;
 
     fetchLeaves(token.id, REQUEST_STATUS.APPROVED)
         .then(approvedLeaves => res.json(approvedLeaves))
@@ -257,7 +257,7 @@ function approved(req, res, next) {
 }
 
 function rejected(req, res, next) {
-    const {token} = req;
+    const { token } = req;
 
     fetchLeaves(token.id, REQUEST_STATUS.REJECTED)
         .then(rejectedLeaves => res.json(rejectedLeaves))
@@ -265,20 +265,20 @@ function rejected(req, res, next) {
 }
 
 async function fetchLeaves(userId, status) {
-    const user = await User.findOne({_id: userId});
+    const user = await User.findOne({ _id: userId });
     if (user.userType === USER_TYPES.ADMIN) {
         return LeaveRequest
-            .find({status})
+            .find({ status })
             .populate('userId')
             .populate('lastUpdatedBy');
     } else {
-        const projectsQuery = {approvers: {$in: [userId]}};
+        const projectsQuery = { approvers: { $in: [userId] } };
         const projectsICanApprove = (await Project.find(projectsQuery)).map(proj => proj._id);
 
-        const usersQuery = {'projectRoles.project': {$in: projectsICanApprove}};
+        const usersQuery = { 'projectRoles.project': { $in: projectsICanApprove } };
         const usersICanApprove = (await User.find(usersQuery)).map(usr => usr._id);
 
-        const leaveQuery = {status, userId: {$in: usersICanApprove}};
+        const leaveQuery = { status, userId: { $in: usersICanApprove } };
         return LeaveRequest
             .find(leaveQuery)
             .populate('userId')
@@ -286,4 +286,4 @@ async function fetchLeaves(userId, status) {
     }
 }
 
-export default { load, get, create, update, updateStatus, remove, list, getForUser, pending, approved, rejected};
+export default { load, get, create, update, updateStatus, remove, list, getForUser, pending, approved, rejected };

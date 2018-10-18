@@ -23,7 +23,7 @@ const envVarsSchema = Joi.object({
     MONGO_PORT: Joi.number()
         .default(27017)
 }).unknown()
-.required();
+    .required();
 
 const { error, value: envVars } = Joi.validate(process.env, envVarsSchema);
 if (error) {

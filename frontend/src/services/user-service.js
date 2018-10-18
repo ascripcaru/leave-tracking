@@ -43,21 +43,18 @@ export class UserService {
             .then(users => users.map(x => new UserModel(x)));
     }
 
-    getQueryParams(name, type, limit) {
-        const userType = type.reduce((a, c) => `${a},${c}`);
-        return `limit=${limit}&name=${name}&fields=firstName,lastName,email${_.isUndefined(type) ? '' : '&userType=' + userType}`;
+    getQueryParams(name, limit, type) {
+        let q = `limit=${limit}&name=${name}&fields=firstName,lastName,email`;
+        if (Array.isArray(type)) q += `&userType=${type.reduce((a, c) => `${a},${c}`)}`;
+        return q;
     }
 
-    searchUser(name, type, limit = 10) {
-        return this.http.get(`users?${this.getQueryParams(name, type, limit)}`)
+    searchUser(name, limit, type) {
+        return this.http.get(`users?${this.getQueryParams(name, limit, type)}`)
             .then(users => users.map(x => new UserModel(x)));
     }
 
-    searchUserByName(name) {
-        return this.searchUser(name);
-    }
-
-    searchApproverUserByName(name) {
-        return this.searchUser(name, ['APPROVER', 'ADMIN']);
+    searchApproverUser(name, limit) {
+        return this.searchUser(name, limit, ['APPROVER', 'ADMIN']);
     }
 }

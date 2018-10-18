@@ -12,7 +12,7 @@ export class MultiObserver {
         let object = {};
         let propertyName = {};
 
-        while(i--) {
+        while (i--) {
             object = properties[i][0];
             propertyName = properties[i][1];
             subscriptions.push(this.observerLocator.getObserver(object, propertyName).subscribe(callback));
@@ -20,7 +20,7 @@ export class MultiObserver {
 
         // return dispose function
         return () => {
-            while(subscriptions.length) {
+            while (subscriptions.length) {
                 subscriptions.pop()();
             }
         }

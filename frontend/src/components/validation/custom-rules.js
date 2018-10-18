@@ -14,7 +14,7 @@ export function setupCustomValidationRules() {
             value !== '' &&
             value !== str;
 
-        return  isOptional ? true : satisfiesRule;
+        return isOptional ? true : satisfiesRule;
     };
 
     ValidationRules.customRule(

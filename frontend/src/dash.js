@@ -1,7 +1,7 @@
-import {inject} from 'aurelia-framework';
-import {UserService} from '~/services/user-service';
-import {AuthService} from '~/services/auth-service';
-import {LeaveService} from '~/services/leave-service';
+import { inject } from 'aurelia-framework';
+import { UserService } from '~/services/user-service';
+import { AuthService } from '~/services/auth-service';
+import { LeaveService } from '~/services/leave-service';
 
 @inject(UserService, AuthService, LeaveService)
 export class Dash {
@@ -45,7 +45,7 @@ export class Dash {
     async populateData() {
         const me = await this._auth.me();
 
-        const {holidays, taken, pending} = me;
+        const { holidays, taken, pending } = me;
 
         this.statusData.datasets[0].data = [holidays, taken, pending];
     }

@@ -22,9 +22,6 @@ const HolidaySchema = new mongoose.Schema({
     }
 });
 
-HolidaySchema.method({
-});
-
 HolidaySchema.statics = {
     get(id) {
         return this.findById(id)

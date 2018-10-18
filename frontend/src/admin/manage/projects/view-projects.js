@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import { ProjectService } from '~/services/project-service';
 
 @inject(ProjectService)

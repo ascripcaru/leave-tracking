@@ -17,7 +17,7 @@ export class AddRequest {
     @bindable ePick;
     @bindable leaveType;
 
-   constructor(_leave, _user, _holiday, _notify, router) {
+    constructor(_leave, _user, _holiday, _notify, router) {
         this._leave = _leave;
         this._user = _user;
         this._holiday = _holiday;
@@ -108,7 +108,7 @@ export class AddRequest {
         this.holidays.forEach(holiday => {
             const hDate = moment(holiday.date).toDate();
 
-            if(range.contains(hDate)) {
+            if (range.contains(hDate)) {
                 dateDiff--;
             }
         });

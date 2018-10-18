@@ -42,7 +42,7 @@ export class Login {
                 }
             })
             .then((me) => {
-                if ( me.userType === 'ADMIN' ) {
+                if (me.userType === 'ADMIN') {
                     this.router.navigateToRoute('admin');
                 } else {
                     this.router.navigateToRoute('home');

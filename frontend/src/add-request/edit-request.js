@@ -68,7 +68,7 @@ export class EditRequest {
 
     leaveTypeChanged() {
         this.leaveType.events.onChanged = () => {
-            if(this.isHalfDaySelected()) {
+            if (this.isHalfDaySelected()) {
                 this.ePick.methods.date(this.sPick.methods.date());
                 this.ePick.methods.disable();
             } else {
@@ -120,7 +120,7 @@ export class EditRequest {
         this.holidays.forEach(holiday => {
             const hDate = moment(holiday.date).toDate();
 
-            if(range.contains(hDate)) {
+            if (range.contains(hDate)) {
                 dateDiff--;
             }
         });

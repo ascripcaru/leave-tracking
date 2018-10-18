@@ -33,10 +33,8 @@ export default class BaseHoliday {
 
     attached() {
         ValidationRules
-            .ensure('name')
-                .required()
-            .ensure('description')
-                .required()
+            .ensure('name').required()
+            .ensure('description').required()
             .on(this.holiday);
     }
 

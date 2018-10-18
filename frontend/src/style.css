@@ -1,32 +1,34 @@
 body {
-    padding-top: 70px;
+  padding-top: 70px;
 }
 
 ai-dialog-overlay.active {
   background-color: black;
   opacity: .5;
 }
+
 .admin-card {
-    cursor:pointer
+  cursor: pointer
 }
 
 .spinner-wrapper {
-    border: none;
+  border: none;
 }
 
 .cal-day-holiday span[data-cal-date] {
-    font-size: 1.8em;
+  font-size: 1.8em;
 }
+
 .cal-day-holiday {
-    background: #f2dede;
+  background: #f2dede;
 }
 
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #101010;
-    color: white;
-    text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #101010;
+  color: white;
+  text-align: center;
 }

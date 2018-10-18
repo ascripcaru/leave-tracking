@@ -11,7 +11,6 @@ const { ADMIN } = USER_TYPES;
 const router = express.Router();
 const { authorize } = expressAuth;
 
-
 router.use(authorize());
 
 router.route('/')
@@ -27,6 +26,5 @@ router.route('/:userId/leaves')
     .get(permit(), leaveCtrl.getForUser);
 
 router.param('userId', userCtrl.load);
-
 
 export default router;

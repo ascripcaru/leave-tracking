@@ -8,10 +8,10 @@ export class ApiService {
         const backendURL = environment.API_URL;
         const that = this;
 
-        this.httpClient = new HttpClient().configure(x => {
-            x.withHeader('Content-Type', 'application/json');
-            x.withBaseUrl(backendURL);
-            x.withInterceptor({
+        this.httpClient = new HttpClient().configure(req => {
+            req.withHeader('Content-Type', 'application/json');
+            req.withBaseUrl(backendURL);
+            req.withInterceptor({
                 response(httpResponse) { return that.handleResponse(httpResponse); },
                 requestError(error) { return that.handleError(error); },
                 responseError(error) { return that.handleError(error); }

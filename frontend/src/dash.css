@@ -67,21 +67,21 @@
 
 
 .leave-tooltip {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 .leave-tooltip .leave-tooltip-text {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    border-radius: 6px;
-    word-break: break-word;
-    position: absolute;
-    z-index: 1;
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  word-break: break-word;
+  position: absolute;
+  z-index: 1;
 }
 .leave-tooltip:hover .leave-tooltip-text {
-    visibility: visible;
+  visibility: visible;
 }

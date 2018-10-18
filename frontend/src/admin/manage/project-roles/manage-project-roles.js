@@ -10,14 +10,14 @@ export class ManageProjectRoles {
         this._project = _project;
     }
 
-    configureRouter(config, router){
+    configureRouter(config, router) {
         config.map([
             {
                 route: [''],
                 name: 'view-project-roles',
                 moduleId: './view-project-roles',
                 nav: true,
-                title:'Manage project roles',
+                title: 'Manage project roles',
                 settings: {
                     icon: 'time'
                 },
@@ -28,7 +28,7 @@ export class ManageProjectRoles {
                 name: 'edit-project-role',
                 moduleId: './edit-project-role',
                 nav: false,
-                title:'Edit project role',
+                title: 'Edit project role',
                 settings: {
                     icon: 'time'
                 },
@@ -39,7 +39,7 @@ export class ManageProjectRoles {
                 name: 'create-project-role',
                 moduleId: './create-project-role',
                 nav: false,
-                title:'Create project role',
+                title: 'Create project role',
                 settings: {
                     icon: 'time'
                 },

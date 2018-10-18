@@ -1,5 +1,5 @@
 import config from './config';
-import nodemailer from'nodemailer';
+import nodemailer from 'nodemailer';
 import expressTemplates from 'nodemailer-express-handlebars';
 import path from 'path';
 

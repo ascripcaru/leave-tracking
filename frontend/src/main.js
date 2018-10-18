@@ -12,7 +12,7 @@ export function configure(aurelia) {
         .plugin('aurelia-bootstrap-select')
         .plugin("aurelia-chart")
         .plugin('aurelia-notify', settings => {
-          settings.timeout = 5000;
+            settings.timeout = 5000;
         })
         .plugin('aurelia-google-analytics', config => {
             config.init('UA-118670465-1');
@@ -31,8 +31,8 @@ export function configure(aurelia) {
                     },
                     // Optional. By default it gets the URL fragment from payload.instruction.fragment.
                     getUrl: (payload) => {
-                    // For example, if you want to get full URL each time override with the following.
-                    return window.location.href;
+                        // For example, if you want to get full URL each time override with the following.
+                        return window.location.href;
                     }
                 },
                 clickTracking: {
@@ -42,9 +42,9 @@ export function configure(aurelia) {
                     filter: (element) => {
                         // For example, if you want to also track clicks on span elements override with the following.
                         return element instanceof HTMLElement &&
-                        (element.nodeName.toLowerCase() === 'a' ||
-                        element.nodeName.toLowerCase() === 'button' ||
-                        element.nodeName.toLowerCase() === 'span');
+                            (element.nodeName.toLowerCase() === 'a' ||
+                                element.nodeName.toLowerCase() === 'button' ||
+                                element.nodeName.toLowerCase() === 'span');
                     }
                 },
                 exceptionTracking: {

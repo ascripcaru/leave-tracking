@@ -1,16 +1,16 @@
 import { inject } from 'aurelia-framework';
-import { AuditService } from '~/services/audit-service';
+import { ReportsService } from '~/services/reports-service';
 
-@inject(AuditService)
+@inject(ReportsService)
 export class Audit {
     loading = true;
 
-    constructor(_audit) {
-        this._audit = _audit;
+    constructor(_reports) {
+        this._reports = _reports;
     }
 
     async attached() {
-        this.audits = await this._audit.getAudits();
+        this.audits = await this._reports.getAll();
         this.loading = false;
     }
 }

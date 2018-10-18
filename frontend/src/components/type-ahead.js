@@ -35,7 +35,7 @@ export class TypeAhead {
         this.state = null;
         try {
             return await this.dataSource(query, limit);
-        } catch(e) {
+        } catch (e) {
             return [];
         }
     }

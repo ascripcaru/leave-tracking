@@ -18,9 +18,7 @@ export class LeaveService {
     }
 
     async getCalendarEvents() {
-        let leaves = await this.getLeaveRequests();
-        // show just the approved leaves
-        leaves = leaves.filter(x => x.status === REQUEST_STATUS.APPROVED);
+        let leaves = await this.getApprovedRequests();
 
         const events = leaves.map(leave => {
             const { leaveType } = leave;

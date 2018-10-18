@@ -9,12 +9,12 @@ export class App {
         this._auth = _auth;
     }
 
-    configureRouter(config, router){
+    configureRouter(config, router) {
         config.title = 'Leave tracker';
         config.addPipelineStep('authorize', AuthorizeStep);
         config.map([
             {
-                route: ['','home'],
+                route: ['', 'home'],
                 name: 'home',
                 moduleId: './dash',
                 nav: true,
@@ -153,24 +153,24 @@ class AuthorizeStep {
         })
     }
 
-  run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
-      const isLoggedIn = this._auth.isAuth;
+    run(navigationInstruction, next) {
+        if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
+            const isLoggedIn = this._auth.isAuth;
 
-      if (!isLoggedIn) {
-        return next.cancel(new Redirect('login'));
-      }
-    }
-
-    if (navigationInstruction.config.requires) {
-        const { requires } = navigationInstruction.config;
-        const { userType } = this._auth.localData();
-
-        if (requires.indexOf(userType) === -1) {
-            return next.cancel();
+            if (!isLoggedIn) {
+                return next.cancel(new Redirect('login'));
+            }
         }
-    }
 
-    return next();
-  }
+        if (navigationInstruction.config.requires) {
+            const { requires } = navigationInstruction.config;
+            const { userType } = this._auth.localData();
+
+            if (requires.indexOf(userType) === -1) {
+                return next.cancel();
+            }
+        }
+
+        return next();
+    }
 }
