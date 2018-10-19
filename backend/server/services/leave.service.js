@@ -2,7 +2,7 @@ import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 import business from 'moment-business';
-
+import User from '../models/user.model';
 import Holiday from '../models/holiday.model';
 import LeaveRequest from '../models/leave-request.model';
 import { LEAVE_TYPES, REQUEST_STATUS } from '../helpers/constants';
@@ -35,53 +35,69 @@ function computeDiff(start, end, holidays) {
     return dateDiff;
 }
 
-async function getHolidaysPerMonth() {
-    const holidays = await Holiday.find();
-    const monthly = [];
-
-    for (let i = 0; i < 12; i++) {
-        const all = createBase();
-        const s = moment().month(i).subtract(moment().utcOffset(), 'm').startOf('month');
-        const e = moment().month(i).subtract(moment().utcOffset(), 'm').endOf('month');
-
-        const inMonth = await LeaveRequest.find({
-            status: REQUEST_STATUS.APPROVED,
-            start: { $gt: s },
-            end: { $lt: e }
-        });
-        const endInMonth = await LeaveRequest.find({
-            status: REQUEST_STATUS.APPROVED,
-            start: { $lt: s },
-            end: { $gt: s, $lt: e }
-        });
-        const startInMonth = await LeaveRequest.find({
-            status: REQUEST_STATUS.APPROVED,
-            start: { $gt: s, $lt: e },
-            end: { $gt: e }
-        });
-        const spanOver = await LeaveRequest.find({
-            status: REQUEST_STATUS.APPROVED,
-            start: { $lt: s },
-            end: { $gt: e }
-        });
-
-        inMonth.forEach(leave => addDays(all, leave));
-        spanOver.forEach(leave => addDays(all, leave, computeDiff(s, e, holidays)));
-
-        endInMonth.forEach(leave => {
-            const end = moment(leave.end);
-            addDays(all, leave, computeDiff(s, end, holidays));
-        });
-
-        startInMonth.forEach(leave => {
-            const start = moment(leave.start);
-            addDays(all, leave, computeDiff(start, e, holidays));
-        });
-
-        monthly.push(all);
-    }
-
-    return monthly;
+async function getUserIds() {
+    return (await User.find({}, '_id')).map(i => i._id);
 }
 
-export { getHolidaysPerMonth };
+async function getHolidaysPerMonth(userId, month, holidays) {
+    const all = createBase();
+    const s = moment().month(month).subtract(moment().utcOffset(), 'm').startOf('month');
+    const e = moment().month(month).subtract(moment().utcOffset(), 'm').endOf('month');
+
+    const inMonth = await LeaveRequest.find({
+        userId,
+        status: REQUEST_STATUS.APPROVED,
+        start: { $gt: s },
+        end: { $lt: e }
+    });
+    const endInMonth = await LeaveRequest.find({
+        userId,
+        status: REQUEST_STATUS.APPROVED,
+        start: { $lt: s },
+        end: { $gt: s, $lt: e }
+    });
+    const startInMonth = await LeaveRequest.find({
+        userId,
+        status: REQUEST_STATUS.APPROVED,
+        start: { $gt: s, $lt: e },
+        end: { $gt: e }
+    });
+    const spanOver = await LeaveRequest.find({
+        userId,
+        status: REQUEST_STATUS.APPROVED,
+        start: { $lt: s },
+        end: { $gt: e }
+    });
+
+    inMonth.forEach(leave => addDays(all, leave));
+    spanOver.forEach(leave => addDays(all, leave, computeDiff(s, e, holidays)));
+
+    endInMonth.forEach(leave => {
+        const end = moment(leave.end);
+        addDays(all, leave, computeDiff(s, end, holidays));
+    });
+
+    startInMonth.forEach(leave => {
+        const start = moment(leave.start);
+        addDays(all, leave, computeDiff(start, e, holidays));
+    });
+
+    return all;
+}
+
+async function getHolidaysPerYear() {
+    const holidays = await Holiday.find();
+    const users = await getUserIds();
+    const usersHolidays = {};
+
+    for (let id of users) {
+        usersHolidays[id] = {};
+        for (let i = 0; i < 12; i++) {
+            usersHolidays[id][i] = await getHolidaysPerMonth(id, i, holidays);
+        }
+    }
+
+    return usersHolidays;
+}
+
+export { getHolidaysPerYear };

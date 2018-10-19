@@ -1,8 +1,8 @@
-import { getHolidaysPerMonth } from '../services/leave.service';
+import { getHolidaysPerYear } from '../services/leave.service';
 
-async function getPerMonth(req, res) {
-    const monthly = await getHolidaysPerMonth();
+async function getPerYear(req, res) {
+    const monthly = await getHolidaysPerYear();
     return res.json(monthly);
 }
 
-export default { getPerMonth };
+export default { getPerYear };
