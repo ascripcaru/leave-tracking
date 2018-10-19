@@ -17,7 +17,7 @@ const debug = require('debug')('express-mongoose-es6-rest-api:index');
 mongoose.Promise = global.Promise;
 
 // connect to mongo db
-const mongoUri = process.env.MONGO_URI || config.mongo.host;
+const mongoUri = config.mongo.host;
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,

@@ -26,7 +26,7 @@ class Worker {
 
     constructor() {
         if (!this.client) {
-            this.client = monq(process.env.MONGO_URI);
+            this.client = monq(process.env.MONGO_HOST);
             this.workers = [];
         }
     }
