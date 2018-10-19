@@ -73,7 +73,7 @@ function update(req, res, next) {
 
 function list(req, res, next) {
 
-    const { limit = 50, skip = 0, name, fields, userType } = req.query;
+    const { limit, skip, name, fields, userType } = req.query;
 
     const queryOptions = {
         limit,

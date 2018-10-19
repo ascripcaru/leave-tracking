@@ -209,7 +209,7 @@ function remove(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
+    const { limit, skip } = req.query;
     LeaveRequest.list({ limit, skip })
         .then(users => res.json(users))
         .catch(e => next(e));

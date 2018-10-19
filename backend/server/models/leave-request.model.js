@@ -62,7 +62,7 @@ LeaveRequestSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50 } = {}) {
+    list({ skip = 0, limit = 1000 } = {}) {
         return this.find()
             .populate('userId')
             .populate('lastUpdatedBy')

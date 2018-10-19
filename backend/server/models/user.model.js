@@ -84,7 +84,7 @@ UserSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50, extra = {} } = {}) {
+    list({ skip = 0, limit = 1000, extra = {} } = {}) {
         return this.find(extra)
             .populate('projectRoles.project')
             .populate('projectRoles.role')

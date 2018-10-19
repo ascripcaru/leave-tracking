@@ -49,7 +49,7 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 100, skip = 0 } = req.query;
+    const { limit, skip } = req.query;
     Project.list({ limit, skip })
         .then(projects => res.json(projects))
         .catch(e => next(e));

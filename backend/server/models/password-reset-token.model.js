@@ -36,7 +36,6 @@ function random(len, charSet) {
 PasswordResetTokenSchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
             .then((pwdToken) => {
                 if (pwdToken) {
                     return pwdToken;
@@ -46,12 +45,11 @@ PasswordResetTokenSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50, extra = {} } = {}) {
+    list({ skip = 0, limit = 1000, extra = {} } = {}) {
         return this.find(extra)
             .sort({ createdAt: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

@@ -39,7 +39,7 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
+    const { limit, skip } = req.query;
     Holiday
         .list({ limit, skip })
         .then(holidays => res.json(holidays))

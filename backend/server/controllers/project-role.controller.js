@@ -39,7 +39,7 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0, name } = req.query;
+    const { limit, skip, name } = req.query;
     const query = { limit, skip, extra: {} };
 
     if (name && name !== '') {

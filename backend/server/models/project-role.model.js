@@ -30,9 +30,9 @@ ProjectRoleSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50, extra = {} } = {}) {
+    list({ skip = 0, limit = 1000, extra = {} } = {}) {
         return this.find(extra)
-            .sort({ createdAt: -1 })
+            .sort({ name: 1 })
             .skip(+skip)
             .limit(+limit);
     }
