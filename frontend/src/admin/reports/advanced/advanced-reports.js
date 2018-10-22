@@ -40,7 +40,6 @@ export class Audit {
                 return a;
             }, this.createBase());
         });
-        console.log(this.total);
     }
 
     getValues(obj) {

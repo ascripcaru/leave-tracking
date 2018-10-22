@@ -68,7 +68,7 @@ export class AddRequest {
     }
 
     isHalfDaySelected() {
-        return this.leaveType.methods.val() === LEAVE_TYPES.HALF_DAY
+        return this.leaveType.methods.val() === LEAVE_TYPES.HALF_DAY;
     }
 
     sPickChanged() {
@@ -106,7 +106,7 @@ export class AddRequest {
         // if it does we do not count that holiday :)
         // it is that easy
         this.holidays.forEach(holiday => {
-            const hDate = moment(holiday.date).toDate();
+            const hDate = moment(holiday.date);
 
             if (range.contains(hDate)) {
                 dateDiff--;
