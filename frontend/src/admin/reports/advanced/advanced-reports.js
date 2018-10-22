@@ -1,7 +1,7 @@
 import { inject } from 'aurelia-framework';
 import { UserService } from '~/services/user-service';
 import { ReportsService } from '~/services/reports-service';
-import { HUMAN_LEAVE_TYPES } from '../../util/constants';
+import { HUMAN_LEAVE_TYPES } from '../../../util/constants';
 import moment from 'moment';
 
 @inject(ReportsService, UserService)

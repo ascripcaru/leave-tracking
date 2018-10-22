@@ -18,9 +18,6 @@ export class Admin {
                 moduleId: './dash',
                 nav: true,
                 title: 'Admin',
-                settings: {
-                    icon: 'time'
-                },
                 auth: true
             },
             {
@@ -29,9 +26,6 @@ export class Admin {
                 moduleId: './manage/users/manage-users',
                 nav: true,
                 title: 'Manage Users',
-                settings: {
-                    icon: 'time'
-                },
                 auth: true
             },
             {
@@ -40,9 +34,6 @@ export class Admin {
                 moduleId: './manage/projects/manage-projects',
                 nav: true,
                 title: 'Manage Projects',
-                settings: {
-                    icon: 'time'
-                },
                 auth: true
             },
             {
@@ -51,9 +42,6 @@ export class Admin {
                 moduleId: './manage/project-roles/manage-project-roles',
                 nav: true,
                 title: 'Manage Project Roles',
-                settings: {
-                    icon: 'time'
-                },
                 auth: true
             },
             {
@@ -62,20 +50,22 @@ export class Admin {
                 moduleId: './manage/legal-holidays/manage-holidays',
                 nav: true,
                 title: 'Manage Holidays',
-                settings: {
-                    icon: 'time'
-                },
                 auth: true
             },
             {
-                route: ['audit'],
-                name: 'audit',
-                moduleId: './audit/audit',
+                route: ['reports'],
+                name: 'reports',
+                moduleId: './reports/reports',
                 nav: true,
-                title: 'Audit time :)',
-                settings: {
-                    icon: 'time'
-                },
+                title: 'User statistics',
+                auth: true
+            },
+            {
+                route: ['reports/advanced'],
+                name: 'advanced-reports',
+                moduleId: './reports/advanced/advanced-reports',
+                nav: true,
+                title: 'Advanced reports',
                 auth: true
             }
         ]);

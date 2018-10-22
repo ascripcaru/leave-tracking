@@ -25,18 +25,6 @@ export class App {
                 auth: true
             },
             {
-                route: 'reports',
-                name: 'reports',
-                moduleId: './reports',
-                nav: false,
-                title: 'Reports',
-                settings: {
-                    icon: 'list-alt'
-                },
-                requires: ['ADMIN'],
-                auth: true
-            },
-            {
                 route: 'calendar',
                 name: 'calendar',
                 moduleId: './calendar',
@@ -46,7 +34,6 @@ export class App {
                     icon: 'calendar'
                 },
                 auth: true
-
             },
             {
                 route: 'add-request',
