@@ -1,0 +1,4 @@
+.table-audit td,
+.table-audit th {
+  border-left: 1px solid #f3f3f3;
+}

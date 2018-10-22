@@ -1,11 +1,13 @@
 <template>
+  <require from="./audit.css"></require>
   <spinner if.bind="loading"></spinner>
   <div class="panel panel-default">
-    <table class="table table-striped">
+    <table class="table table-striped table-audit">
       <thead>
         <tr>
           <th></th>
           <th repeat.for="month of monthNames">${month}</th>
+          <th>Total</th>
         </tr>
       </thead>
       <tbody>
@@ -13,6 +15,11 @@
           <th>${getUserName(id)}</th>
           <td repeat.for="report of getValues(reports[id])">
             <div repeat.for="item of getEntries(report)">
+              <span if.bind="item[1] > 0">${item[0] | humanizeLeave} <strong>${item[1]}</strong></span>
+            </div>
+          </td>
+          <td>
+            <div repeat.for="item of getEntries(total[id])">
               <span if.bind="item[1] > 0">${item[0] | humanizeLeave} <strong>${item[1]}</strong></span>
             </div>
           </td>

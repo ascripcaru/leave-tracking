@@ -13,6 +13,7 @@ export class Audit {
         this._user = _user;
         this.types = Object.keys(HUMAN_LEAVE_TYPES);
         this.monthNames = moment.monthsShort();
+        this.total = {};
     }
 
     async attached() {
@@ -22,7 +23,24 @@ export class Audit {
         this.userIds = Object.keys(this.reports);
         this.months = Object.entries(this.reports);
 
+        this.calculateTotal(this.reports);
         this.loading = false;
+    }
+
+    createBase() {
+        const base = {};
+        Object.keys(HUMAN_LEAVE_TYPES).forEach(item => base[item] = 0);
+        return base;
+    }
+
+    calculateTotal(obj) {
+        Object.entries(obj).forEach(entry => {
+            this.total[entry[0]] = Object.values(entry[1]).reduce((a, c) => {
+                Object.keys(a).forEach(key => a[key] += c[key]);
+                return a;
+            }, this.createBase());
+        });
+        console.log(this.total);
     }
 
     getValues(obj) {
