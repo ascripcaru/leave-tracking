@@ -26,19 +26,19 @@
                             <a class="list-group-item" repeat.for="holiday of agg.items"
                                 href="#/admin/holidays/${holiday._id}/edit">
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-xs-4 col-sm-4">
                                         <h4 class="list-group-item-heading">
                                             ${holiday.name}
                                         </h4>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-xs-4 col-sm-4">
                                         <p class="list-group-item-text">
                                             ${holiday.description}
                                         </p>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-xs-4 col-sm-4">
                                         <p class="list-group-item-text">
                                             ${holiday.date | dateFormat}
                                         </p>

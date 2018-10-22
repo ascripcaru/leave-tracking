@@ -1,10 +1,14 @@
 .approval-row .btn-group {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 .approval-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.badge-pill {
+  white-space: unset;
+  min-width: unset;
 }
 
 

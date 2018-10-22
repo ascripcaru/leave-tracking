@@ -8,19 +8,19 @@
                 <a class="list-group-item" repeat.for="project of projects"
                     href="#/admin/projects/${project._id}/edit">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-xs-4 col-sm-4">
                             <h4 class="list-group-item-heading">
                                 ${project.name}
                             </h4>
                         </div>
 
-                        <div class="col-sm-7">
+                        <div class="col-xs-6 col-sm-7">
                             <p class="list-group-item-text">
                                 ${project.description}
                             </p>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-xs-2 col-sm-1">
                             <p class="list-group-item-text">
                                 <i class="fa fa-circle ${project.active ? 'project-active' : 'project-inactive'}"></i>
                             </p>

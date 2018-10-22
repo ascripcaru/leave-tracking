@@ -28,14 +28,14 @@
                         </a>
                     </li>
 
-                    <li if.bind="_auth.isAdmin || _auth.isApprover" class="nav navbar-nav">
+                    <li if.bind="_auth.isAdmin || _auth.isApprover">
                         <a href="#/approvals" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon glyphicon-ok"></i>
                             Approvals
                         </a>
                     </li>
 
-                    <li if.bind="_auth.isAdmin" class="nav navbar-nav">
+                    <li if.bind="_auth.isAdmin">
                         <a href="#/admin" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon glyphicon-cog"></i>
                             Admin
