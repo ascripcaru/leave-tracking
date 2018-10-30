@@ -1,12 +1,12 @@
 export class ManageHolidays {
-    configureRouter(config, router){
+    configureRouter(config, router) {
         config.map([
             {
                 route: [''],
                 name: 'view-holidays',
                 moduleId: './view-holidays',
                 nav: true,
-                title:'Manage holiday',
+                title: 'Manage holiday',
                 settings: {
                     icon: 'time'
                 },
@@ -17,7 +17,7 @@ export class ManageHolidays {
                 name: 'edit-holiday',
                 moduleId: './edit-holiday',
                 nav: false,
-                title:'Edit holiday',
+                title: 'Edit holiday',
                 settings: {
                     icon: 'time'
                 },
@@ -28,7 +28,7 @@ export class ManageHolidays {
                 name: 'create-holiday',
                 moduleId: './create-holiday',
                 nav: false,
-                title:'Create holiday',
+                title: 'Create holiday',
                 settings: {
                     icon: 'time'
                 },

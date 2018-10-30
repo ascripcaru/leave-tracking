@@ -5,9 +5,9 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="list-group panel-body">
-                    <ul  class="nav nav-pills">
+                    <ul class="nav nav-pills">
                         <li class="${$index === 0 ? 'active': ''}" repeat.for="agg of aggregatedHolidays">
-                            <a  href="#${agg._id}" data-toggle="tab">
+                            <a href="#${agg._id}" data-toggle="tab">
                                 ${agg._id}
                                 <span class="badge badge-light" title="total work days">
                                     ${agg.totalDays}/${agg.workingDays}
@@ -15,11 +15,10 @@
                             </a>
                         </li>
                     </ul>
-                    <hr/>
+                    <hr />
 
                     <div class="tab-content list-group">
-                        <div
-                            repeat.for="agg of aggregatedHolidays"
+                        <div repeat.for="agg of aggregatedHolidays"
                             class="tab-pane ${$index === 0 ? 'active': ''}"
                             id="${agg._id}">
 

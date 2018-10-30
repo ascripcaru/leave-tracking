@@ -61,9 +61,10 @@ function aggregate(req, res, next) {
                                 if: {
                                     $in: [
                                         { $dayOfWeek: { date: '$date', timezone: 'Europe/Bucharest' } },
-                                        { $range: [2, 6] }]
+                                        { $range: [2, 7] }]
                                 },
-                                then: 1, else: 0
+                                then: 1,
+                                else: 0
                             }
                         }
                     }

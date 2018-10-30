@@ -69,7 +69,7 @@ export class Calendar {
         const legalHolidays = {};
 
         holidays.forEach(h => {
-            const date = moment(h.date).format('DD-MM');
+            const date = moment(h.date).format('DD-MM-YYYY');
             legalHolidays[date] = h.name;
         });
 
