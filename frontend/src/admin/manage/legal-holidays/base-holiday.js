@@ -49,6 +49,7 @@ export default class BaseHoliday {
     }
 
     async save() {
+        this.holiday.date = moment(this.holiday.date).endOf('day');
         await this._holiday.updateHoliday(this.holiday);
         this.router.navigateBack();
     }
@@ -59,6 +60,7 @@ export default class BaseHoliday {
     }
 
     async createHoliday() {
+        this.holiday.date = moment(this.holiday.date).endOf('day');
         this._holiday.createHoliday(this.holiday)
             .then(() => this.router.navigateToRoute('holidays'));
     }

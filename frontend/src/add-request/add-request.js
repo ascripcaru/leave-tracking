@@ -31,7 +31,7 @@ export class AddRequest {
     }
 
     dateFormat = 'DD-MM-YYYY';
-    allowedDate = moment().subtract(1, "days");
+    allowedDate = moment().subtract(1, "days").startOf('day');
     start = moment();
     end = moment();
     holidays = [];
@@ -90,7 +90,7 @@ export class AddRequest {
     }
 
     ePickChanged() {
-        this.ePick.events.onChange = (e) => {
+        this.ePick.events.onChange = () => {
             this.end = this.ePick.methods.date();
             this.computeDiff();
         }
