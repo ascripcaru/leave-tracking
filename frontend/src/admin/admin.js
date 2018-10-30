@@ -25,7 +25,7 @@ export class Admin {
                 name: 'users',
                 moduleId: './manage/users/manage-users',
                 nav: true,
-                title: 'Manage Users',
+                title: 'Manage users',
                 auth: true
             },
             {
@@ -33,7 +33,7 @@ export class Admin {
                 name: 'projects',
                 moduleId: './manage/projects/manage-projects',
                 nav: true,
-                title: 'Manage Projects',
+                title: 'Manage projects',
                 auth: true
             },
             {
@@ -41,7 +41,7 @@ export class Admin {
                 name: 'project-roles',
                 moduleId: './manage/project-roles/manage-project-roles',
                 nav: true,
-                title: 'Manage Project Roles',
+                title: 'Manage project roles',
                 auth: true
             },
             {
@@ -49,7 +49,7 @@ export class Admin {
                 name: 'holidays',
                 moduleId: './manage/legal-holidays/manage-holidays',
                 nav: true,
-                title: 'Manage Holidays',
+                title: 'Manage holidays',
                 auth: true
             },
             {
