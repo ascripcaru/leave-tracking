@@ -9,9 +9,11 @@ export class CreateProject extends BaseProject {
         active: true,
     };
 
-    activate() {
-        this.setTemplateParams();
+    async activate() {
+        this.project.roles = await this._projectRole.getProjectRoles();
         this.project.submit = this.createProject.bind(this);
+
+        this.setTemplateParams();
     }
 
     setTemplateParams() {
