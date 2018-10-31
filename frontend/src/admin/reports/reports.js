@@ -8,6 +8,10 @@ export class Reports {
         this._user = _user;
     }
 
+    print() {
+        window.print();
+    }
+
     async attached() {
         this.getUsers();
     }

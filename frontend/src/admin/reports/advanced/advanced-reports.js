@@ -27,6 +27,10 @@ export class Audit {
         this.loading = false;
     }
 
+    print() {
+        window.print();
+    }
+
     createBase() {
         const base = {};
         Object.keys(HUMAN_LEAVE_TYPES).forEach(item => base[item] = 0);

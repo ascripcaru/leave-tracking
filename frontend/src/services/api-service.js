@@ -9,7 +9,6 @@ export class ApiService {
         const that = this;
 
         this.httpClient = new HttpClient().configure(req => {
-            req.withHeader('Content-Type', 'application/json');
             req.withBaseUrl(backendURL);
             req.withInterceptor({
                 response(httpResponse) { return that.handleResponse(httpResponse); },
