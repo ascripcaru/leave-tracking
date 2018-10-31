@@ -8,7 +8,7 @@ export class ReportsService {
         this.http = api.http;
     }
 
-    getAll() {
-        return this.http.get('reports');
+    getPerYear(year) {
+        return this.http.get(`reports/${year}`);
     }
 }

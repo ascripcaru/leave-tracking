@@ -10,7 +10,7 @@ const { authorize } = expressAuth;
 
 router.use(authorize());
 
-router.route('/')
+router.route('/:year')
     .get(permit(ADMIN), reportsCrl.getPerYear);
 
 export default router;

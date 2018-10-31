@@ -18,7 +18,7 @@ export class Audit {
 
     async attached() {
         this.users = await this._user.getUsers();
-        this.reports = await this._reports.getAll();
+        this.reports = await this._reports.getPerYear(2018);
 
         this.userIds = Object.keys(this.reports);
         this.months = Object.entries(this.reports);

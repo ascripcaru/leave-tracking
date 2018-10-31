@@ -39,10 +39,10 @@ async function getUserIds() {
     return (await User.find({}, '_id')).map(i => i._id);
 }
 
-async function getHolidaysPerMonth(userId, month, holidays) {
+async function getHolidaysPerMonth(userId, month, year, holidays) {
     const all = createBase();
-    const s = moment().month(month).subtract(moment().utcOffset(), 'm').startOf('month');
-    const e = moment().month(month).subtract(moment().utcOffset(), 'm').endOf('month');
+    const s = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').startOf('month');
+    const e = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').endOf('month');
 
     const inMonth = await LeaveRequest.find({
         userId,
@@ -85,15 +85,15 @@ async function getHolidaysPerMonth(userId, month, holidays) {
     return all;
 }
 
-async function getHolidaysPerYear() {
+async function getHolidaysPerYear(year) {
     const holidays = await Holiday.find();
     const users = await getUserIds();
     const usersHolidays = {};
 
     for (let id of users) {
         usersHolidays[id] = {};
-        for (let i = 0; i < 12; i++) {
-            usersHolidays[id][i] = await getHolidaysPerMonth(id, i, holidays);
+        for (let month = 0; month < 12; month++) {
+            usersHolidays[id][month] = await getHolidaysPerMonth(id, month, year, holidays);
         }
     }
 
