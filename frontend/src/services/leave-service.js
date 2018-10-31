@@ -9,6 +9,10 @@ export class LeaveService {
         this.http = api.http;
     }
 
+    sendFile(leave) {
+        return this.http.post('files', leave);
+    }
+
     getLeaveRequests() {
         return this.http.get('leaves');
     }

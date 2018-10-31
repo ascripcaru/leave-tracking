@@ -11,6 +11,8 @@ import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
 import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 
+import environment from '~/environment';
+
 @inject(LeaveService, UserService, HolidayService, NotificationService, Router)
 export class AddRequest {
     @bindable sPick;
@@ -120,12 +122,18 @@ export class AddRequest {
         return this.start && this.end && this.dateDiff >= 1;
     }
 
-    async submit() {
+    async submit(images) {
         if (this.canSave) {
             const user = await this._user.currentUser();
             this.start = moment(this.start).startOf('day').toISOString();
             this.end = moment(this.end).endOf('day').toISOString();
+
+            const form = new FormData();
+
+            form.append('file', images[0], images[0].name);
+
             const leave = {
+                file: images[0],
                 userId: user._id,
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
@@ -133,13 +141,29 @@ export class AddRequest {
                 workDays: this.dateDiff,
                 comment: this.comment,
             };
+            console.log('====', form);
 
-            this._leave.addLeaveRequest(leave)
-                .then(() => this.router.navigateBack())
-                .catch(error => {
-                    this._notify.danger(error.message && error.message.message,
-                        { containerSelector: '#add-request', limit: 1 })
-                });
+            // fetch(environment.API_URL + '/files', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Authorization': `Bearer ${localStorage.getItem('token')}`
+            //     },
+            //     body: form
+            //   }).then((response) => {
+            //       console.log(response);
+            //     return response.json();
+            //   }).catch((error) => {
+            //     console.log(error);
+            //   });
+
+            this._leave.sendFile(form);
+
+            // this._leave.addLeaveRequest(leave)
+            //     .then(() => this.router.navigateBack())
+            //     .catch(error => {
+            //         this._notify.danger(error.message && error.message.message,
+            //             { containerSelector: '#add-request', limit: 1 })
+            //     });
         }
     }
 
