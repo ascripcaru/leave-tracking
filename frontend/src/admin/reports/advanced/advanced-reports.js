@@ -20,7 +20,7 @@ export class Audit {
         this.users = await this._user.getUsers();
         this.reports = await this._reports.getPerYear(2018);
 
-        this.userIds = Object.keys(this.reports);
+        this.userIds = this.users.map(user => user._id);
         this.months = Object.entries(this.reports);
 
         this.calculateTotal(this.reports);
