@@ -10,6 +10,7 @@ export class Calendar {
     isLoading = true;
     calendar = {};
     config = {
+        first_day: 1, // start monday
         tmpl_path: "bootstrap-calendar/tmpls/",
         events_source: {},
         modal_type: 'template',
