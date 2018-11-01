@@ -78,7 +78,7 @@ function list(req, res, next) {
     const queryOptions = {
         limit,
         skip,
-        extra: {}
+        extra: { deleted: { $ne: true } }
     };
 
     if (name && fields) {
@@ -114,7 +114,10 @@ function computeFilterFields(name, fields) {
 
 function remove(req, res, next) {
     const user = req.user;
-    user.remove()
+
+    user.deleted = true;
+
+    user.save()
         .then(deletedUser => res.json(deletedUser))
         .catch(e => next(e));
 }

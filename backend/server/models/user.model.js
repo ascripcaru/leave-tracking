@@ -59,12 +59,16 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
 }, {
     toObject: {
         transform(doc, ret) {
             delete ret.password;
-            ret.fullName = `${ret.firstName} ${ret.lastName}`;
+            ret.fullName = `${ret.lastName} ${ret.firstName}`;
             return ret;
         }
     }
@@ -88,7 +92,7 @@ UserSchema.statics = {
         return this.find(extra)
             .populate('projectRoles.project')
             .populate('projectRoles.role')
-            .sort({ createdAt: -1 })
+            .sort({ lastName: 1, firstName: 1 })
             .skip(+skip)
             .limit(+limit);
     }

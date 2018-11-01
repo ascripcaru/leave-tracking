@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Days per year</th>
                     <th scope="col">Pending</th>
                     <th scope="col">Taken</th>
                     <th scope="col">Remaining</th>
@@ -16,10 +16,10 @@
             <tbody>
                 <tr repeat.for="user of users">
                     <td>${user.fullName}</td>
-                    <td>${user.holidays}</td>
+                    <td>${user.daysPerYear}</td>
                     <td>${user.pending}</td>
                     <td>${user.taken}</td>
-                    <td><strong>${user.holidays - user.taken}</strong></td>
+                    <td><strong>${user.holidays}</strong></td>
                 </tr>
             </tbody>
         </table>

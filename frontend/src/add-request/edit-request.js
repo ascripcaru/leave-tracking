@@ -120,7 +120,7 @@ export class EditRequest {
         this.holidays.forEach(holiday => {
             const hDate = moment(holiday.date);
 
-            if (range.contains(hDate)) {
+            if (range.contains(hDate) && business.isWeekDay(hDate)) {
                 dateDiff--;
             }
         });
