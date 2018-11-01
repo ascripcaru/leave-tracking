@@ -42,10 +42,11 @@ export class EditRequest {
     }
 
     dateFormat = 'DD-MM-YYYY';
-    allowedDate = moment().subtract(1, "days");
+    allowedDate = moment().subtract(1, "days").startOf('day');
     start = moment();
     end = moment();
     holidays = [];
+    comment = '';
 
     pickerOptions = {
         useCurrent: false,
@@ -134,14 +135,12 @@ export class EditRequest {
 
     submit() {
         if (this.canSave) {
-            this.start = moment(this.start).startOf('day').toISOString();
-            this.end = moment(this.end).endOf('day').toISOString();
             const leave = {
                 _id: this.request._id,
                 userId: this.request.userId._id,
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
-                start: this.start,
-                end: this.end,
+                start: moment(this.start).startOf('day').toISOString(),
+                end: moment(this.end).endOf('day').toISOString(),
                 workDays: this.dateDiff,
                 comment: this.comment,
             };

@@ -123,13 +123,11 @@ export class AddRequest {
     async submit() {
         if (this.canSave) {
             const user = await this._user.currentUser();
-            this.start = moment(this.start).startOf('day').toISOString();
-            this.end = moment(this.end).endOf('day').toISOString();
             const leave = {
                 userId: user._id,
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
-                start: this.start,
-                end: this.end,
+                start: moment(this.start).startOf('day').toISOString(),
+                end: moment(this.end).endOf('day').toISOString(),
                 workDays: this.dateDiff,
                 comment: this.comment,
             };

@@ -15,7 +15,7 @@ export function configure(aurelia) {
             settings.timeout = 5000;
         })
         .plugin('aurelia-google-analytics', config => {
-            config.init('UA-118670465-1');
+            config.init('UA-128530451-1');
             config.attach({
                 logging: {
                     // Set to `true` to have some log messages appear in the browser console.
