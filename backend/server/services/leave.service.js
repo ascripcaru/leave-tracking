@@ -27,7 +27,8 @@ function computeDiff(start, end, holidays) {
     let dateDiff = business.weekDays(start, end) + 1;
 
     holidays.forEach(holiday => {
-        if (range.contains(moment(holiday.date))) {
+        const hDate = moment(holiday.date);
+        if (range.contains(hDate) && business.isWeekDay(hDate)) {
             dateDiff--;
         }
     });
@@ -47,19 +48,19 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
     const inMonth = await LeaveRequest.find({
         userId,
         status: REQUEST_STATUS.APPROVED,
-        start: { $gt: s },
-        end: { $lt: e }
+        start: { $gte: s },
+        end: { $lte: e }
     });
     const endInMonth = await LeaveRequest.find({
         userId,
         status: REQUEST_STATUS.APPROVED,
         start: { $lt: s },
-        end: { $gt: s, $lt: e }
+        end: { $gte: s, $lte: e }
     });
     const startInMonth = await LeaveRequest.find({
         userId,
         status: REQUEST_STATUS.APPROVED,
-        start: { $gt: s, $lt: e },
+        start: { $gte: s, $lte: e },
         end: { $gt: e }
     });
     const spanOver = await LeaveRequest.find({
