@@ -22,6 +22,7 @@ function get(req, res) {
 
 async function create(req, res, next) {
     const { token } = req;
+    const user = await User.findById(token.id);
     const leave = new LeaveRequest(
         {
             start: req.body.start,
@@ -43,6 +44,10 @@ async function create(req, res, next) {
 
     if (overlapFound) {
         return;
+    }
+
+    if (req.body.leaveType === LEAVE_TYPES.ANNUAL && user.holidays < req.body.workDays) {
+        return next(new APIError({ message: `You only have ${user.holidays} available days.` }, 400, true));
     }
 
     leave.save()
@@ -126,8 +131,7 @@ async function update(req, res, next) {
     }
 
     if (userType === USER_TYPES.USER && leave.status === REQUEST_STATUS.APPROVED) {
-        next(new APIError({ message: 'You do not have rights to edit an appproved request.' }, 403, true));
-        return;
+        return next(new APIError({ message: 'You do not have rights to edit an appproved request.' }, 403, true));
     }
 
     leave.save()
@@ -189,13 +193,13 @@ function remove(req, res, next) {
 
                 if (leaveType === LEAVE_TYPES.ANNUAL) {
                     switch (status) {
-                    case REQUEST_STATUS.APPROVED:
-                        user.taken -= workDays;
-                        user.holidays += workDays;
-                        break;
-                    case REQUEST_STATUS.PENDING:
-                        user.pending -= workDays;
-                        break;
+                        case REQUEST_STATUS.APPROVED:
+                            user.taken -= workDays;
+                            user.holidays += workDays;
+                            break;
+                        case REQUEST_STATUS.PENDING:
+                            user.pending -= workDays;
+                            break;
                     }
 
                     await user.save();
@@ -204,7 +208,7 @@ function remove(req, res, next) {
             })
             .catch(e => next(e));
     } else {
-        next(new APIError('You do not have right to delete this leave request.', 403, true));
+        return next(new APIError('You do not have right to delete this leave request.', 403, true));
     }
 }
 
@@ -241,8 +245,7 @@ function checkForOverlap(item, leave, next) {
             status: item.status
         };
 
-        next(new APIError(existing, 400, true));
-        return overlaps;
+        return next(new APIError(existing, 400, true));
     }
 }
 
