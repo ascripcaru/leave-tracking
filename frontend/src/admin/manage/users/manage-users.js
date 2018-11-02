@@ -23,7 +23,7 @@ export class Users {
                 auth: true
             },
             {
-                route: ['/:userId/edit'],
+                route: ['/:userId'],
                 name: 'edit-user',
                 moduleId: './edit-user',
                 nav: false,

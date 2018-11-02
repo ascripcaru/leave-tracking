@@ -132,7 +132,6 @@
             "path": "../node_modules/logrocket/dist",
             "main": "build.umd.js"
           },
-
           {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",

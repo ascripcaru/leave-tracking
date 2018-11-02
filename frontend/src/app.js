@@ -36,7 +36,7 @@ export class App {
                 auth: true
             },
             {
-                route: 'add-request',
+                route: 'leave-request',
                 name: 'add-request',
                 moduleId: './add-request/add-request',
                 nav: true,
@@ -47,7 +47,7 @@ export class App {
                 auth: true
             },
             {
-                route: ['add-request/:requestId/edit'],
+                route: ['leave-request/:requestId'],
                 name: 'edit-request',
                 moduleId: './add-request/edit-request',
                 nav: false,

@@ -24,7 +24,7 @@ export class ManageProjects {
                 auth: true
             },
             {
-                route: ['/:projectId/edit'],
+                route: ['/:projectId'],
                 name: 'edit-project',
                 moduleId: './edit-project',
                 nav: false,

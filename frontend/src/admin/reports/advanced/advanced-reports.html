@@ -4,6 +4,16 @@
 
   <h3><i class="fa fa-list-alt"></i> Advanced reports</h3>
   <button class="btn btn-default" click.trigger="print()">Print</button>
+
+  <span class="pull-right">
+    <label class="control-label">Report for</label>
+    <abp-select
+        element.bind="selectedYear"
+        selected-value.bind="currentYear"
+        collection.bind="years">
+    </abp-select>
+  </span>
+
   <hr>
   <div class="panel">
     <table class="table table-striped table-audit">

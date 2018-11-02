@@ -66,7 +66,7 @@ export function configure(aurelia) {
     setupCustomValidationRules();
     aurelia.start().then(() => {
         if (!environment.debug) {
-            LogRocket.init('o8pmf8/leave-tracker');
+            LogRocket.init('jqunqu/leave-tracker');
         }
         return aurelia.setRoot()
     });

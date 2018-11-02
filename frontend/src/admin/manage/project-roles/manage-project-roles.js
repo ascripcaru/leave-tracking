@@ -24,7 +24,7 @@ export class ManageProjectRoles {
                 auth: true
             },
             {
-                route: ['/:projectRoleId/edit'],
+                route: ['/:projectRoleId'],
                 name: 'edit-project-role',
                 moduleId: './edit-project-role',
                 nav: false,

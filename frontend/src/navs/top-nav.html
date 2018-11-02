@@ -10,19 +10,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/#/" class="navbar-brand">Leave Tracker</a>
             </div>
             <div id="nav-container" class="navbar-collapse collapse">
                 <ul if.bind="isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
                         <a
-                                data-analytics-category="navigator"
-                                data-analytics-action="click"
-                                data-analytics-label="${row.title}"
-                                href.bind="row.href"
-                                data-toggle="collapse"
-                                data-target="#nav-container">
+                            data-analytics-category="navigator"
+                            data-analytics-action="click"
+                            data-analytics-label="${row.title}"
+                            href.bind="row.href"
+                            data-toggle="collapse"
+                            data-target="#nav-container">
                             <i class="glyphicon glyphicon-${row.settings.icon}"></i>
                             ${row.title}
                         </a>
@@ -50,7 +49,7 @@
                 </ul>
                 <ul if.bind="!isAuth" class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="./#/login" data-toggle="collapse" data-target="#nav-container">Login</a>
+                        <a href="#/login" data-toggle="collapse" data-target="#nav-container">Login</a>
                     </li>
                 </ul>
             </div>

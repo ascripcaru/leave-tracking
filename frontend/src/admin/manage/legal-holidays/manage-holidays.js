@@ -13,7 +13,7 @@ export class ManageHolidays {
                 auth: true
             },
             {
-                route: ['/:holidayId/edit'],
+                route: ['/:holidayId'],
                 name: 'edit-holiday',
                 moduleId: './edit-holiday',
                 nav: false,

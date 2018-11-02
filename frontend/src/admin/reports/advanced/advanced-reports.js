@@ -1,4 +1,4 @@
-import { inject } from 'aurelia-framework';
+import { bindable, inject } from 'aurelia-framework';
 import { UserService } from '~/services/user-service';
 import { ReportsService } from '~/services/reports-service';
 import { HUMAN_LEAVE_TYPES } from '../../../util/constants';
@@ -6,6 +6,8 @@ import moment from 'moment';
 
 @inject(ReportsService, UserService)
 export class Audit {
+    @bindable currentYear;
+
     loading = true;
 
     constructor(_reports, _user) {
@@ -14,11 +16,22 @@ export class Audit {
         this.types = Object.keys(HUMAN_LEAVE_TYPES);
         this.monthNames = moment.monthsShort();
         this.total = {};
+        this.currentYear = moment().year();
+        this.years = [this.currentYear - 1, this.currentYear, this.currentYear + 1];
+    }
+
+    currentYearChanged(value) {
+        this.loading = true;
+        this.processReport(value);
     }
 
     async attached() {
         this.users = await this._user.getUsers();
-        this.reports = await this._reports.getPerYear(2018);
+        this.processReport(this.currentYear);
+    }
+
+    async processReport(year) {
+        this.reports = await this._reports.getPerYear(this.currentYear);
 
         this.userIds = this.users.map(user => user._id);
         this.months = Object.entries(this.reports);
