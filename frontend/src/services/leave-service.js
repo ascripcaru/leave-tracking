@@ -38,13 +38,14 @@ export class LeaveService {
     }
 
     addLeaveRequest(request) {
-        const { start, end, workDays, leaveType, userId } = request;
+        const { start, end, workDays, leaveType, userId, comment } = request;
         const leave = {
             leaveType,
             start,
             end,
             workDays,
             userId,
+            comment,
             status: REQUEST_STATUS.PENDING
         };
 
