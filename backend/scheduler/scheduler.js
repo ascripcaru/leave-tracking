@@ -5,6 +5,8 @@ import User from '../server/models/user.model';
 import LeaveRequest from '../server/models/leave-request.model';
 import { LEAVE_TYPES, REQUEST_STATUS } from '../server/helpers/constants';
 
+const MAXIMUM_DAYS_PER_YEAR = 27;
+
 const removeObsoleteWFHAndHalfDay = cron.schedule('0 7 * * *', async () => {
     await LeaveRequest.deleteMany({
         leaveType: { $in: [LEAVE_TYPES.WORK_FROM_HOME, LEAVE_TYPES.HALF_DAY] },
@@ -13,7 +15,7 @@ const removeObsoleteWFHAndHalfDay = cron.schedule('0 7 * * *', async () => {
 });
 
 const increaseDaysPerYear = cron.schedule('0 3 1 1 *', async () => {
-    await User.updateMany({ daysPerYear: { $lt: 30 } }, { $inc: { daysPerYear: 1 } });
+    await User.updateMany({ daysPerYear: { $lt: MAXIMUM_DAYS_PER_YEAR } }, { $inc: { daysPerYear: 1 } });
 });
 
 const updateUserHolidaysForNewYear = cron.schedule('0 4 1 1 *', async () => {
