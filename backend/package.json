@@ -52,7 +52,7 @@
     "moment": "^2.22.2",
     "moment-business": "^3.0.1",
     "moment-range": "^4.0.1",
-    "mongoose": "5.3.14",
+    "mongoose": "5.2.17",
     "monq": "0.3.7",
     "morgan": "1.9.1",
     "node-cron": "^2.0.3",
