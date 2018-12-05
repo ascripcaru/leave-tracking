@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import util from 'util';
 
 // config should be imported before importing any other file
 import config from './config/config';
@@ -11,8 +10,6 @@ import {
     updateUserHolidaysForNewYear,
     unapprovedReminder
 } from './scheduler/scheduler';
-
-const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
 mongoose.Promise = global.Promise;
 
@@ -28,13 +25,6 @@ mongoose.connect(mongoUri, {
 mongoose.connection.on('error', () => {
     throw new Error(`unable to connect to database: ${mongoUri}`);
 });
-
-// print mongoose logs in dev env
-if (config.MONGOOSE_DEBUG) {
-    mongoose.set('debug', (collectionName, method, query, doc) => {
-        debug(`${collectionName}.${method}`, util.inspect(query, false, 20), doc);
-    });
-}
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912

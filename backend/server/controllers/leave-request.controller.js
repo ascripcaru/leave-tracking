@@ -193,13 +193,13 @@ function remove(req, res, next) {
 
                 if (leaveType === LEAVE_TYPES.ANNUAL) {
                     switch (status) {
-                        case REQUEST_STATUS.APPROVED:
-                            user.taken -= workDays;
-                            user.holidays += workDays;
-                            break;
-                        case REQUEST_STATUS.PENDING:
-                            user.pending -= workDays;
-                            break;
+                    case REQUEST_STATUS.APPROVED:
+                        user.taken -= workDays;
+                        user.holidays += workDays;
+                        break;
+                    case REQUEST_STATUS.PENDING:
+                        user.pending -= workDays;
+                        break;
                     }
 
                     await user.save();

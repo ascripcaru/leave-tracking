@@ -37,7 +37,7 @@ function computeDiff(start, end, holidays) {
         }
     });
 
-    return { days, count: dateDiff }
+    return { days, count: dateDiff };
 }
 
 async function getUserIds() {
@@ -77,7 +77,7 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
     inMonth.forEach(leave => {
         const start = moment(leave.start);
         const end = moment(leave.end);
-        addDays(all, leave, computeDiff(start, end, holidays))
+        addDays(all, leave, computeDiff(start, end, holidays));
     });
 
     spanOver.forEach(leave => addDays(all, leave, computeDiff(s, e, holidays)));

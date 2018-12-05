@@ -4,7 +4,7 @@ import { getHolidaysPerYear } from '../services/leave.service';
 
 async function getPerYear(req, res, next) {
     const year = filterInt(req.params.year);
-    if (year != NaN && year >= 2010 && year <= 2100) {
+    if (!isNaN(year) && year >= 2010 && year <= 2100) {
         const monthly = await getHolidaysPerYear(year);
         return res.json(monthly);
     } else {
