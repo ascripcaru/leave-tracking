@@ -29,12 +29,19 @@
           <th>${getUserName(id)}</th>
           <td repeat.for="report of getValues(reports[id])">
             <div repeat.for="item of getEntries(report)">
-              <span if.bind="item[1] > 0">${item[0] | humanizeLeave} <strong>${item[1]}</strong></span>
+              <span if.bind="item[1].count > 0">
+                ${item[0] | humanizeLeave}
+                <strong>${item[1].count}</strong>
+                (${item[1].days})
+              </span>
             </div>
           </td>
           <td>
             <div repeat.for="item of getEntries(total[id])">
-              <span if.bind="item[1] > 0">${item[0] | humanizeLeave} <strong>${item[1]}</strong></span>
+              <span if.bind="item[1].count > 0">
+                ${item[0] | humanizeLeave}
+                <strong>${item[1].count}</strong>
+              </span>
             </div>
           </td>
         </tr>

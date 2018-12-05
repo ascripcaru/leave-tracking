@@ -46,14 +46,14 @@ export class Audit {
 
     createBase() {
         const base = {};
-        Object.keys(HUMAN_LEAVE_TYPES).forEach(item => base[item] = 0);
+        Object.keys(HUMAN_LEAVE_TYPES).forEach(item => base[item] = { count: 0 });
         return base;
     }
 
     calculateTotal(obj) {
         Object.entries(obj).forEach(entry => {
             this.total[entry[0]] = Object.values(entry[1]).reduce((a, c) => {
-                Object.keys(a).forEach(key => a[key] += c[key]);
+                Object.keys(a).forEach(key => a[key].count += c[key].count);
                 return a;
             }, this.createBase());
         });

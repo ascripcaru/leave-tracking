@@ -7,17 +7,15 @@ import Holiday from '../models/holiday.model';
 import LeaveRequest from '../models/leave-request.model';
 import { LEAVE_TYPES, REQUEST_STATUS } from '../helpers/constants';
 
-function addDays(base, leave, days) {
-    if (days == undefined) {
-        days = leave.workDays;
-    }
-    base[leave.leaveType] += days;
+function addDays(base, leave, obj) {
+    base[leave.leaveType].count += obj.count;
+    base[leave.leaveType].days.push(...obj.days);
 }
 
 function createBase() {
     const base = {};
 
-    Object.values(LEAVE_TYPES).forEach(item => base[item] = 0);
+    Object.values(LEAVE_TYPES).forEach(item => base[item] = { count: 0, days: [] });
 
     return base;
 }
@@ -25,15 +23,21 @@ function createBase() {
 function computeDiff(start, end, holidays) {
     const range = moment.range(start, end);
     let dateDiff = business.weekDays(start, end) + 1;
+    let days = [];
+
+    Array.from(range.by('d')).forEach(day => {
+        business.isWeekDay(day) && days.push(day.format('D'));
+    });
 
     holidays.forEach(holiday => {
         const hDate = moment(holiday.date);
         if (range.contains(hDate) && business.isWeekDay(hDate)) {
             dateDiff--;
+            days = days.filter(day => day !== hDate.format('D'));
         }
     });
 
-    return dateDiff;
+    return { days, count: dateDiff }
 }
 
 async function getUserIds() {
@@ -70,7 +74,12 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
         end: { $gt: e }
     });
 
-    inMonth.forEach(leave => addDays(all, leave));
+    inMonth.forEach(leave => {
+        const start = moment(leave.start);
+        const end = moment(leave.end);
+        addDays(all, leave, computeDiff(start, end, holidays))
+    });
+
     spanOver.forEach(leave => addDays(all, leave, computeDiff(s, e, holidays)));
 
     endInMonth.forEach(leave => {
