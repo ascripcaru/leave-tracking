@@ -15,6 +15,7 @@ export const LEAVE_TYPES = {
     MARRIAGE_LEAVE: 'marriage-leave',
     WORK_FROM_HOME: 'work-from-home',
     IN_LIEU: 'in-lieu-leave',
+    BLOOD_DONOR: 'blood-donor-leave',
 };
 
 export const REQUEST_STATUS = {

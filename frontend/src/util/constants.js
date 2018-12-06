@@ -15,6 +15,7 @@ export const LEAVE_TYPES = {
     MARRIAGE_LEAVE: 'marriage-leave',
     WORK_FROM_HOME: 'work-from-home',
     IN_LIEU: 'in-lieu-leave',
+    BLOOD_DONOR: 'blood-donor-leave',
 }
 
 export const HUMAN_LEAVE_TYPES = {
@@ -28,6 +29,7 @@ export const HUMAN_LEAVE_TYPES = {
     'marriage-leave': 'Marriage Leave',
     'work-from-home': 'Work From Home',
     'in-lieu-leave': 'In Lieu Leave',
+    'blood-donor-leave': 'Blood Donor Leave',
 }
 
 export const LEGEND = {
@@ -41,4 +43,5 @@ export const LEGEND = {
     'marriage-leave': 'event-marriage',
     'work-from-home': 'event-work-from-home',
     'in-lieu-leave': 'event-in-lieu',
+    'blood-donor-leave': 'event-blood-donor',
 };

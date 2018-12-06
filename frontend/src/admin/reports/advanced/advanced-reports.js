@@ -5,7 +5,7 @@ import { HUMAN_LEAVE_TYPES } from '../../../util/constants';
 import moment from 'moment';
 
 @inject(ReportsService, UserService)
-export class Audit {
+export class AdvancedReports {
     @bindable currentYear;
 
     loading = true;
