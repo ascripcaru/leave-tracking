@@ -11,6 +11,7 @@ export class AdvancedReports {
     loading = true;
 
     constructor(_reports, _user) {
+        this.showWorked = false;
         this._reports = _reports;
         this._user = _user;
         this.types = Object.keys(HUMAN_LEAVE_TYPES);

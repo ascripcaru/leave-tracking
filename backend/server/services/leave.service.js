@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
@@ -7,6 +8,8 @@ import Holiday from '../models/holiday.model';
 import LeaveRequest from '../models/leave-request.model';
 import { LEAVE_TYPES, REQUEST_STATUS } from '../helpers/constants';
 
+const excluded = ['in-lieu-leave', 'half-day-leave', 'work-from-home'];
+
 function addDays(base, leave, obj) {
     base[leave.leaveType].count += obj.count;
     base[leave.leaveType].days.push(...obj.days);
@@ -14,9 +17,7 @@ function addDays(base, leave, obj) {
 
 function createBase() {
     const base = {};
-
     Object.values(LEAVE_TYPES).forEach(item => base[item] = { count: 0, days: [] });
-
     return base;
 }
 
@@ -48,6 +49,7 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
     const all = createBase();
     const s = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').startOf('month');
     const e = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').endOf('month');
+    const workingDays = computeDiff(s, e, holidays).count;
 
     const inMonth = await LeaveRequest.find({
         userId,
@@ -92,15 +94,25 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
         addDays(all, leave, computeDiff(start, e, holidays));
     });
 
+    const vacation = _.reduce(all, (prev, next, key) => {
+        if (excluded.includes(key)) {
+            return prev;
+        } else {
+            return prev + next.count;
+        }
+    }, 0);
+
+    all.workDays = workingDays - vacation;
+
     return all;
 }
 
 async function getHolidaysPerYear(year) {
     const holidays = await Holiday.find();
-    const users = await getUserIds();
+    const userIds = await getUserIds();
     const usersHolidays = {};
 
-    for (let id of users) {
+    for (let id of userIds) {
         usersHolidays[id] = {};
         for (let month = 0; month < 12; month++) {
             usersHolidays[id][month] = await getHolidaysPerMonth(id, month, year, holidays);

@@ -14,6 +14,10 @@
     </abp-select>
   </span>
 
+  <div class="checkbox">
+      <label class="control-label"><input type="checkbox" checked.bind="showWorked"> Show Worked</label>
+  </div>
+
   <hr>
   <div class="panel">
     <table class="table table-striped table-audit">
@@ -32,8 +36,9 @@
               <span if.bind="item[1].count > 0">
                 ${item[0] | humanizeLeave}
                 <strong>${item[1].count}</strong>
-                <span class="days-list text-muted ">(${item[1].days})</span>
+                <span class="days-list text-muted">(${item[1].days})</span>
               </span>
+              <span class="worked" if.bind="item[0] == 'workDays' && showWorked">Worked ${item[1]}</span>
             </div>
           </td>
           <td>
