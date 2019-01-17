@@ -47,6 +47,7 @@ export class EditRequest {
     end = moment();
     holidays = [];
     comment = '';
+    customerInformed = false;
 
     pickerOptions = {
         useCurrent: false,
@@ -134,7 +135,7 @@ export class EditRequest {
     }
 
     submit() {
-        if (this.canSave) {
+        if (this.canSave && this.customerInformed) {
             const leave = {
                 _id: this.request._id,
                 userId: this.request.userId._id,

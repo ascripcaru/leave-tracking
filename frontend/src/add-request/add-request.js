@@ -36,6 +36,7 @@ export class AddRequest {
     end = moment();
     holidays = [];
     comment = '';
+    customerInformed = false;
 
     pickerOptions = {
         calendarWeeks: true,
@@ -121,7 +122,7 @@ export class AddRequest {
     }
 
     async submit() {
-        if (this.canSave) {
+        if (this.canSave && this.customerInformed) {
             const user = await this._user.currentUser();
             const leave = {
                 userId: user._id,

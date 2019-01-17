@@ -54,9 +54,13 @@
                     value.bind="dateDiff"/>
             </div>
 
+            <div class="form-group">
+                <label class="control-label"><input type="checkbox" checked.bind="customerInformed"> Customer Informed</label>
+            </div>
+
             <button
                 data-analytics-category="leave-request" data-analytics-action="create"
-                class="btn btn-primary ${canSave ? '' : 'disabled'}"
+                class="btn btn-primary ${customerInformed ? '' : 'disabled'}"
                 type="submit">
                 Submit
             </button>
