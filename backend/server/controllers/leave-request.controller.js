@@ -278,6 +278,7 @@ async function fetchLeaves(userId, status) {
     if (user.userType === USER_TYPES.ADMIN) {
         return LeaveRequest
             .find({ status })
+            .sort({ createdAt: -1 })
             .populate('userId')
             .populate('lastUpdatedBy');
     } else {
@@ -290,6 +291,7 @@ async function fetchLeaves(userId, status) {
         const leaveQuery = { status, userId: { $in: usersICanApprove } };
         return LeaveRequest
             .find(leaveQuery)
+            .sort({ createdAt: -1 })
             .populate('userId')
             .populate('lastUpdatedBy');
     }
