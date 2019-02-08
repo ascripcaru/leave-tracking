@@ -14,6 +14,7 @@ class Worker {
     get processEvents() {
         return {
             USER: 'process_new_user',
+            ANNIVERSARY: 'process_anniversary',
             CHECK_FOR_USERS: 'process_check_for_users',
             PASSWORD_RESET: 'process_password_reset',
             NEW_LEAVE: 'process_new_leave_request',
@@ -43,6 +44,11 @@ class Worker {
     queueNewUser(data) {
         const queue = this.client.queue(this.queueTypes.user);
         queue.enqueue(this.processEvents.USER, data, () => {});
+    }
+
+    queueAnniversary(data) {
+        const queue = this.client.queue(this.queueTypes.user);
+        queue.enqueue(this.processEvents.ANNIVERSARY, data, () => {});
     }
 
     queueCheckForUsers() {
@@ -91,7 +97,8 @@ class Worker {
         worker.register({
             process_new_user: userWorkers.handleNewUsers,
             process_password_reset: userWorkers.handlePasswordReset,
-            process_check_for_users: userWorkers.createDefaultUser
+            process_check_for_users: userWorkers.createDefaultUser,
+            process_anniversary: userWorkers.handleEmploymentAnniversary,
         });
 
         this.workers.push(worker);

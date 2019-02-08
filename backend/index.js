@@ -8,7 +8,8 @@ import {
     removeObsoleteWFHAndHalfDay,
     increaseDaysPerYear,
     updateUserHolidaysForNewYear,
-    unapprovedReminder
+    unapprovedReminder,
+    employmentAnniversary,
 } from './scheduler/scheduler';
 
 mongoose.Promise = global.Promise;
@@ -35,6 +36,7 @@ if (!module.parent) {
         increaseDaysPerYear.start();
         updateUserHolidaysForNewYear.start();
         unapprovedReminder.start();
+        employmentAnniversary.start();
         worker.start();
         console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
     });

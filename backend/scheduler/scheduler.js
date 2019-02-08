@@ -35,4 +35,26 @@ const unapprovedReminder = cron.schedule('0 11 * * *', async () => {
         });
 });
 
-export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear, unapprovedReminder };
+const employmentAnniversary = cron.schedule('25 9 * * *', async () => {
+    User.aggregate([
+        {
+            $redact: {
+                $cond: {
+                    if: {
+                        $and: [
+                            { $lte: [{ $dayOfYear: '$startDate' }, moment().dayOfYear() + 7] },
+                            { $gt: [{ $dayOfYear: '$startDate' }, moment().dayOfYear() + 6] }
+                        ]
+                    },
+                    then: '$$DESCEND',
+                    else: '$$PRUNE'
+                }
+            }
+        }
+    ])
+    .then(users => {
+        users.forEach(user => worker.queueAnniversary(user));
+    })
+});
+
+export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear, unapprovedReminder, employmentAnniversary };

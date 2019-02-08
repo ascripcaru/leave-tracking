@@ -13,6 +13,7 @@ async function handleNewLeaveRequest(leave, callback) {
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
+        leave.domain = process.env.FE_DOMAIN || 'http://localhost:3000';
         leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
@@ -39,6 +40,7 @@ async function handleLeaveReminder(leave, callback) {
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { firstName, lastName } = user;
 
+        leave.domain = process.env.FE_DOMAIN || 'http://localhost:3000';
         leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;

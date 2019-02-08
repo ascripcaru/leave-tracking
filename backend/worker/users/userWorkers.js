@@ -1,9 +1,27 @@
+import moment from 'moment';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import smtp from '../../smtp/smtp';
 import { UserSchema } from '../../server/models/user.model';
 
 const User = mongoose.model('User', UserSchema);
+
+function handleEmploymentAnniversary(params, callback) {
+    try {
+        const { startDate } = params;
+        const emailSubject = `Employment Anniversary`;
+
+        params.years = moment().year() - moment(startDate).year();
+
+        params.startDate = moment(startDate).format('DD MMMM');
+
+        smtp.sendMail('andrei.scripcaru@issco.ro', emailSubject, 'employmentAnniversary', params)
+            .then(info => callback(null, info));
+    } catch (error) {
+        console.log('err handleNewUsers', error);
+        return callback(error);
+    }
+}
 
 function handleNewUsers(params, callback) {
     try {
@@ -61,4 +79,4 @@ function createDefaultUser(params, cb) {
         .catch(err => cb(err));
 }
 
-export default { handleNewUsers, handlePasswordReset, createDefaultUser };
+export default { handleNewUsers, handlePasswordReset, createDefaultUser, handleEmploymentAnniversary };
