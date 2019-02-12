@@ -8,6 +8,7 @@ const User = mongoose.model('User', UserSchema);
 
 function handleEmploymentAnniversary(params, callback) {
     try {
+        const toEmail = 'hr@issco.ro';
         const { startDate } = params;
         const emailSubject = `Employment Anniversary`;
 
@@ -15,7 +16,7 @@ function handleEmploymentAnniversary(params, callback) {
 
         params.startDate = moment(startDate).format('DD MMMM');
 
-        smtp.sendMail('andrei.scripcaru@issco.ro', emailSubject, 'employmentAnniversary', params)
+        smtp.sendMail(toEmail, emailSubject, 'employmentAnniversary', params)
             .then(info => callback(null, info));
     } catch (error) {
         console.log('err handleNewUsers', error);
