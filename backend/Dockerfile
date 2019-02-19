@@ -23,14 +23,9 @@ WORKDIR /usr/src/app
 # Bundle app source
 COPY . .
 
-RUN npm install
-RUN npm install -g gulp
-
+RUN npm i
 RUN npm run build
-
-RUN echo '#!/bin/sh \n\
-node ./dist/index.js' > /start.sh && chmod +x /start.sh
 
 EXPOSE 4040
 
-ENTRYPOINT ["/start.sh"]
+CMD npm run serve

@@ -51,10 +51,9 @@ const employmentAnniversary = cron.schedule('25 9 * * *', async () => {
                 }
             }
         }
-    ])
-    .then(users => {
+    ]).then(users => {
         users.forEach(user => worker.queueAnniversary(user));
-    })
+    });
 });
 
 export { removeObsoleteWFHAndHalfDay, increaseDaysPerYear, updateUserHolidaysForNewYear, unapprovedReminder, employmentAnniversary };

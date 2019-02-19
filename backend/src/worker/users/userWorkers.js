@@ -1,6 +1,4 @@
-import Moment from 'moment';
-import { extendMoment } from 'moment-range';
-const moment = extendMoment(Moment);
+import moment from 'moment';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import smtp from '../../smtp/smtp';
@@ -12,7 +10,7 @@ function handleEmploymentAnniversary(params, callback) {
     try {
         const toEmail = 'hr@issco.ro';
         const { startDate } = params;
-        const emailSubject = `Employment Anniversary`;
+        const emailSubject = 'Employment Anniversary';
 
         params.years = moment().year() - moment(startDate).year();
 

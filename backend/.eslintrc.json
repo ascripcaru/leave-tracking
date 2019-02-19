@@ -1,14 +1,10 @@
-module.exports = {
+{
     "env": {
-        "browser": false,
-        "es6": true,
-        "node": true,
-        "mocha": true
-
+        "node": true
     },
-  "parser": "babel-eslint",
-    "extends": "eslint:recommended",
+    "parser": "esprima",
     "parserOptions": {
+        "ecmaVersion": 6,
         "sourceType": "module"
     },
     "rules": {
@@ -28,6 +24,6 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-console": "warn",
+        "no-console": "warn"
     }
-};
+}
