@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import moment from 'moment';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+const moment = extendMoment(Moment);
 import smtp from '../../smtp/smtp';
 import User from '../../server/models/user.model';
 import Project from '../../server/models/project.model';

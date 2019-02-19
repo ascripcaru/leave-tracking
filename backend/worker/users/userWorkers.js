@@ -1,4 +1,6 @@
-import moment from 'moment';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+const moment = extendMoment(Moment);
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import smtp from '../../smtp/smtp';
