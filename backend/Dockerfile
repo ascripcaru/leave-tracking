@@ -17,6 +17,13 @@ ENV APPROVED_LEAVE_CC_EMAIL="hr@leavetracker.domain"
 
 ENV FE_DOMAIN=http://localhost:3000
 
+ENV TZ=Europe/Bucharest
+
+RUN apt-get update && apt-get install -y tzdata && \
+    rm /etc/localtime && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
+
 # Create app directory
 WORKDIR /usr/src/app
 
