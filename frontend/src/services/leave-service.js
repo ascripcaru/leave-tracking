@@ -18,6 +18,7 @@ export class LeaveService {
     }
 
     async getCalendarEvents() {
+        const offset = Math.round((new Date()).getTimezoneOffset() + moment().utcOffset());
         let leaves = await this.getLeaveRequests();
         leaves = leaves.filter(item => item.status === REQUEST_STATUS.APPROVED);
 
@@ -26,11 +27,11 @@ export class LeaveService {
 
             return {
                 id: leave._id,
-                title: `${leave.userId.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
+                title: `${(leave.userId || {}).fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
                 type: leaveType,
                 class: LEGEND[leaveType],
-                start: moment(leave.start).valueOf(),
-                end: moment(leave.end).valueOf()
+                start: moment(leave.start).add(offset, 'm').valueOf(),
+                end: moment(leave.end).add(offset, 'm').valueOf()
             }
         });
 
