@@ -1,12 +1,10 @@
 *
 !aurelia_project
 !src
-!test
 !.babelrc
 !favicon.ico
 !index.html
 !jsconfig.json
-!karma.conf.js
 !package-lock.json
 !package.json
 !server.js

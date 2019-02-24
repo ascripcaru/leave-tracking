@@ -1,3 +1,5 @@
+import moment from 'moment-timezone';
+moment.tz.setDefault('Europe/Bucharest');
 import environment from '~/environment';
 import { setupCustomValidationRules } from '~/components/validation/custom-rules';
 import LogRocket from 'logrocket';
@@ -10,7 +12,7 @@ export function configure(aurelia) {
         .plugin('aurelia-bootstrap-datetimepicker')
         .plugin('aurelia-validation')
         .plugin('aurelia-bootstrap-select')
-        .plugin("aurelia-chart")
+        .plugin('aurelia-chart')
         .plugin('aurelia-notify', settings => {
             settings.timeout = 5000;
         })

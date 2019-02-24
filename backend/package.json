@@ -9,8 +9,8 @@
     "node": ">=8"
   },
   "scripts": {
-    "build": "babel src --out-dir dist && cp -r ./src/smtp/templates ./dist/smtp/",
-    "start": "nodemon --exec babel-node src/index.js",
+    "build": "npx babel src --out-dir dist && cp -r ./src/smtp/templates ./dist/smtp/",
+    "start": "npx nodemon --exec babel-node src/index.js",
     "serve": "node dist/index.js",
     "lint": "npx eslint src"
   },
