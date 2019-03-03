@@ -30,15 +30,6 @@ async function login(req, res, next) {
     res.json({ token });
 }
 
-function me(req, res) {
-    return User.get(req.token.id).then(user => {
-        user = user.toObject();
-        delete user.password;
-
-        return res.json(user);
-    });
-}
-
 async function recover(req, res) {
     const { email } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -106,4 +97,4 @@ async function reset(req, res, next) {
     res.json();
 }
 
-export default { login, me, recover, reset };
+export default { login, recover, reset };
