@@ -65,7 +65,7 @@ const UserSchema = new mongoose.Schema({
         default: false
     }
 }, {
-    toObject: {
+    toJSON: {
         transform(doc, ret) {
             delete ret.password;
             ret.fullName = `${ret.lastName} ${ret.firstName}`;

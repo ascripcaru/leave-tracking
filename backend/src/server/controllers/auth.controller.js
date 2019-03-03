@@ -25,7 +25,7 @@ async function login(req, res, next) {
         return next(unauthorizedError);
     }
 
-    const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret);
+    const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret, { expiresIn: '24h', issuer: config.jwtIssuer });
 
     res.json({ token });
 }
