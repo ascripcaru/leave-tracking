@@ -5,7 +5,6 @@ import config from './config/config';
 import app from './config/express';
 import worker from './worker/worker';
 import {
-    removeObsoleteWFHAndHalfDay,
     increaseDaysPerYear,
     updateUserHolidaysForNewYear,
     unapprovedReminder,
@@ -32,7 +31,6 @@ mongoose.connection.on('error', () => {
 if (!module.parent) {
     // listen on port config.port
     app.listen(process.env.PORT || config.port, () => {
-        removeObsoleteWFHAndHalfDay.start();
         increaseDaysPerYear.start();
         updateUserHolidaysForNewYear.start();
         unapprovedReminder.start();

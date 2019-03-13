@@ -15,12 +15,8 @@ const HolidaySchema = new mongoose.Schema({
         type: Date,
         required: true,
         unique: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
-});
+}, { timestamps: true });
 
 HolidaySchema.statics = {
     get(id) {

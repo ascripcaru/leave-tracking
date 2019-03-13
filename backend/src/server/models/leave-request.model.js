@@ -15,10 +15,6 @@ const LeaveRequestSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    approverId: {
-        type: String,
-        required: false
-    },
     leaveType: {
         type: String,
         required: true
@@ -41,12 +37,8 @@ const LeaveRequestSchema = new mongoose.Schema({
     workDays: {
         type: Number,
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
-});
+}, { timestamps: true });
 
 LeaveRequestSchema.statics = {
     get(id) {

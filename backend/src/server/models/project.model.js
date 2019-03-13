@@ -8,28 +8,24 @@ const ProjectSchema = new mongoose.Schema({
         required: true,
         index: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     approvers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     }],
-    description: {
-        type: String,
-        required: true
-    },
     roles: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ProjectRole',
         required: true
     }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     active: {
         type: Boolean,
     }
-});
+}, { timestamps: true });
 
 ProjectSchema.statics = {
     get(id) {

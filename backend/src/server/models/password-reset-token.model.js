@@ -14,12 +14,8 @@ const PasswordResetTokenSchema = new mongoose.Schema({
     token: {
         type: String,
         default: () => random(100)
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
-});
+}, { timestamps: true });
 
 function random(len, charSet) {
     charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

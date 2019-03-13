@@ -56,15 +56,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     deleted: {
         type: Boolean,
         default: false
     }
 }, {
+    timestamps: true,
     toJSON: {
         transform(doc, ret) {
             delete ret.password;
