@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 import config from '../../config/config';
 import User from '../models/user.model';
-import worker from '../../worker/worker';
+import { handlePasswordReset } from '../../worker/userWorker';
 import PasswordResetTokenSchema from '../models/password-reset-token.model';
 
 async function login(req, res, next) {
@@ -68,10 +68,9 @@ async function recover(req, res) {
 
     const data = { user: safeUser, token: savedToken.toObject() };
 
-    worker.queuePasswordReset(data);
+    handlePasswordReset(data);
 
     res.json();
-
 }
 
 async function reset(req, res, next) {

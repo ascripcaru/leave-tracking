@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import moment from 'moment';
-import smtp from '../../smtp/smtp';
-import User from '../../server/models/user.model';
-import Project from '../../server/models/project.model';
+import logger from '../config/winston';
+import { sendMail } from '../smtp/smtp';
+import User from '../server/models/user.model';
+import Project from '../server/models/project.model';
 
 const DATE_FORMAT = 'DD MMM YYYY';
 const DATETIME_FORMAT = 'DD MMM YYYY HH:mm';
 
-async function handleNewLeaveRequest(leave, callback) {
+async function handleNewLeaveRequest(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
@@ -24,17 +25,16 @@ async function handleNewLeaveRequest(leave, callback) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
         const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
 
-        Promise.all([
-            smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave),
-            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
-        ]).then(info => callback(null, info));
+        await Promise.all([
+            sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave),
+            sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
+        ]);
     } catch (error) {
-        console.log('handleNewLeaveRequest:', error);
-        return callback(error);
+        logger.error(error);
     }
 }
 
-async function handleLeaveReminder(leave, callback) {
+async function handleLeaveReminder(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
@@ -50,16 +50,13 @@ async function handleLeaveReminder(leave, callback) {
 
         const approverEmailSubject = `[${leaveType}] REMINDER Leave request pending for: ${firstName} ${lastName}`;
 
-        Promise.all([
-            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
-        ]).then(info => callback(null, info));
+        await sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
     } catch (error) {
-        console.log('handleLeaveReminder:', error);
-        return callback(error);
+        logger.error(error);
     }
 }
 
-async function handleApprovedLeaveRequest(leave, callback) {
+async function handleApprovedLeaveRequest(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
@@ -77,17 +74,16 @@ async function handleApprovedLeaveRequest(leave, callback) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
-        Promise.all([
-            smtp.sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave),
-            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave)
-        ]).then(info => callback(null, info));
+        await Promise.all([
+            sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave),
+            sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave)
+        ]);
     } catch (error) {
-        console.log('handleApprovedLeaveRequest:', error);
-        return callback(error);
+        logger.error(error);
     }
 }
 
-async function handleRejectedLeaveRequest(leave, callback) {
+async function handleRejectedLeaveRequest(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
@@ -104,17 +100,16 @@ async function handleRejectedLeaveRequest(leave, callback) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
 
-        Promise.all([
-            smtp.sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave),
-            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave)
-        ]).then(info => callback(null, info));
+        await Promise.all([
+            sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave),
+            sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave)
+        ]);
     } catch (error) {
-        console.log('handleRejectedLeaveRequest:', error);
-        return callback(error);
+        logger.error(error);
     }
 }
 
-async function handleCanceledLeaveRequest(leave, callback) {
+async function handleCanceledLeaveRequest(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
@@ -130,13 +125,13 @@ async function handleCanceledLeaveRequest(leave, callback) {
 
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been CANCELED`;
         const approverEmailSubject = `[${leaveType}] CANCELED Leave request for: ${firstName} ${lastName}`;
-        Promise.all([
-            smtp.sendMail(email, userEmailSubject, 'canceledLeaveRequest', leave),
-            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', leave)
-        ]).then(info => callback(null, info));
+
+        await Promise.all([
+            sendMail(email, userEmailSubject, 'canceledLeaveRequest', leave),
+            sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', leave)
+        ]);
     } catch (error) {
-        console.log('handleCanceledLeaveRequest:', error);
-        return callback(error);
+        logger.error(error);
     }
 }
 
@@ -169,4 +164,4 @@ async function getAndAgredateLeaveRequestData(leave) {
     };
 }
 
-export default { handleNewLeaveRequest, handleLeaveReminder, handleApprovedLeaveRequest, handleRejectedLeaveRequest, handleCanceledLeaveRequest };
+export { handleNewLeaveRequest, handleLeaveReminder, handleApprovedLeaveRequest, handleRejectedLeaveRequest, handleCanceledLeaveRequest };

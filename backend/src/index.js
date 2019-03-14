@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 // config should be imported before importing any other file
 import config from './config/config';
 import app from './config/express';
-import worker from './worker/worker';
 import {
     increaseDaysPerYear,
     updateUserHolidaysForNewYear,
@@ -35,7 +34,6 @@ if (!module.parent) {
         updateUserHolidaysForNewYear.start();
         unapprovedReminder.start();
         employmentAnniversary.start();
-        worker.start();
         console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
     });
 }

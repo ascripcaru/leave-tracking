@@ -2,7 +2,12 @@ import moment from 'moment';
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
 import Project from '../models/project.model';
-import worker from '../../worker/worker';
+import {
+    handleNewLeaveRequest,
+    handleApprovedLeaveRequest,
+    handleCanceledLeaveRequest,
+    handleRejectedLeaveRequest,
+} from '../../worker/leaveRequestWorker';
 import APIError from '../helpers/APIError';
 import { USER_TYPES, LEAVE_TYPES, REQUEST_STATUS } from '../helpers/constants';
 
@@ -52,7 +57,7 @@ async function create(req, res, next) {
 
     leave.save()
         .then(savedLeave => {
-            worker.queueNewLeaveRequest(savedLeave);
+            handleNewLeaveRequest(savedLeave.toObject());
             return updateUserDaysForCreatedLeave(savedLeave, res);
         })
         .catch(e => next(e));
@@ -84,7 +89,7 @@ async function updateStatus(req, res, next) {
 
             if (leaveType === LEAVE_TYPES.ANNUAL) {
                 if (status === REQUEST_STATUS.APPROVED) {
-                    worker.queueApprovedLeaveRequest(savedLeave);
+                    handleApprovedLeaveRequest(savedLeave.toObject());
                     user.taken += workDays;
                     user.pending -= workDays;
                     user.holidays -= workDays;
@@ -92,7 +97,7 @@ async function updateStatus(req, res, next) {
                 }
 
                 if (status === REQUEST_STATUS.REJECTED) {
-                    worker.queueRejectedLeaveRequest(savedLeave);
+                    handleRejectedLeaveRequest(savedLeave.toObject());
                     user.pending -= workDays;
                     await user.save();
                 }
@@ -187,7 +192,7 @@ function remove(req, res, next) {
     if (hasRights) {
         return leave.remove()
             .then(async deleted => {
-                worker.queueCanceledLeaveRequest(deleted);
+                handleCanceledLeaveRequest(deleted.toObject());
                 const { userId, leaveType, status, workDays } = deleted;
                 const user = await User.findById(userId);
 

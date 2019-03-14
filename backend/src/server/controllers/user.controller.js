@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../models/user.model';
-import worker from '../../worker/worker';
+import { handleNewUser } from '../../worker/userWorker';
 import _ from 'lodash';
 
 function load(req, res, next, id) {
@@ -46,7 +46,7 @@ function create(req, res, next) {
 
     user.save()
         .then(user => {
-            worker.queueNewUser(Object.assign(user.toObject(), { password }));
+            handleNewUser(Object.assign(user.toObject(), { password }));
 
             return res.json(user);
         })
