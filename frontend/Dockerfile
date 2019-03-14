@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 # Bundle app source
 COPY . .
 
-RUN npm i -g aurelia-cli
+RUN npm i -g aurelia-cli@0.35.1
 RUN npm i
 
 RUN echo '#!/bin/sh \n\
