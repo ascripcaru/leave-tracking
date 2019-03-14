@@ -3,6 +3,7 @@ FROM node:10.15.1
 ENV NODE_ENV=development
 ENV PORT=4040
 ENV JWT_SECRET=0a6b944d-d2fb-46fc-a85e-0295c986cd9f
+ENV JWT_ISSUER=issco
 ENV MONGO_HOST=mongodb://localhost:27017/leave_tracker
 ENV MONGO_PORT=27017
 
