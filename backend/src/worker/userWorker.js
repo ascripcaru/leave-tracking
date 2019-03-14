@@ -42,7 +42,7 @@ async function handlePasswordReset(params) {
 
         await sendMail(email, emailSubject, 'resetPassword', params);
     } catch (error) {
-        logger.error(error)
+        logger.error(error);
     }
 }
 
