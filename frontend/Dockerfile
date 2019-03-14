@@ -10,8 +10,8 @@ WORKDIR /usr/src/app
 # Bundle app source
 COPY . .
 
-RUN npm install
-RUN npm install -g aurelia-cli
+RUN npm i -g aurelia-cli
+RUN npm i
 
 RUN echo '#!/bin/sh \n\
 au build --env prod --api_url $API_URL && \
