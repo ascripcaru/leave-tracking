@@ -99,7 +99,6 @@
         ],
         "dependencies": [
           "lodash",
-          "underscore",
           "moment-business",
           "moment-range",
           "nearest-periodic-value",

@@ -69,9 +69,6 @@
     "gulp-sourcemaps": "^2.6.5",
     "html-minifier": "^3.5.21",
     "minimatch": "^3.0.4",
-    "through2": "^2.0.1",
-    "uglify-js": "^3.4.9",
-    "underscore": "^1.9.1",
-    "vinyl-fs": "^2.4.3"
+    "uglify-js": "^3.4.9"
   }
 }
