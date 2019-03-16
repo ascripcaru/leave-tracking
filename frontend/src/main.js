@@ -2,7 +2,6 @@ import moment from 'moment-timezone';
 moment.tz.setDefault('Europe/Bucharest');
 import environment from '~/environment';
 import { setupCustomValidationRules } from '~/components/validation/custom-rules';
-import LogRocket from 'logrocket';
 
 export function configure(aurelia) {
 
@@ -68,10 +67,5 @@ export function configure(aurelia) {
     }
 
     setupCustomValidationRules();
-    aurelia.start().then(() => {
-        if (!environment.debug) {
-            LogRocket.init('jqunqu/leave-tracker');
-        }
-        return aurelia.setRoot()
-    });
+    aurelia.start().then(() => aurelia.setRoot());
 }

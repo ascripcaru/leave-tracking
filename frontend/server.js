@@ -1,8 +1,7 @@
 const express = require('express');
-const serveStatic = require('serve-static');
 const compression = require('compression');
 const port = process.env.PORT || 3000;
-const domain =  process.env.DOMAIN;
+const domain = process.env.DOMAIN;
 
 function ensureDomain(req, res, next) {
   if (!domain || req.hostname === domain) {
@@ -21,8 +20,7 @@ app.all('*', ensureDomain);
 
 app.use(compression());
 
-// default to .html (you can omit the extension in the URL)
-app.use(serveStatic(`${__dirname}/`, {'extensions': ['html']}));
+app.use(express.static('./', { extensions: ['html'] }))
 
 app.listen(port, () => {
   console.log('Server running ... on port', port);

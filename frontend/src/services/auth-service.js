@@ -2,9 +2,6 @@ import { inject } from 'aurelia-framework';
 import { ApiService } from './api-service';
 import { UserModel } from '~/models/user-model';
 import { Events } from './events';
-import LogRocket from 'logrocket';
-
-let shouldIdentifyLogRocket = true;
 
 @inject(ApiService, Events)
 export class AuthService {
@@ -45,8 +42,6 @@ export class AuthService {
             this._events.ea.publish('no_token');
         }
 
-        this.identifyLogRocket();
-
         return !!token;
     }
 
@@ -57,26 +52,6 @@ export class AuthService {
                 localStorage.setItem('me', JSON.stringify(meData))
                 return meData;
             })
-    }
-
-    identifyLogRocket() {
-        if (!shouldIdentifyLogRocket) {
-            return;
-        }
-
-        shouldIdentifyLogRocket = false;
-
-        const me = JSON.parse(localStorage.getItem('me'));
-
-        if (!me) {
-            return;
-        }
-
-        LogRocket.identify(me._id, {
-            name: `${me.firstName} ${me.lastName}`,
-            email: me.email,
-            userType: me.userType
-        });
     }
 
     localData() {
