@@ -64,7 +64,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "del": "4.0.0",
-    "eslint": "5.15.1",
+    "eslint": "5.15.2",
     "eslint-config-airbnb-base": "13.1.0",
     "express-swagger-generator": "1.1.13"
   },
