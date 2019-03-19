@@ -1,0 +1,14 @@
+{
+    "name": "Leave Tracker",
+    "icons": [
+        {
+            "src": "issco-logo.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": ".",
+    "background_color": "#fafafa",
+    "display": "standalone",
+    "theme_color": "#263238"
+}
