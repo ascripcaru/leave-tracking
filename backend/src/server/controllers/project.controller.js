@@ -1,18 +1,15 @@
 import Project from '../models/project.model';
 import User from '../models/user.model';
-import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     if (id === 'undefined') {
-        next(new APIError('Project id is undefined', 400, true));
-        return null;
+        return res.status(400).json({ message: 'Project id is undefined.' });
     }
 
     Project.get(id)
         .then((project) => {
             req.project = project;
             next();
-            return null;
         })
         .catch(e => next(e));
 }
@@ -62,7 +59,7 @@ async function remove(req, res, next) {
     const assignedUsers = await User.find({ 'projectRoles.project': projectId });
 
     if (assignedUsers && assignedUsers.length > 0) {
-        next(new APIError(`Project is assigned to ${assignedUsers.length} users`, 403, true));
+        return res.status(403).json({ message: `Project is assigned to ${assignedUsers.length} users` });
     } else {
         project.remove()
             .then(deletedProject => res.json(deletedProject))
@@ -73,9 +70,9 @@ async function remove(req, res, next) {
 function getUsers(req, res, next) {
     const { projectId } = req.params;
     if (projectId === 'undefined') {
-        next(new APIError('Project id is undefined', 400, true));
-        return null;
+        return res.status(400).json({ message: 'Project id is undefined.' });
     }
+
     User.find({ 'projectRoles.project': projectId })
         .then(users => res.json(users))
         .catch(e => next(e));

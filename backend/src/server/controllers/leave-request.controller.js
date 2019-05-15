@@ -8,7 +8,6 @@ import {
     handleCanceledLeaveRequest,
     handleRejectedLeaveRequest,
 } from '../../worker/leaveRequestWorker';
-import APIError from '../helpers/APIError';
 import { USER_TYPES, LEAVE_TYPES, REQUEST_STATUS } from '../helpers/constants';
 
 function load(req, res, next, id) {
@@ -45,14 +44,14 @@ async function create(req, res, next) {
         $or: [{ status: REQUEST_STATUS.APPROVED }, { status: REQUEST_STATUS.PENDING }]
     });
 
-    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
+    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave));
 
     if (overlapFound) {
-        return;
+        return res.status(400).json({ message: 'There is a leave-request already created that overlaps with your dates.' });
     }
 
     if (req.body.leaveType === LEAVE_TYPES.ANNUAL && user.holidays < req.body.workDays) {
-        return next(new APIError({ message: `You only have ${user.holidays} available days.` }, 400, true));
+        return res.status(400).json({ message: `You only have ${user.holidays} available days.` });
     }
 
     leave.save()
@@ -129,14 +128,14 @@ async function update(req, res, next) {
         $or: [{ status: REQUEST_STATUS.APPROVED }, { status: REQUEST_STATUS.PENDING }],
     });
 
-    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
+    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave));
 
     if (overlapFound) {
-        return;
+        return res.status(400).json({ message: 'There is a leave-request already created that overlaps with your dates.' });
     }
 
     if (userType === USER_TYPES.USER && leave.status === REQUEST_STATUS.APPROVED) {
-        return next(new APIError({ message: 'You do not have rights to edit an appproved request.' }, 403, true));
+        return res.status(403).json({ message: 'You do not have rights to edit an appproved request.' });
     }
 
     leave.save()
@@ -198,13 +197,13 @@ function remove(req, res, next) {
 
                 if (leaveType === LEAVE_TYPES.ANNUAL) {
                     switch (status) {
-                    case REQUEST_STATUS.APPROVED:
-                        user.taken -= workDays;
-                        user.holidays += workDays;
-                        break;
-                    case REQUEST_STATUS.PENDING:
-                        user.pending -= workDays;
-                        break;
+                        case REQUEST_STATUS.APPROVED:
+                            user.taken -= workDays;
+                            user.holidays += workDays;
+                            break;
+                        case REQUEST_STATUS.PENDING:
+                            user.pending -= workDays;
+                            break;
                     }
 
                     await user.save();
@@ -213,7 +212,7 @@ function remove(req, res, next) {
             })
             .catch(e => next(e));
     } else {
-        return next(new APIError('You do not have right to delete this leave request.', 403, true));
+        return res.status(403).json({ message: 'You do not have right to delete this leave request.' });
     }
 }
 
@@ -232,7 +231,7 @@ function getForUser(req, res, next) {
         .catch(e => next(e));
 }
 
-function checkForOverlap(item, leave, next) {
+function checkForOverlap(item, leave) {
     const currentStart = moment(leave.start);
     const currentEnd = moment(leave.end);
     let { start, end } = item;
@@ -240,18 +239,7 @@ function checkForOverlap(item, leave, next) {
     start = moment(start);
     end = moment(end);
 
-    const overlaps = currentStart.isBefore(end) && start.isBefore(currentEnd);
-
-    if (overlaps) {
-        const existing = {
-            message: 'There is a leave-request already created that overlaps with your dates',
-            start,
-            end,
-            status: item.status
-        };
-
-        return next(new APIError(existing, 400, true));
-    }
+    return currentStart.isBefore(end) && start.isBefore(currentEnd);
 }
 
 function pending(req, res, next) {

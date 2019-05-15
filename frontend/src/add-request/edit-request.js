@@ -149,7 +149,7 @@ export class EditRequest {
             this._leave.updateLeaveRequest(leave)
                 .then(() => this.router.navigateBack())
                 .catch(error => {
-                    this._notify.danger(error.message && error.message.message,
+                    this._notify.danger(error.message,
                         { containerSelector: '#edit-request', limit: 1 })
                 });
         }

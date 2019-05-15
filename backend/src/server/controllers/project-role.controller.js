@@ -1,6 +1,5 @@
 import Project from '../models/project.model';
 import ProjectRole from '../models/project-role.model';
-import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     ProjectRole.get(id)
@@ -58,7 +57,7 @@ async function remove(req, res, next) {
     const assignedProjects = await Project.find({ roles: { $in: [projectRoleId] } });
 
     if (assignedProjects && assignedProjects.length) {
-        next(new APIError(`ProjectRole is assigned to ${assignedProjects.length} projects`, 403, true));
+        return res.status(403).json({ message: `ProjectRole is assigned to ${assignedProjects.length} projects` });
     } else {
         projectRole.remove()
             .then(deletedProjectRole => res.json(deletedProjectRole))

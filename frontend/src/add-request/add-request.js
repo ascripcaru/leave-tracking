@@ -136,7 +136,7 @@ export class AddRequest {
             this._leave.addLeaveRequest(leave)
                 .then(() => this.router.navigateBack())
                 .catch(error => {
-                    this._notify.danger(error.message && error.message.message,
+                    this._notify.danger(error.message,
                         { containerSelector: '#add-request', limit: 1 })
                 });
         }

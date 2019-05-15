@@ -1,4 +1,3 @@
-import APIError from '../helpers/APIError';
 import { filterInt } from '../helpers/util';
 import { getHolidaysPerYear } from '../services/leave.service';
 
@@ -8,7 +7,7 @@ async function getPerYear(req, res, next) {
         const monthly = await getHolidaysPerYear(year);
         return res.json(monthly);
     } else {
-        return next(new APIError('Cannot query report for that year.', 400, true));
+        return res.status(400).json({ message: 'Cannot query report for that year.' })
     }
 }
 

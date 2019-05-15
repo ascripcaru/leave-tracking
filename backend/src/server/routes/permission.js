@@ -1,5 +1,3 @@
-import APIError from '../helpers/APIError';
-
 export default function permit(...allowed) {
     const isAllowed = role => allowed.indexOf(role) > -1;
 
@@ -8,8 +6,8 @@ export default function permit(...allowed) {
         if (req.token && (isAllowed(req.token.userType) || allowed.length == 0)) {
             next(); // role is allowed, so continue on the next middleware
         } else {
-            const errorMessage = `Current: '${req.token.userType}', Requires: '${allowed}'`;
-            next(new APIError(errorMessage, 403, true));
+            const message = `Current: '${req.token.userType}', Requires: '${allowed}'`;
+            res.status(403).json({ message });
         }
     };
 }

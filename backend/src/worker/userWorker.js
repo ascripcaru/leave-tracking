@@ -4,7 +4,7 @@ import { sendMail } from '../smtp/smtp';
 
 async function handleEmploymentAnniversary(params) {
     try {
-        const toEmail = 'hr@issco.ro';
+        const toEmail = process.env.APPROVED_LEAVE_CC_EMAIL;
         const { startDate } = params;
         const emailSubject = 'Employment Anniversary';
 

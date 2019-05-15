@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import httpStatus from 'http-status';
-import APIError from '../helpers/APIError';
 
 const HolidaySchema = new mongoose.Schema({
     name: {
@@ -20,14 +18,7 @@ const HolidaySchema = new mongoose.Schema({
 
 HolidaySchema.statics = {
     get(id) {
-        return this.findById(id)
-            .then((holiday) => {
-                if (holiday) {
-                    return holiday;
-                }
-                const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND, true);
-                return Promise.reject(err);
-            });
+        return this.findById(id);
     },
 
     list({ skip = 0, limit = 1000 } = {}) {

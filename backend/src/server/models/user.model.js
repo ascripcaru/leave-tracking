@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import httpStatus from 'http-status';
-import APIError from '../helpers/APIError';
 
 const UserSchema = new mongoose.Schema({
     startDate: {
@@ -75,14 +73,7 @@ UserSchema.statics = {
     get(id) {
         return this.findById(id)
             .populate('projectRoles.project')
-            .populate('projectRoles.role')
-            .then((user) => {
-                if (user) {
-                    return user;
-                }
-                const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true);
-                return Promise.reject(err);
-            });
+            .populate('projectRoles.role');
     },
 
     list({ skip = 0, limit = 1000, extra = {} } = {}) {
