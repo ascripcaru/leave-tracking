@@ -4,7 +4,7 @@ import expressTemplates from 'nodemailer-express-handlebars';
 import path from 'path';
 
 const templatePlugin = expressTemplates({
-    viewEngine: { partialsDir: path.resolve(__dirname, './templates') },
+    viewEngine: { partialsDir: path.resolve(__dirname, './templates'), defaultLayout: false },
     viewPath: path.resolve(__dirname, './templates'),
     extName: '.hbs',
 });
