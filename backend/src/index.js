@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import config from './config/config';
 import app from './config/express';
 import {
-    increaseDaysPerYear,
     updateUserHolidaysForNewYear,
     unapprovedReminder,
     employmentAnniversary,
@@ -30,7 +29,6 @@ mongoose.connection.on('error', () => {
 if (!module.parent) {
     // listen on port config.port
     app.listen(process.env.PORT || config.port, () => {
-        increaseDaysPerYear.start();
         updateUserHolidaysForNewYear.start();
         unapprovedReminder.start();
         employmentAnniversary.start();
