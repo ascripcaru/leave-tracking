@@ -31,7 +31,8 @@ export class EditRequest {
         this.start = moment(this.request.start);
         this.end = moment(this.request.end);
         this.dateDiff = this.request.workDays;
-        this.comment = this.request.comment;
+        this.comment = /[AP]M\W/.test(this.request.comment) ? this.request.comment.substring(3) : this.request.comment;
+        this.dayPeriod = /[AP]M\W/.test(this.request.comment) ? this.request.comment.substring(0, 2) : '';
     }
 
     attached() {
@@ -47,6 +48,7 @@ export class EditRequest {
     end = moment();
     holidays = [];
     comment = '';
+    dayPeriod = '';
     customerInformed = false;
 
     pickerOptions = {
@@ -130,20 +132,32 @@ export class EditRequest {
         this.dateDiff = dateDiff;
     }
 
+    get showPeriod() {
+        return (Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave) === LEAVE_TYPES.HALF_DAY;
+    }
+
+    get isSubmitEnabled() {
+        return this.showPeriod
+            ? !!this.dayPeriod && this.customerInformed
+            : this.customerInformed;
+    }
+
     get canSave() {
         return this.start && this.end && this.dateDiff >= 1;
     }
 
     submit() {
         if (this.canSave && this.customerInformed) {
+            const leaveType = Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave;
+            const comment = leaveType === LEAVE_TYPES.HALF_DAY ? `${this.dayPeriod} ${this.comment}` : this.comment;
             const leave = {
+                leaveType,
+                comment,
                 _id: this.request._id,
                 userId: this.request.userId._id,
-                leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: moment(this.start).startOf('day').toISOString(),
                 end: moment(this.end).endOf('day').toISOString(),
                 workDays: this.dateDiff,
-                comment: this.comment,
             };
 
             this._leave.updateLeaveRequest(leave)

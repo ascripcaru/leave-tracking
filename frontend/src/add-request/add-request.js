@@ -36,6 +36,7 @@ export class AddRequest {
     end = moment();
     holidays = [];
     comment = '';
+    dayPeriod = '';
     customerInformed = false;
 
     pickerOptions = {
@@ -117,6 +118,16 @@ export class AddRequest {
         this.dateDiff = dateDiff;
     }
 
+    get showPeriod() {
+        return (Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave) === LEAVE_TYPES.HALF_DAY;
+    }
+
+    get isSubmitEnabled() {
+        return this.showPeriod
+            ? !!this.dayPeriod && this.customerInformed
+            : this.customerInformed;
+    }
+
     get canSave() {
         return this.start && this.end && this.dateDiff >= 1;
     }
@@ -124,13 +135,15 @@ export class AddRequest {
     async submit() {
         if (this.canSave && this.customerInformed) {
             const user = await this._user.currentUser();
+            const leaveType = Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave;
+            const comment = leaveType === LEAVE_TYPES.HALF_DAY ? `${this.dayPeriod} ${this.comment}` : this.comment;
             const leave = {
+                leaveType,
+                comment,
                 userId: user._id,
-                leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: moment(this.start).startOf('day').toISOString(),
                 end: moment(this.end).endOf('day').toISOString(),
                 workDays: this.dateDiff,
-                comment: this.comment,
             };
 
             this._leave.addLeaveRequest(leave)

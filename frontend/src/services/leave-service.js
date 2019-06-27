@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { LEGEND, HUMAN_LEAVE_TYPES, REQUEST_STATUS } from '~/util/constants';
+import { LEGEND, HUMAN_LEAVE_TYPES, REQUEST_STATUS, LEAVE_TYPES } from '~/util/constants';
 import { ApiService } from './api-service';
 
 @inject(ApiService)
@@ -24,10 +24,11 @@ export class LeaveService {
 
         const events = leaves.map(leave => {
             const { leaveType } = leave;
+            const dayPart = leaveType === LEAVE_TYPES.HALF_DAY ? ` - ${leave.comment.substring(0, 2)}` : '';
 
             return {
                 id: leave._id,
-                title: `${(leave.userId || {}).fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
+                title: `${(leave.userId || {}).fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}${dayPart}`,
                 type: leaveType,
                 class: LEGEND[leaveType],
                 start: moment(leave.start).add(offset, 'm').valueOf(),

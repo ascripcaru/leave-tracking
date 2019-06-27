@@ -44,6 +44,15 @@
                     value.bind="comment"/>
             </div>
 
+            <div class="form-group" if.bind="showPeriod">
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="AM" checked.bind="dayPeriod"> AM
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="PM" checked.bind="dayPeriod"> PM
+                </label>
+            </div>
+
             <div class="form-group">
                 <label class="control-label">Number of days you want to take</label>
                 <input
@@ -60,7 +69,8 @@
 
             <button
                 data-analytics-category="leave-request" data-analytics-action="create"
-                class="btn btn-primary ${customerInformed ? '' : 'disabled'}"
+                class="btn btn-primary"
+                disabled.bind="!isSubmitEnabled"
                 type="submit">
                 Submit
             </button>
