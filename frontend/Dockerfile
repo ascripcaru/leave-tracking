@@ -1,4 +1,4 @@
-FROM node:10.15.1
+FROM node:10.16.0
 
 ENV NODE_ENV=development
 ENV PORT=3000
