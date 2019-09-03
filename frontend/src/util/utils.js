@@ -16,3 +16,8 @@ export const setupValidationControllers = (cFactory, renderer, scope, validateTr
     scope.controller.validateTrigger = validateTrigger.changeOrBlur;
     scope.controller.addRenderer(new renderer());
 };
+
+export function isWeekDay(moment) {
+    const FRIDAY = 5;
+    return moment.isoWeekday() <= FRIDAY;
+};

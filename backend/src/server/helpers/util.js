@@ -4,4 +4,9 @@ function filterInt(value) {
     return NaN;
 }
 
-export { filterInt };
+function isWeekDay(moment) {
+    const FRIDAY = 5;
+    return moment.isoWeekday() <= FRIDAY;
+}
+
+export { filterInt, isWeekDay };

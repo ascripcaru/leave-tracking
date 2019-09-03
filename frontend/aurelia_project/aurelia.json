@@ -99,10 +99,7 @@
         ],
         "dependencies": [
           "lodash",
-          "moment-business",
           "moment-range",
-          "nearest-periodic-value",
-          "contained-periodic-values",
           "aurelia-binding",
           "aurelia-http-client",
           "aurelia-bootstrapper",

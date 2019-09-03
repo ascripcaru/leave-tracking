@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
-import business from 'moment-business';
+import { isWeekDay } from '../helpers/util';
 import User from '../models/user.model';
 import Holiday from '../models/holiday.model';
 import LeaveRequest from '../models/leave-request.model';
@@ -23,16 +23,16 @@ function createBase() {
 
 function computeDiff(start, end, holidays) {
     const range = moment.range(start, end);
-    let dateDiff = business.weekDays(start, end) + 1;
+    let dateDiff = Array.from(range.by('d')).reduce((prev, curr) => (isWeekDay(curr) ? ++prev : prev), 0)
     let days = [];
 
     Array.from(range.by('d')).forEach(day => {
-        business.isWeekDay(day) && days.push(day.format('D'));
+        isWeekDay(day) && days.push(day.format('D'));
     });
 
     holidays.forEach(holiday => {
         const hDate = moment(holiday.date);
-        if (range.contains(hDate) && business.isWeekDay(hDate)) {
+        if (range.contains(hDate) && isWeekDay(hDate)) {
             dateDiff--;
             days = days.filter(day => day !== hDate.format('D'));
         }

@@ -2,7 +2,7 @@ import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 
-import business from 'moment-business';
+import { isWeekDay } from '~/util/utils';
 import { bindable, inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { NotificationService } from 'aurelia-notify';
@@ -102,7 +102,7 @@ export class AddRequest {
         const from = moment(this.start);
         const to = moment(this.end);
         const range = moment.range(from, to);
-        let dateDiff = business.weekDays(from, to) + 1;
+        let dateDiff = Array.from(range.by('d')).reduce((prev, curr) => (isWeekDay(curr) ? ++prev : prev), 0)
 
         // go over each holiday and see if the range contains any
         // if it does we do not count that holiday :)
@@ -110,7 +110,7 @@ export class AddRequest {
         this.holidays.forEach(holiday => {
             const hDate = moment(holiday.date);
 
-            if (range.contains(hDate) && business.isWeekDay(hDate)) {
+            if (range.contains(hDate) && isWeekDay(hDate)) {
                 dateDiff--;
             }
         });
