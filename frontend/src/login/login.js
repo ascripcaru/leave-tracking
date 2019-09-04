@@ -4,13 +4,13 @@ import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation
 import { AuthService } from '~/services/auth-service';
 import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
 import { NotificationService } from 'aurelia-notify';
-
+import { USER_TYPES } from '~/util/constants';
 
 @inject(AuthService, Router, ValidationControllerFactory, NotificationService)
 export class Login {
     user = {
         email: '',
-        password: ''
+        password: '',
     }
     loading = false;
 
@@ -42,7 +42,7 @@ export class Login {
                 }
             })
             .then((me) => {
-                if (me.userType === 'ADMIN') {
+                if (me.userType === USER_TYPES.ADMIN) {
                     this.router.navigateToRoute('admin');
                 } else {
                     this.router.navigateToRoute('home');

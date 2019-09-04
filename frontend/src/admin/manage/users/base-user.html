@@ -60,9 +60,7 @@
             <div class="col-xs-9">
                 <select class="form-control" value.bind="user.userType & validate">
                     <option selected>None</option>
-                    <option>USER</option>
-                    <option>ADMIN</option>
-                    <option>APPROVER</option>
+                    <option repeat.for="type of userTypes">${type}</option>
                 </select>
             </div>
         </div>

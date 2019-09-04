@@ -7,14 +7,14 @@ import expressAuth from '../helpers/expressAuth';
 import permit from './permission';
 import { USER_TYPES } from '../helpers/constants';
 
-const { ADMIN } = USER_TYPES;
+const { ADMIN, ADVANCED_USER } = USER_TYPES;
 const router = express.Router();
 const { authorize } = expressAuth;
 
 router.use(authorize());
 
 router.route('/')
-    .get(permit(ADMIN), userCtrl.list)
+    .get(permit(ADMIN, ADVANCED_USER), userCtrl.list)
     .post(permit(ADMIN), validate(paramValidation.createUser), userCtrl.create);
 
 router.route('/:userId')

@@ -1,16 +1,5 @@
-import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { UserService } from '~/services/user-service';
-import { ProjectService } from '~/services/project-service';
-
-@inject(UserService, ProjectService, Router)
 export class Admin {
-    constructor(_user, _project, router) {
-        this._user = _user;
-        this._project = _project;
-    }
-
-    configureRouter(config, router) {
+    configureRouter(config) {
         config.map([
             {
                 route: [''],
@@ -50,22 +39,6 @@ export class Admin {
                 moduleId: './manage/legal-holidays/manage-holidays',
                 nav: true,
                 title: 'Manage holidays',
-                auth: true
-            },
-            {
-                route: ['reports'],
-                name: 'reports',
-                moduleId: './reports/reports',
-                nav: true,
-                title: 'User statistics',
-                auth: true
-            },
-            {
-                route: ['reports/advanced'],
-                name: 'advanced-reports',
-                moduleId: './reports/advanced/advanced-reports',
-                nav: true,
-                title: 'Advanced reports',
                 auth: true
             }
         ]);

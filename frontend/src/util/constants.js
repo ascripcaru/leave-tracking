@@ -1,3 +1,10 @@
+export const USER_TYPES = {
+    ADMIN: 'ADMIN',
+    APPROVER: 'APPROVER',
+    ADVANCED_USER: 'ADVANCED_USER',
+    USER: 'USER',
+}
+
 export const REQUEST_STATUS = {
     APPROVED: 'approved',
     REJECTED: 'rejected',

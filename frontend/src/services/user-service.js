@@ -2,6 +2,7 @@ import { inject } from 'aurelia-framework';
 import { UserModel } from '~/models/user-model';
 import { ApiService } from './api-service';
 import { AuthService } from './auth-service';
+import { USER_TYPES } from '~/util/constants';
 
 @inject(ApiService, AuthService)
 export class UserService {
@@ -55,6 +56,6 @@ export class UserService {
     }
 
     searchApproverUser(name, limit) {
-        return this.searchUser(name, limit, ['APPROVER', 'ADMIN']);
+        return this.searchUser(name, limit, [USER_TYPES.APPROVER, USER_TYPES.ADMIN]);
     }
 }

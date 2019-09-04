@@ -2,6 +2,7 @@ import { inject } from 'aurelia-framework';
 import { Redirect, Router } from 'aurelia-router';
 import { AuthService } from '~/services/auth-service';
 import { Events } from '~/services/events';
+import { USER_TYPES } from '~/util/constants';
 
 @inject(AuthService)
 export class App {
@@ -67,7 +68,19 @@ export class App {
                     icon: 'cog'
                 },
                 auth: true,
-                requires: ['ADMIN']
+                requires: [USER_TYPES.ADMIN]
+            },
+            {
+                route: 'reports',
+                name: 'reports',
+                moduleId: './reports/reports',
+                nav: false,
+                title: 'Reports',
+                settings: {
+                    icon: 'book'
+                },
+                auth: true,
+                requires: [USER_TYPES.ADMIN, USER_TYPES.ADVANCED_USER]
             },
             {
                 route: 'approvals',
@@ -79,7 +92,7 @@ export class App {
                     icon: 'ok'
                 },
                 auth: true,
-                requires: ['ADMIN', 'APPROVER']
+                requires: [USER_TYPES.ADMIN, USER_TYPES.APPROVER]
             },
             {
                 route: 'login',

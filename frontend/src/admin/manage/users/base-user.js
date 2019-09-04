@@ -9,6 +9,7 @@ import {
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 import { compareObjects, setupValidationControllers } from '~/util/utils';
+import { USER_TYPES } from '~/util/constants';
 import moment from 'moment';
 
 @inject(UserService, ProjectService, Router, ValidationControllerFactory)
@@ -21,6 +22,7 @@ export default class BaseUser {
             vertical: 'bottom'
         }
     };
+    userTypes = Object.keys(USER_TYPES);
 
     constructor(_user, _project, router, controllerFactory) {
         this._user = _user;

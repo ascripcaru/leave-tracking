@@ -2,6 +2,7 @@ import { inject } from 'aurelia-framework';
 import { ApiService } from './api-service';
 import { UserModel } from '~/models/user-model';
 import { Events } from './events';
+import { USER_TYPES } from '~/util/constants';
 
 @inject(ApiService, Events)
 export class AuthService {
@@ -58,12 +59,16 @@ export class AuthService {
         return (localStorage.getItem('me') && JSON.parse(localStorage.getItem('me'))) || null;
     }
 
+    get isAdvancedUser() {
+        return (this.localData() && this.localData().userType === USER_TYPES.ADVANCED_USER) || false
+    }
+
     get isAdmin() {
-        return (this.localData() && this.localData().userType === 'ADMIN') || false
+        return (this.localData() && this.localData().userType === USER_TYPES.ADMIN) || false
     }
 
     get isApprover() {
-        return (this.localData() && this.localData().userType === 'APPROVER') || false
+        return (this.localData() && this.localData().userType === USER_TYPES.APPROVER) || false
     }
 
     recover(email) {

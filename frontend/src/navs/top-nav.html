@@ -34,6 +34,13 @@
                         </a>
                     </li>
 
+                    <li if.bind="_auth.isAdmin || _auth.isAdvancedUser">
+                        <a href="#/reports" data-toggle="collapse" data-target="#nav-container">
+                            <i class="glyphicon glyphicon-book"></i>
+                            Reports
+                        </a>
+                    </li>
+
                     <li if.bind="_auth.isAdmin">
                         <a href="#/admin" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon glyphicon-cog"></i>
