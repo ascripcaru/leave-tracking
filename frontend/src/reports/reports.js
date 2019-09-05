@@ -24,6 +24,14 @@ export class Reports {
                 nav: true,
                 title: 'Advanced reports',
                 auth: true
+            },
+            {
+                route: ['payroll'],
+                name: 'payroll-reports',
+                moduleId: './payroll/advanced-reports',
+                nav: true,
+                title: 'Payroll reports',
+                auth: true
             }
         ]);
 

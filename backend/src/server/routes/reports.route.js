@@ -13,4 +13,7 @@ router.use(authorize());
 router.route('/:year')
     .get(permit(ADMIN, ADVANCED_USER), reportsCrl.getPerYear);
 
+router.route('/:month/:year')
+    .get(permit(ADMIN, ADVANCED_USER), reportsCrl.getPerMonthAndYear);
+
 export default router;

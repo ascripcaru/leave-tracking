@@ -11,4 +11,8 @@ export class ReportsService {
     getPerYear(year) {
         return this.http.get(`reports/${year}`);
     }
+
+    getPerMonthAndYear(month, year) {
+        return this.http.get(`reports/${month}/${year}`);
+    }
 }

@@ -45,10 +45,12 @@ async function getUserIds() {
     return (await User.find({}, '_id')).map(i => i._id);
 }
 
-async function getHolidaysPerMonth(userId, month, year, holidays) {
+async function getHolidaysPerMonth(userId, month, year) {
     const all = createBase();
     const s = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').startOf('month');
     const e = moment().set({ year, month }).subtract(moment().utcOffset(), 'm').endOf('month');
+
+    const holidays = await Holiday.find({ date: { $gte: s }, date: { $lte: e } });
     const workingDays = computeDiff(s, e, holidays).count;
 
     const inMonth = await LeaveRequest.find({
@@ -108,18 +110,29 @@ async function getHolidaysPerMonth(userId, month, year, holidays) {
 }
 
 async function getHolidaysPerYear(year) {
-    const holidays = await Holiday.find();
     const userIds = await getUserIds();
     const usersHolidays = {};
 
     for (let id of userIds) {
         usersHolidays[id] = {};
         for (let month = 0; month < 12; month++) {
-            usersHolidays[id][month] = await getHolidaysPerMonth(id, month, year, holidays);
+            usersHolidays[id][month] = await getHolidaysPerMonth(id, month, year);
         }
     }
 
     return usersHolidays;
 }
 
-export { getHolidaysPerYear };
+async function getHolidaysPerMonthAndYear(month, year) {
+    const userIds = await getUserIds();
+    const usersHolidays = {};
+
+    for (let id of userIds) {
+        usersHolidays[id] = await getHolidaysPerMonth(id, month, year);
+        delete usersHolidays[id].workDays
+    }
+
+    return usersHolidays;
+}
+
+export { getHolidaysPerYear, getHolidaysPerMonthAndYear };

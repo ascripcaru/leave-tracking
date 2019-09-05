@@ -1,5 +1,5 @@
 function filterInt(value) {
-    if (/^([0-9]{4})$/.test(value))
+    if (/^([0-9]{1,4})$/.test(value))
         return Number(value);
     return NaN;
 }

@@ -1,0 +1,42 @@
+<template>
+  <require from="./advanced-reports.css"></require>
+  <spinner if.bind="loading"></spinner>
+
+  <h3><i class="fa fa-fw fa-money"></i>Payroll report</h3>
+  <button class="btn btn-default" click.trigger="print()">Print</button>
+
+  <span class="pull-right">
+    <label class="control-label">Report for</label>
+    <abp-select
+      element.bind="selectedMonth"
+      selected-value.bind="currentMonth"
+      collection.bind="monthNames">
+    </abp-select>
+    <abp-select
+      element.bind="selectedYear"
+      selected-value.bind="currentYear"
+      collection.bind="years">
+    </abp-select>
+  </span>
+
+  <hr>
+  <div class="panel">
+    <table class="table table-striped table-audit">
+      <thead>
+        <tr>
+          <th></th>
+          <th repeat.for="type of leaveTypes">${type | humanizeLeave}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr repeat.for="id of userIds">
+          <th>${getUserName(id)}</th>
+          <td repeat.for="report of getValues(reports[id])">
+            <strong if.bind="report.count > 0">${report.count}</strong>
+            <span class="days-list text-muted" if.bind="report.count > 0">(${report.days})</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
