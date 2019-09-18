@@ -17,6 +17,7 @@ const mongoUri = config.mongo.host;
 mongoose.connect(mongoUri, {
     useCreateIndex: true,
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     reconnectTries: 5,
     reconnectInterval: 1000
 });
