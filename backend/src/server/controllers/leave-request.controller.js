@@ -86,17 +86,21 @@ async function updateStatus(req, res, next) {
             const { status, userId, workDays, leaveType } = savedLeave;
             const user = await User.findById(userId);
 
-            if (leaveType === LEAVE_TYPES.ANNUAL) {
-                if (status === REQUEST_STATUS.APPROVED) {
-                    handleApprovedLeaveRequest(savedLeave.toObject());
+            if (status === REQUEST_STATUS.APPROVED) {
+                handleApprovedLeaveRequest(savedLeave.toObject());
+
+                if (leaveType === LEAVE_TYPES.ANNUAL) {
                     user.taken += workDays;
                     user.pending -= workDays;
                     user.holidays -= workDays;
                     await user.save();
                 }
+            }
 
-                if (status === REQUEST_STATUS.REJECTED) {
-                    handleRejectedLeaveRequest(savedLeave.toObject());
+            if (status === REQUEST_STATUS.REJECTED) {
+                handleRejectedLeaveRequest(savedLeave.toObject());
+
+                if (leaveType === LEAVE_TYPES.ANNUAL) {
                     user.pending -= workDays;
                     await user.save();
                 }
