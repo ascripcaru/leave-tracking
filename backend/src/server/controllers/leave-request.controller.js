@@ -81,7 +81,7 @@ async function updateStatus(req, res, next) {
     leave.status = req.body.status;
     leave.lastUpdatedBy = lastUpdatedBy._id;
 
-    leave.save()
+    return leave.save()
         .then(async savedLeave => {
             const { status, userId, workDays, leaveType } = savedLeave;
             const user = await User.findById(userId);
@@ -205,10 +205,10 @@ function remove(req, res, next) {
                             user.pending -= workDays;
                             break;
                     }
-
                     await user.save();
-                    return res.json(leave);
                 }
+
+                return res.json(deleted);
             })
             .catch(e => next(e));
     } else {
