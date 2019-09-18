@@ -1,7 +1,7 @@
 import winston from 'winston';
 
 const logger = winston.createLogger({
-    format: winston.format.simple(),
+    format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
     transports: [
         new winston.transports.Console(),
     ]

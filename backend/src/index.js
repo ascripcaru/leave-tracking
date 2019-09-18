@@ -15,6 +15,7 @@ mongoose.Promise = global.Promise;
 const mongoUri = config.mongo.host;
 
 mongoose.connect(mongoUri, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     reconnectTries: 5,
     reconnectInterval: 1000

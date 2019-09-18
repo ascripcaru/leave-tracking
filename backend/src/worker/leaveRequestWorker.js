@@ -4,9 +4,7 @@ import logger from '../config/winston';
 import { sendMail } from '../smtp/smtp';
 import User from '../server/models/user.model';
 import Project from '../server/models/project.model';
-
-const DATE_FORMAT = 'DD MMM YYYY';
-const DATETIME_FORMAT = 'DD MMM YYYY HH:mm';
+import { DATE_FORMAT, DATETIME_FORMAT } from '../server/helpers/constants';
 
 async function handleNewLeaveRequest(leave) {
     try {
@@ -25,10 +23,8 @@ async function handleNewLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
         const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
 
-        await Promise.all([
-            sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave),
-            sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave)
-        ]);
+        sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave);
+        sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
     } catch (error) {
         logger.error(error);
     }
@@ -50,7 +46,7 @@ async function handleLeaveReminder(leave) {
 
         const approverEmailSubject = `[${leaveType}] REMINDER Leave request pending for: ${firstName} ${lastName}`;
 
-        await sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
+        sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
     } catch (error) {
         logger.error(error);
     }
@@ -74,10 +70,8 @@ async function handleApprovedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
-        await Promise.all([
-            sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave),
-            sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave)
-        ]);
+        sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave);
+        sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave);
     } catch (error) {
         logger.error(error);
     }
@@ -100,10 +94,8 @@ async function handleRejectedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
 
-        await Promise.all([
-            sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave),
-            sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave)
-        ]);
+        sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave);
+        sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave);
     } catch (error) {
         logger.error(error);
     }
@@ -126,10 +118,8 @@ async function handleCanceledLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been CANCELED`;
         const approverEmailSubject = `[${leaveType}] CANCELED Leave request for: ${firstName} ${lastName}`;
 
-        await Promise.all([
-            sendMail(email, userEmailSubject, 'canceledLeaveRequest', leave),
-            sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', leave)
-        ]);
+        sendMail(email, userEmailSubject, 'canceledLeaveRequest', leave);
+        sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', leave);
     } catch (error) {
         logger.error(error);
     }

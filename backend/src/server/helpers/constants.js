@@ -24,3 +24,6 @@ export const REQUEST_STATUS = {
     REJECTED: 'rejected',
     PENDING: 'pending',
 };
+
+export const DATE_FORMAT = 'DD MMM YYYY';
+export const DATETIME_FORMAT = 'DD MMM YYYY HH:mm';
