@@ -13,10 +13,6 @@ COPY . .
 RUN npm i -g aurelia-cli@0.35.1
 RUN npm i
 
-RUN echo '#!/bin/sh \n\
-au build --env prod --api_url $API_URL && \
-node ./server.js' > /start.sh && chmod +x /start.sh
-
 EXPOSE 3000
 
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["npm", "start"]

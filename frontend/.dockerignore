@@ -5,6 +5,7 @@
 !favicon.ico
 !index.html
 !jsconfig.json
+!manifest.json
 !package-lock.json
 !package.json
 !server.js
