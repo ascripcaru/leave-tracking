@@ -5,6 +5,7 @@ import { sendMail } from '../smtp/smtp';
 import User from '../server/models/user.model';
 import Project from '../server/models/project.model';
 import { DATE_FORMAT, DATETIME_FORMAT } from '../server/helpers/constants';
+import { sendNotificationForEmails } from '../push.service';
 
 async function handleNewLeaveRequest(leave) {
     try {
@@ -25,6 +26,7 @@ async function handleNewLeaveRequest(leave) {
 
         sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave);
         sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
+        sendNotificationForEmails(approversEmails, { title: 'Leave request pending for:', body: `${firstName} ${lastName}` });
     } catch (error) {
         logger.error(error);
     }
