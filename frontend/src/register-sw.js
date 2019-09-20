@@ -32,14 +32,14 @@ function registerSW() {
             userVisibleOnly: true,
             applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
           }).then(function(sub) {
-            fetch('API_URL_REPLACE/subscribe', {
+            fetch('API_URL_REPLACEsubscribe', {
               headers,
               method: 'POST',
               body: JSON.stringify(sub.toJSON()),
             });
           });
         } else {
-          fetch('API_URL_REPLACE/subscribe', {
+          fetch('API_URL_REPLACEsubscribe', {
             headers,
             method: 'PUT',
             body: JSON.stringify(sub.toJSON()),

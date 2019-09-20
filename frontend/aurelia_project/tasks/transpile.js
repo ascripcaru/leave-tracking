@@ -32,10 +32,9 @@ function configureServiceWorker() {
       const api_url = CLIOptions.getFlagValue('api_url');
       const vapid_public_key = CLIOptions.getFlagValue('vapid_public_key');
 
-      content.replace('VAPID_PUBLIC_KEY_REPLACE', `${vapid_public_key}`)
-      content.replace('API_URL_REPLACE', `${api_url}`)
-
-      return content;
+      return content
+        .replace('VAPID_PUBLIC_KEY_REPLACE', `${vapid_public_key}`)
+        .replace('API_URL_REPLACE', `${api_url}`)
     }))
     .pipe(gulp.dest(project.paths.root));
 }
