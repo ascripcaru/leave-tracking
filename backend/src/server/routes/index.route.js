@@ -6,11 +6,13 @@ import projectRoutes from './project.route';
 import projectRoleRoutes from './project-role.route';
 import reportsRoutes from './reports.route';
 import holidayRoutes from './holiday.route';
+import subscriptionRoutes from './subscription.route';
 
 const router = express.Router();
 
 router.get('/health-check', (req, res) => res.send('OK'));
 
+router.use('/subscribe', subscriptionRoutes);
 router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 router.use('/leaves', leaveRoutes);

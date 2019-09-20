@@ -3,6 +3,7 @@ FROM node:10.16.0
 ENV NODE_ENV=development
 ENV PORT=3000
 ENV API_URL=http://localhost:4040/api/
+ENV VAPID_PUBLIC_KEY=""
 
 # Create app directory
 WORKDIR /usr/src/app

@@ -14,6 +14,10 @@ ENV SMTP_SECURE="false"
 ENV SMTP_USER="uhzdcegtgaxt427t@ethereal.email"
 ENV SMTP_PASSWORD="cR48DwNMD3ncEwykrG"
 
+ENV GCM_API_KEY=""
+ENV VAPID_PRIVATE_KEY=""
+ENV VAPID_PUBLIC_KEY=""
+
 ENV APPROVED_LEAVE_CC_EMAIL="hr@leavetracker.domain"
 
 ENV FE_DOMAIN=http://localhost:3000
@@ -36,4 +40,4 @@ RUN npm run build
 
 EXPOSE 4040
 
-CMD npm run serve
+CMD [ "npm", "run", "serve" ]
