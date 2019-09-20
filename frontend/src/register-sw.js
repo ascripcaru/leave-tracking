@@ -1,4 +1,5 @@
 const VAPID_PUBLIC_KEY = 'VAPID_PUBLIC_KEY_REPLACE';
+const SUBSCRIBE_URL = 'API_URL_REPLACEsubscribe';
 
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -32,14 +33,14 @@ function registerSW() {
             userVisibleOnly: true,
             applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
           }).then(function(sub) {
-            fetch('API_URL_REPLACEsubscribe', {
+            fetch(SUBSCRIBE_URL, {
               headers,
               method: 'POST',
               body: JSON.stringify(sub.toJSON()),
             });
           });
         } else {
-          fetch('API_URL_REPLACEsubscribe', {
+          fetch(SUBSCRIBE_URL, {
             headers,
             method: 'PUT',
             body: JSON.stringify(sub.toJSON()),

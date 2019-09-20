@@ -11,6 +11,11 @@
       "name": "api_url",
       "description": "Sets the api_url environment.",
       "type": "string"
+    },
+    {
+      "name": "vapid_public_key",
+      "description": "Sets the VAPID public key for service worker.",
+      "type": "string"
     }
   ]
 }
