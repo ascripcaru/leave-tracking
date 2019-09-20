@@ -18,12 +18,6 @@ function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-const headers = new Headers({
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-});
-
 export function register() {
   if ('serviceWorker' in navigator) {
     Notification.requestPermission();
@@ -36,14 +30,22 @@ export function register() {
             applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
           }).then(function(sub) {
             window.fetch(SUBSCRIBE_URL, {
-              headers,
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              },
               method: 'POST',
               body: JSON.stringify(sub.toJSON()),
             });
           });
         } else {
           window.fetch(SUBSCRIBE_URL, {
-            headers,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
             method: 'PUT',
             body: JSON.stringify(sub.toJSON()),
           });
