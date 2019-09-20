@@ -1,5 +1,6 @@
 export default {
   debug: false,
   testing: false,
-  API_URL: 'API_REPLACE'
+  API_URL: 'API_REPLACE',
+  VAPID_PUBLIC_KEY: 'VAPID_PUBLIC_KEY_REPLACE',
 };

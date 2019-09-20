@@ -1,5 +1,7 @@
-const VAPID_PUBLIC_KEY = 'VAPID_PUBLIC_KEY_REPLACE';
-const SUBSCRIBE_URL = 'API_URL_REPLACEsubscribe';
+import environment from '~/environment';
+
+const VAPID_PUBLIC_KEY = environment.VAPID_PUBLIC_KEY;
+const SUBSCRIBE_URL = `${environment.API_URL}subscribe`;
 
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -19,10 +21,10 @@ function urlB64ToUint8Array(base64String) {
 const headers = new Headers({
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
 });
 
-function registerSW() {
+export function register() {
   if ('serviceWorker' in navigator) {
     Notification.requestPermission();
 
@@ -33,14 +35,14 @@ function registerSW() {
             userVisibleOnly: true,
             applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
           }).then(function(sub) {
-            fetch(SUBSCRIBE_URL, {
+            window.fetch(SUBSCRIBE_URL, {
               headers,
               method: 'POST',
               body: JSON.stringify(sub.toJSON()),
             });
           });
         } else {
-          fetch(SUBSCRIBE_URL, {
+          window.fetch(SUBSCRIBE_URL, {
             headers,
             method: 'PUT',
             body: JSON.stringify(sub.toJSON()),
@@ -50,5 +52,3 @@ function registerSW() {
     });
   }
 }
-
-registerSW();

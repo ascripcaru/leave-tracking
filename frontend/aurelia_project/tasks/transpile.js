@@ -17,24 +17,11 @@ function configureEnvironment() {
     .pipe(rename('environment.js'))
     .pipe(modifyFile((content, path, file) => {
       const api_url = CLIOptions.getFlagValue('api_url');
-
-      return `${content.replace(
-        'API_URL: \'API_REPLACE\'',
-        `API_URL: \'${api_url}\'`)}`
-    }))
-    .pipe(gulp.dest(project.paths.root));
-}
-
-function configureServiceWorker() {
-  return gulp.src('src/register-sw.js')
-    .pipe(changedInPlace({ firstPass: true }))
-    .pipe(modifyFile((content, path, file) => {
-      const api_url = CLIOptions.getFlagValue('api_url');
       const vapid_public_key = CLIOptions.getFlagValue('vapid_public_key');
 
       return `${content
-        .replace('VAPID_PUBLIC_KEY_REPLACE', `${vapid_public_key}`)
-        .replace('API_URL_REPLACE', `${api_url}`)}`
+        .replace('API_URL: \'API_REPLACE\'', `API_URL: \'${api_url}\'`)
+        .replace('VAPID_PUBLIC_KEY_REPLACE', `${vapid_public_key}`)}`
     }))
     .pipe(gulp.dest(project.paths.root));
 }
@@ -50,6 +37,5 @@ function buildJavaScript() {
 
 export default gulp.series(
   configureEnvironment,
-  configureServiceWorker,
   buildJavaScript
 );
