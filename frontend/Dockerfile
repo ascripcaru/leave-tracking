@@ -14,6 +14,10 @@ COPY . .
 RUN npm i -g aurelia-cli@0.35.1
 RUN npm i
 
+RUN echo "#!/bin/sh \n\
+au build --env prod --api_url $API_URL --vapid_public_key $VAPID_PUBLIC_KEY && \
+node ./server.js" > /start.sh && chmod +x /start.sh
+
 EXPOSE 3000
 
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["/start.sh"]
