@@ -7,7 +7,7 @@
     "url": "???"
   },
   "scripts": {
-    "start": "au build --env prod --api_url $API_URL && node server.js",
+    "start": "au build --env prod --api_url $API_URL --vapid_public_key $VAPID_PUBLIC_KEY && node server.js",
     "dev": "au run --env dev --watch"
   },
   "license": "MIT",

@@ -4,8 +4,11 @@
 !.babelrc
 !favicon.ico
 !index.html
+!issco-logo.png
 !jsconfig.json
 !manifest.json
 !package-lock.json
 !package.json
+!register-sw.js
 !server.js
+!sw.js

@@ -4,7 +4,6 @@ import environment from '~/environment';
 import { setupCustomValidationRules } from '~/components/validation/custom-rules';
 
 export function configure(aurelia) {
-
     aurelia.use
         .standardConfiguration()
         .plugin('aurelia-bootstrap')
