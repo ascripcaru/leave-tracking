@@ -9,6 +9,5 @@
 !manifest.json
 !package-lock.json
 !package.json
-!register-sw.js
 !server.js
 !sw.js

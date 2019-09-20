@@ -26,7 +26,7 @@ function configureEnvironment() {
 }
 
 function configureServiceWorker() {
-  return gulp.src('register-sw.js')
+  return gulp.src('src/register-sw.js')
     .pipe(changedInPlace({ firstPass: true }))
     .pipe(modifyFile((content, path, file) => {
       const api_url = CLIOptions.getFlagValue('api_url');

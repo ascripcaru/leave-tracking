@@ -1,4 +1,4 @@
-self.addEventListener('push', function(e) {
+self.addEventListener('push', function(event) {
     const options = {
         icon: 'issco-logo.png',
         vibrate: [50, 50],
@@ -8,11 +8,11 @@ self.addEventListener('push', function(e) {
         }
     };
 
-    const text = e.data.json()
+    const payload = event.data.json();
 
     if (self.Notification.permission == 'granted') {
-        e.waitUntil(
-            self.registration.showNotification(text.altceva, Object.assign({ body: text.user }, options))
+        event.waitUntil(
+            self.registration.showNotification(payload.title, Object.assign({ body: payload.body }, options))
         )
     }
 });

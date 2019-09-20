@@ -5,6 +5,7 @@ import { AuthService } from '~/services/auth-service';
 import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
 import { NotificationService } from 'aurelia-notify';
 import { USER_TYPES } from '~/util/constants';
+import { registerSW } from '~/register-sw';
 
 @inject(AuthService, Router, ValidationControllerFactory, NotificationService)
 export class Login {
@@ -48,6 +49,7 @@ export class Login {
                     this.router.navigateToRoute('home');
                 }
                 this.loading = false;
+                registerSW();
             })
             .catch((err) => {
                 this.loading = false;
