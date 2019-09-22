@@ -7,13 +7,15 @@ import Project from '../server/models/project.model';
 import { DATE_FORMAT, DATETIME_FORMAT } from '../server/helpers/constants';
 import { sendNotificationForEmails } from '../push.service';
 
+const domain = process.env.FE_DOMAIN || 'http://localhost:3000';
+
 async function handleNewLeaveRequest(leave) {
     try {
         const { leaveType } = leave;
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { email, firstName, lastName } = user;
 
-        leave.domain = process.env.FE_DOMAIN || 'http://localhost:3000';
+        leave.domain = domain;
         leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
@@ -26,7 +28,11 @@ async function handleNewLeaveRequest(leave) {
 
         sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave);
         sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
-        sendNotificationForEmails(approversEmails, { title: 'Leave request pending for:', body: `${firstName} ${lastName}` });
+        sendNotificationForEmails(approversEmails, {
+            domain,
+            title: 'Leave request pending for:',
+            body: `${firstName} ${lastName}`,
+        });
     } catch (error) {
         logger.error(error);
     }
@@ -38,7 +44,7 @@ async function handleLeaveReminder(leave) {
         const { user, projects, approversData, approversEmails } = await getAndAgredateLeaveRequestData(leave);
         const { firstName, lastName } = user;
 
-        leave.domain = process.env.FE_DOMAIN || 'http://localhost:3000';
+        leave.domain = domain;
         leave.projectName = projects.map(p => p.name).reduce((a, v) => `${a}, ${v}`);
         leave.approvers = approversData;
         leave.employee = user;
@@ -49,6 +55,11 @@ async function handleLeaveReminder(leave) {
         const approverEmailSubject = `[${leaveType}] REMINDER Leave request pending for: ${firstName} ${lastName}`;
 
         sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
+        sendNotificationForEmails(approversEmails, {
+            domain,
+            title: 'REMINDER Leave request pending for:',
+            body: `${firstName} ${lastName}`,
+        });
     } catch (error) {
         logger.error(error);
     }
@@ -72,6 +83,11 @@ async function handleApprovedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
+        sendNotificationForEmails([email], {
+            domain,
+            title: 'Your leave request has been APPROVED',
+            body: `[${leaveType}]`,
+        });
         sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', leave);
         sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', leave);
     } catch (error) {
@@ -96,6 +112,11 @@ async function handleRejectedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
 
+        sendNotificationForEmails([email], {
+            domain,
+            title: 'Your leave request has been DECLINED',
+            body: `[${leaveType}]`,
+        });
         sendMail(email, userEmailSubject, 'declinedLeaveRequest', leave);
         sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', leave);
     } catch (error) {
