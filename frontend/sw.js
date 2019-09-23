@@ -25,18 +25,7 @@ self.addEventListener('notificationclick', function(event) {
         });
     });
 
-    clients.matchAll().then(function(allClients) {
-        const visibleClient = allClients.find(function(client) {
-            client.visibilityState === 'visible';
-        });
-
-        if (visibleClient) {
-            visibleClient.navigate(event.notification.domain);
-            visibleClient.focus();
-        } else {
-            event.waitUntil(
-                clients.openWindow(event.notification.domain)
-            );
-        }
-    });
+    event.waitUntil(
+        clients.openWindow(event.notification.domain)
+    );
 });
