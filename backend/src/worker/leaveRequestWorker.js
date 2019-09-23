@@ -28,7 +28,7 @@ async function handleNewLeaveRequest(leave) {
 
         sendMail(email, userEmailSubject, 'newUserLeaveRequest', leave);
         sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
-        sendNotificationForEmails(approversEmails, {
+        await sendNotificationForEmails(approversEmails, {
             domain,
             title: 'Leave request pending for:',
             body: `${firstName} ${lastName}`,
@@ -55,7 +55,7 @@ async function handleLeaveReminder(leave) {
         const approverEmailSubject = `[${leaveType}] REMINDER Leave request pending for: ${firstName} ${lastName}`;
 
         sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', leave);
-        sendNotificationForEmails(approversEmails, {
+        await sendNotificationForEmails(approversEmails, {
             domain,
             title: 'REMINDER Leave request pending for:',
             body: `${firstName} ${lastName}`,
@@ -83,7 +83,7 @@ async function handleApprovedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
-        sendNotificationForEmails([email], {
+        await sendNotificationForEmails([email], {
             domain,
             title: 'Your leave request has been APPROVED',
             body: `[${leaveType}]`,
@@ -112,7 +112,7 @@ async function handleRejectedLeaveRequest(leave) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
 
-        sendNotificationForEmails([email], {
+        await sendNotificationForEmails([email], {
             domain,
             title: 'Your leave request has been DECLINED',
             body: `[${leaveType}]`,

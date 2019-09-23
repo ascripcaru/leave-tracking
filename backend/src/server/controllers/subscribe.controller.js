@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Subscription from '../models/subscription.model';
 
 export async function saveSubscription(req, res) {
@@ -13,9 +14,8 @@ export async function saveSubscription(req, res) {
         });
         await sub.save();
     } else {
-        const sub = JSON.stringify(data);
-        if (!sub in userSubs.subscriptions) {
-            userSubs.subscriptions.push(sub);
+        if (!_.some(userSubs.subscriptions, (el) => _.isEqual(JSON.parse(el), data))) {
+            userSubs.subscriptions.push(JSON.stringify(data));
             await userSubs.save();
         }
     }

@@ -13,7 +13,7 @@ webpush.setGCMAPIKey(GCM_API_KEY);
 webpush.setVapidDetails(FE_DOMAIN, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
 export function sendNotification(subscription, payload) {
-    webpush.sendNotification(subscription, JSON.stringify(payload));
+    return webpush.sendNotification(subscription, JSON.stringify(payload));
 }
 
 export async function sendNotificationForEmails(emails, payload) {
