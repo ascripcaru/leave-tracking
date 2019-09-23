@@ -5,15 +5,18 @@ self.addEventListener('push', function(event) {
         data: {
             dateOfArrival: Date.now(),
             primaryKey: Date.now(),
+            domain: null,
         }
     };
 
     const payload = event.data.json();
 
     if (self.Notification.permission === 'granted') {
+        options.body = payload.body;
+        options.data.domain = payload.domain;
+
         event.waitUntil(
-            self.registration.showNotification(payload.title,
-                Object.assign({ body: payload.body, domain: payload.domain }, options))
+            self.registration.showNotification(payload.title, options)
         );
     }
 });
@@ -26,6 +29,6 @@ self.addEventListener('notificationclick', function(event) {
     });
 
     event.waitUntil(
-        clients.openWindow(event.notification.domain)
+        clients.openWindow(event.notification.data.domain)
     );
 });
